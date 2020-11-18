@@ -7,6 +7,8 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\ImporterController;
 use App\Http\Controllers\MerchantController;
 
+use App\Http\Controllers\Admin\CategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,6 +39,10 @@ Route::group(['prefix' => 'admin'], function(){
 	Route::group(['middleware'=>'admin.auth'], function(){
 		Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.home');		
 		Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+		Route::get('add-category', [CategoryController::class, 'index'])->name('admin.add-category');
+		Route::post('save-category', [CategoryController::class, 'store'])->name('admin.save-category');
+
 	});
 
 });
