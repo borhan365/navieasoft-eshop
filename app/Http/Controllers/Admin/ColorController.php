@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\Color;
 
-
-class CategoryController extends Controller
+class ColorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::simplepaginate(20);
-        return view('backend.admin.category.index', compact('categories'));
+        $colors = Color::simplepaginate(20);
+        return view('backend.admin.color.index', compact('colors'));
     }
 
     /**
@@ -27,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('backend.admin.category.create');
+        return view('backend.admin.color.create');
     }
 
     /**
@@ -39,20 +38,19 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|unique:categories',
+            'name' => 'required|unique:colors',
             'status' => 'required',
         ]);
 
-        $category = new Category();
+        $category = new Color();
         $category->name = $request->name;
         $category->status = $request->status;
         $category->save();
         $notification=array(
-            'message' => 'Category Saved Successfully !!',
+            'message' => 'Color Saved Successfully !!',
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
-
     }
 
     /**
@@ -74,8 +72,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findorfail($id);
-        return view('backend.admin.category.edit', compact('category'));
+        $color = Color::findorfail($id);
+        return view('backend.admin.color.edit', compact('color'));
     }
 
     /**
@@ -87,12 +85,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::findorfail($id);
-        $category->name = $request->name;
-        $category->status = $request->status;
-        $category->save();
+        $color = Color::findorfail($id);
+        $color->name = $request->name;
+        $color->status = $request->status;
+        $color->save();
         $notification=array(
-            'message' => 'Category Updated Successfully !!',
+            'message' => 'Color Updated Successfully !!',
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
@@ -106,10 +104,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findorfail($id);
-        $category->delete();
+        $color = Color::findorfail($id);
+        $color->delete();
         $notification=array(
-            'message' => 'Category Deleted Successfully !!',
+            'message' => 'Color Deleted Successfully !!',
             'alert-type' => 'error'
         );
 

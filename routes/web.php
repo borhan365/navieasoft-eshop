@@ -10,6 +10,10 @@ use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\ProsubcategoryController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\SizeController;
+use App\Http\Controllers\Admin\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,14 +46,27 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.home');		
 		Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-		//Category Controller -----------------------------------------------------------------------------
+		//Category Controller
 		Route::resource('category', CategoryController::class);
 		Route::resource('subcategory', SubcategoryController::class);
 		Route::resource('prosubcategory', ProsubcategoryController::class);
 
+		//Brand Controller
+		Route::resource('brand', BrandController::class);
 
-		//Ajax Request ------------------------------------------------------------------------------------
+		//Color Controller
+		Route::resource('color', ColorController::class);
+
+		//Size Controller
+		Route::resource('size', SizeController::class);
+
+		//Product Controller
+		Route::resource('product', ProductController::class);
+
+
+		//Ajax Request
 		Route::post('admin/get-subcategory', [ProsubcategoryController::class, 'get_subcategory'])->name('admin/get-subcategory');
+		Route::post('admin/get-prosubcategory', [ProductController::class, 'get_prosubcategory'])->name('admin/get-prosubcategory');
 
 	});
 

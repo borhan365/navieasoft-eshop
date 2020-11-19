@@ -98,7 +98,8 @@
           </li>
 
           <li class="nav-item has-treeview  
-
+              {{ request()->is('admin/brand/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/brand') ? 'menu-open' : '' }}
           ">
             <a href="" class="nav-link has-treeview">
               <i class="nav-icon fas fa-chart-pie"></i>
@@ -108,15 +109,15 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item ">
-                <a href="" class="nav-link">
+              <li class="nav-item {{ request()->is('admin/brand/create') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/brand/create')}}" class="nav-link {{ request()->is('admin/brand/create') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Brand</p>
                 </a>
               </li>              
 
-              <li class="nav-item">
-                <a href="" class="nav-link">
+              <li class="nav-item {{ request()->is('admin/brand') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/brand')}}" class="nav-link {{ request()->is('admin/brand') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage Brand</p>
                 </a>
@@ -124,14 +125,93 @@
             </ul>
           </li>
 
+          <li class="nav-item has-treeview  
+              {{ request()->is('admin/color/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/color') ? 'menu-open' : '' }}
+          ">
+            <a href="" class="nav-link has-treeview">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p class=" has-treeview">
+                Color
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ request()->is('admin/color/create') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/color/create')}}" class="nav-link {{ request()->is('admin/color/create') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Color</p>
+                </a>
+              </li>              
+
+              <li class="nav-item {{ request()->is('admin/color') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/color')}}" class="nav-link {{ request()->is('admin/color') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Color</p>
+                </a>
+              </li>
+            </ul>
+          </li>
 
 
 
+          <li class="nav-item has-treeview  
+              {{ request()->is('admin/size/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/size') ? 'menu-open' : '' }}
+          ">
+            <a href="" class="nav-link has-treeview">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p class=" has-treeview">
+                Size
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ request()->is('admin/size/create') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/size/create')}}" class="nav-link {{ request()->is('admin/size/create') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Size</p>
+                </a>
+              </li>              
+
+              <li class="nav-item {{ request()->is('admin/size') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/size')}}" class="nav-link {{ request()->is('admin/size') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Size</p>
+                </a>
+              </li>
+            </ul>
+          </li>
 
 
 
+          <li class="nav-item has-treeview  
+              {{ request()->is('admin/product/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/product') ? 'menu-open' : '' }}
+          ">
+            <a href="" class="nav-link has-treeview">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p class=" has-treeview">
+                Product
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ request()->is('admin/product/create') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/product/create')}}" class="nav-link {{ request()->is('admin/product/create') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Product</p>
+                </a>
+              </li>              
 
-
+              <li class="nav-item {{ request()->is('admin/product') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/product')}}" class="nav-link {{ request()->is('admin/product') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Product</p>
+                </a>
+              </li>
+            </ul>
+          </li>
 
 
 

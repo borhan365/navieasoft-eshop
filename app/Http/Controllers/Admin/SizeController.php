@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\Size;
 
-
-class CategoryController extends Controller
+class SizeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::simplepaginate(20);
-        return view('backend.admin.category.index', compact('categories'));
+        $sizes = Size::simplepaginate(20);
+        return view('backend.admin.size.index', compact('sizes'));
     }
 
     /**
@@ -27,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('backend.admin.category.create');
+        return view('backend.admin.size.create');
     }
 
     /**
@@ -39,20 +38,19 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|unique:categories',
+            'name' => 'required|unique:sizes',
             'status' => 'required',
         ]);
 
-        $category = new Category();
-        $category->name = $request->name;
-        $category->status = $request->status;
-        $category->save();
+        $size = new Size();
+        $size->name = $request->name;
+        $size->status = $request->status;
+        $size->save();
         $notification=array(
-            'message' => 'Category Saved Successfully !!',
+            'message' => 'Size Saved Successfully !!',
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
-
     }
 
     /**
@@ -74,8 +72,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findorfail($id);
-        return view('backend.admin.category.edit', compact('category'));
+        $size = Size::findorfail($id);
+        return view('backend.admin.size.edit', compact('size'));
     }
 
     /**
@@ -87,12 +85,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::findorfail($id);
-        $category->name = $request->name;
-        $category->status = $request->status;
-        $category->save();
+        $size = Size::findorfail($id);
+        $size->name = $request->name;
+        $size->status = $request->status;
+        $size->save();
         $notification=array(
-            'message' => 'Category Updated Successfully !!',
+            'message' => 'Size Updated Successfully !!',
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
@@ -106,10 +104,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findorfail($id);
-        $category->delete();
+        $size = Size::findorfail($id);
+        $size->delete();
         $notification=array(
-            'message' => 'Category Deleted Successfully !!',
+            'message' => 'Size Deleted Successfully !!',
             'alert-type' => 'error'
         );
 
