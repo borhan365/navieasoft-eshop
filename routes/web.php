@@ -8,6 +8,8 @@ use App\Http\Controllers\ImporterController;
 use App\Http\Controllers\MerchantController;
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SubcategoryController;
+use App\Http\Controllers\Admin\ProsubcategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,8 +42,14 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.home');		
 		Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-		Route::get('add-category', [CategoryController::class, 'index'])->name('admin.add-category');
-		Route::post('save-category', [CategoryController::class, 'store'])->name('admin.save-category');
+		//Category Controller -----------------------------------------------------------------------------
+		Route::resource('category', CategoryController::class);
+		Route::resource('subcategory', SubcategoryController::class);
+		Route::resource('prosubcategory', ProsubcategoryController::class);
+
+
+		//Ajax Request ------------------------------------------------------------------------------------
+		Route::post('admin/get-subcategory', [ProsubcategoryController::class, 'get_subcategory'])->name('admin/get-subcategory');
 
 	});
 

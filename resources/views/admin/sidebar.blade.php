@@ -28,7 +28,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview">
-            <a href="" class="nav-link">
+            <a href="{{URL::to('admin/dashboard')}}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -37,7 +37,12 @@
           </li>
 
           <li class="nav-item has-treeview  
-
+              {{ request()->is('admin/category/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/category') ? 'menu-open' : '' }}
+              {{ request()->is('admin/subcategory/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/subcategory') ? 'menu-open' : '' }}
+              {{ request()->is('admin/prosubcategory/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/prosubcategory') ? 'menu-open' : '' }}
           ">
             <a href="" class="nav-link has-treeview">
               <i class="nav-icon fas fa-chart-pie"></i>
@@ -47,34 +52,47 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('admin.add-category')}}" class="nav-link">
+              <li class="nav-item {{ request()->is('admin/category/create') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/category/create')}}" class="nav-link {{ request()->is('admin/category/create') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Category</p>
                 </a>
               </li>              
 
-              <li class="nav-item ">
-                <a href="" class="nav-link">
+              <li class="nav-item {{ request()->is('admin/category') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/category')}}" class="nav-link {{ request()->is('admin/category') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage Category</p>
                 </a>
               </li>
 
-              <li class="nav-item">
-                <a href="" class="nav-link">
+              <li class="nav-item {{ request()->is('admin/subcategory/create') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/subcategory/create')}}" class="nav-link {{ request()->is('admin/subcategory/create') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Sub Category</p>
                 </a>
               </li>               
 
-              <li class="nav-item">
-                <a href="" class="nav-link">
+              <li class="nav-item {{ request()->is('admin/subcategory') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/subcategory')}}" class="nav-link {{ request()->is('admin/subcategory') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage Sub Category</p>
                 </a>
               </li> 
 
+              <li class="nav-item {{ request()->is('admin/prosubcategory/create') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/prosubcategory/create')}}" class="nav-link {{ request()->is('admin/prosubcategory/create') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Pro Sub Category</p>
+                </a>
+              </li> 
+
+              <li class="nav-item {{ request()->is('admin/prosubcategory') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/prosubcategory')}}" class="nav-link {{ request()->is('admin/prosubcategory') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Pro Sub Category</p>
+                </a>
+              </li> 
 
             </ul>
           </li>

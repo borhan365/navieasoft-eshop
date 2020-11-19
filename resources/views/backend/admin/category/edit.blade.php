@@ -22,17 +22,19 @@
 	            <!-- Horizontal Form -->
 		            <div class="card card-info">
 		              <div class="card-header">
-		                <h3 class="card-title">Add Category</h3>
+		                <h3 class="card-title">Edit Category</h3>
 		              </div>
 		              <!-- /.card-header -->
 		              <!-- form start -->
-		              <form class="form-horizontal" action="{{URL::to('admin/category')}}" method="post" enctype="multipart/form-data">
+		              <form class="form-horizontal" action="{{URL::to('admin/category/'.$category->id)}}" method="post">
+
 		              	@csrf
+		              	@method('PATCH')
 		                <div class="card-body">
 		                  <div class="form-group row">
 		                    <label for="inputEmail3" class="col-sm-3 col-form-label">Category Name</label>
 		                    <div class="col-sm-9">
-		                      <input type="text" class="form-control" name="name" placeholder="Category Name">
+		                      <input type="text" class="form-control" name="name" placeholder="Category Name" value="{{$category->name}}">
 		                    </div>
 		                  </div>		                  
 	                  
@@ -41,15 +43,15 @@
 		                    <label for="inputPassword3" class="col-sm-3 col-form-label">Status</label>
 		                    <div class="col-sm-9">
 		                      <select name="status" id="" class="form-control">
-		                      	<option value="1">Active</option>
-		                      	<option value="0">Inactive</option>
+                        			<option value="1" @php echo $category->status==1?"selected":""; @endphp>Active</option>
+                        			<option value="0" @php echo $category->status==0?"selected":""; @endphp>Inactive</option>
 		                      </select>
 		                    </div>
 		                  </div>
 		                </div>
 		                <!-- /.card-body -->
 		                <div class="card-footer">
-		                  <button type="submit" class="btn btn-info">Save</button>
+		                  <button type="submit" class="btn btn-info">Update</button>
 		                  <button type="reset" class="btn btn-default float-right">Cancel</button>
 		                </div>
 		                <!-- /.card-footer -->
