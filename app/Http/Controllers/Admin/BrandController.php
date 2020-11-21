@@ -116,8 +116,7 @@ class BrandController extends Controller
             $success = $image->move($upload_path, $image_full_name);
             if($success)
             {   
-                $old_logo = $request->old_brand_logo;
-                if (file_exists($old_logo)) {
+                if (file_exists($request->old_brand_logo)) {
                     unlink($request->old_brand_logo);
                 }
                 $brand->brand_logo = $image_url;
@@ -140,13 +139,18 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        $brand = Brand::findorfail($id);
-        $brand->delete();
+        $imagePath = Brand::select('brand_logo')->where('id', $id)->first();
+        $filePath = $imagePath->brand_logo;
+        if (file_exists($filePath)) {
+            unlink($filePath);
+            Brand::where('id', $id)->delete();
+        }else{
+            Brand::where('id', $id)->delete();
+        }
         $notification=array(
             'message' => 'Brand Deleted Successfully !!',
             'alert-type' => 'error'
         );
-
         return redirect()->back()->with($notification);
     }
 }

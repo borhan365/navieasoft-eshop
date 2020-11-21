@@ -4,10 +4,6 @@
 
 
 
-
-  <link rel="stylesheet" href="{{asset('public/frontend/plugins/select2/css/select2.min.css')}}">
-  <link rel="stylesheet" href="{{asset('public/frontend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
-
 <style>
 	
 .note-editor.note-frame .note-editing-area .note-editable {
@@ -162,8 +158,7 @@
 		                    <div class="col-sm-9  mt-3">
 						        <div class="col-md-12">
 						            <div class="mb-3">
-						                <textarea name="description" class="textarea" style="width: 100%; height: 500px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">        	
-						                </textarea>
+						                <textarea name="description" class="textarea" style="width: 100%; height: 500px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
 						            </div>
 						        </div>
 		                    </div>
@@ -205,7 +200,7 @@
 
 
 
-<script src="{{asset('backend/plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('public/backend/plugins/jquery/jquery.min.js')}}"></script>
 <!-- <script src="{{asset('admin/jquery.min.js')}}"></script> -->
 <script type="text/javascript">
 		$( document ).ready(function() {

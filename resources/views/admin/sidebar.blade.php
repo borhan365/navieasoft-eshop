@@ -3,7 +3,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="" class="brand-link" style="background-color: #049A9A">
-      <img src="{{asset('backend/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+      <img src="{{asset('public/backend/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">E-shop</span>
     </a>
@@ -13,7 +13,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{asset('backend/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{asset('public/backend/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="" class="d-block"> {{ Auth::user()->name  ?? '' }}</a>
@@ -213,8 +213,144 @@
             </ul>
           </li>
 
+          <li class="nav-item has-treeview
+          {{ request()->is('admin/vendor') ? 'menu-open' : '' }}
+          ">
+            <a href="{{URL::to('admin/vendor')}}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Vendors
+              </p>
+            </a>
+          </li>
 
 
+          <li class="nav-item has-treeview
+          {{ request()->is('admin/importer') ? 'menu-open' : '' }}
+          ">
+            <a href="{{URL::to('admin/importer')}}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Importers
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item has-treeview
+          {{ request()->is('admin/merchant') ? 'menu-open' : '' }}
+          ">
+            <a href="{{URL::to('admin/merchant')}}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Merchant
+              </p>
+            </a>
+          </li>
+
+
+          <li class="nav-item has-treeview
+              {{ request()->is('admin/page/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/page') ? 'menu-open' : '' }}              
+              {{ request()->is('admin/deliverymethod/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/deliverymethod') ? 'menu-open' : '' }}              
+              {{ request()->is('admin/social/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/social') ? 'menu-open' : '' }}
+          ">
+            <a href="" class="nav-link">
+              <i class="nav-icon fas fa-cog"></i>
+              <p>
+                Settings
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item has-treeview
+              {{ request()->is('admin/page/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/page') ? 'menu-open' : '' }} 
+              ">
+                <a href="" class="nav-link" style="margin-left: 21px;">
+                  <i class="nav-icon fas fa-cog"></i>
+                  <p>
+                    Page
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item {{ request()->is('admin/page/create') ? 'active' : '' }}">
+                    <a href="{{URL::to('admin/page/create')}}" class="nav-link {{ request()->is('admin/page/create') ? 'active' : '' }}"  style="margin-left: 44px;">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Add Page</p>
+                    </a>
+                  </li>                   
+
+                  <li class="nav-item {{ request()->is('admin/page') ? 'active' : '' }}">
+                    <a href="{{URL::to('admin/page')}}" class="nav-link {{ request()->is('admin/page') ? 'active' : '' }}"  style="margin-left: 44px;">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Manage Page</p>
+                    </a>
+                  </li>              
+                </ul>
+              </li> 
+
+
+              <li class="nav-item has-treeview
+              {{ request()->is('admin/deliverymethod/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/deliverymethod') ? 'menu-open' : '' }}
+              ">
+                <a href="" class="nav-link" style="margin-left: 21px;">
+                  <i class="nav-icon fas fa-cog"></i>
+                  <p>
+                    Delivery Method
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item {{ request()->is('admin/deliverymethod/create') ? 'active' : '' }}">
+                    <a href="{{URL::to('admin/deliverymethod/create')}}" class="nav-link {{ request()->is('admin/deliverymethod/create') ? 'active' : '' }}"  style="margin-left: 44px;">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Add Method</p>
+                    </a>
+                  </li>                   
+
+                  <li class="nav-item {{ request()->is('admin/deliverymethod') ? 'active' : '' }}">
+                    <a href="{{URL::to('admin/deliverymethod')}}" class="nav-link {{ request()->is('admin/deliverymethod') ? 'active' : '' }}"  style="margin-left: 44px;">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Manage Method</p>
+                    </a>
+                  </li>              
+                </ul>
+              </li> 
+
+              <li class="nav-item has-treeview
+              {{ request()->is('admin/social/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/social') ? 'menu-open' : '' }}
+              ">
+                <a href="" class="nav-link" style="margin-left: 21px;">
+                  <i class="nav-icon fas fa-cog"></i>
+                  <p>
+                    Social Link
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+<!--                   <li class="nav-item {{ request()->is('admin/social/create') ? 'active' : '' }}">
+                    <a href="{{URL::to('admin/social/create')}}" class="nav-link {{ request()->is('admin/social/create') ? 'active' : '' }}"  style="margin-left: 44px;">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Add Link</p>
+                    </a>
+                  </li>   -->                 
+
+                  <li class="nav-item {{ request()->is('admin/social') ? 'active' : '' }}">
+                    <a href="{{URL::to('admin/social')}}" class="nav-link {{ request()->is('admin/social') ? 'active' : '' }}"  style="margin-left: 44px;">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Manage Link</p>
+                    </a>
+                  </li>              
+                </ul>
+              </li> 
+
+            </ul>
+          </li>
 
 
 

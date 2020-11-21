@@ -42,14 +42,14 @@
                   	<td>
 
                         <a href="{{URL::to('admin/brand/'.$brand->id.'/edit')}}" title="Edit" style="float: left;margin-right: 10px;">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i>
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>
                             </button>
                         </a>
 
                         <form action="{{URL::to('admin/brand/'.$brand->id)}}" method="post">
                         	@csrf
                         	@method('DELETE')
-                        	<button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i></button>
+                        	<button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash"></i></button>
                         </form>
 
 

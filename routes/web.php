@@ -14,6 +14,10 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\DeliveryMethodController;
+use App\Http\Controllers\Admin\SocialLinkController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -50,18 +54,26 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::resource('category', CategoryController::class);
 		Route::resource('subcategory', SubcategoryController::class);
 		Route::resource('prosubcategory', ProsubcategoryController::class);
-
 		//Brand Controller
 		Route::resource('brand', BrandController::class);
-
 		//Color Controller
 		Route::resource('color', ColorController::class);
-
 		//Size Controller
 		Route::resource('size', SizeController::class);
-
 		//Product Controller
 		Route::resource('product', ProductController::class);
+		//Page Controller
+		Route::resource('page', PageController::class);
+		//Delivery Method Controller
+		Route::resource('deliverymethod', DeliveryMethodController::class);		
+		//Social Link Controller
+		Route::resource('social', SocialLinkController::class);		
+		//Vendor Controller
+		Route::resource('vendor', App\Http\Controllers\Admin\VendorController::class);		
+		//Importer Controller
+		Route::resource('importer', App\Http\Controllers\Admin\ImporterController::class);		
+		//Merchant Controller
+		Route::resource('merchant', App\Http\Controllers\Admin\MerchantController::class);
 
 
 		//Ajax Request
