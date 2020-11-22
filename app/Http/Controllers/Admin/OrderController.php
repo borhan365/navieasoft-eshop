@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Importer;
+use App\Models\Order;
+use App\Models\OrderDetails;
 
-class ImporterController extends Controller
+
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +17,8 @@ class ImporterController extends Controller
      */
     public function index()
     {
-        $importers = Importer::get();
-        return view('backend.admin.importer.index', compact('importers'));
+        $orders = Order::get();
+        return view('backend.admin.order.index', compact('orders'));
     }
 
     /**
@@ -48,8 +50,9 @@ class ImporterController extends Controller
      */
     public function show($id)
     {
-        $importer = Importer::findorfail($id);
-        return view('backend.admin.importer.details', compact('importer'));
+        $order = Order::findorfail($id);
+        $orderDetails = OrderDetails::where('order_id', $id)->get();
+        return view('backend.admin.order.details', compact('order', 'orderDetails'));
     }
 
     /**
@@ -83,37 +86,6 @@ class ImporterController extends Controller
      */
     public function destroy($id)
     {
-        $importer = Importer::findorfail($id);
-        $importer->delete();
-        $notification=array(
-            'message' => 'Importer Deleted Successfully !!',
-            'alert-type' => 'error'
-        );
-
-        return redirect()->back()->with($notification);
+        //
     }
-
-    public function inactive_importer($id){
-        $importer = Importer::find($id);
-        $importer->status = 0;
-        $importer->save();
-        $notification=array(
-            'message' => 'Importer Inactived Successfully !!',
-            'alert-type' => 'error'
-        );
-
-        return redirect()->back()->with($notification);
-    }
-
-    public function active_importer($id){
-        $importer = Importer::find($id);
-        $importer->status = 1;
-        $importer->save();
-        $notification=array(
-            'message' => 'Importer Actived Successfully !!',
-            'alert-type' => 'success'
-        );
-        return redirect()->back()->with($notification);
-    }
-
 }

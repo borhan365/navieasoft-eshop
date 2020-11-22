@@ -92,4 +92,29 @@ class VendorController extends Controller
 
         return redirect()->back()->with($notification);
     }
+
+    public function inactive_vendor($id){
+        $vendor = Vendor::find($id);
+        $vendor->status = 0;
+        $vendor->save();
+        $notification=array(
+            'message' => 'Vendor Inactived Successfully !!',
+            'alert-type' => 'error'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function active_vendor($id){
+        $vendor = Vendor::find($id);
+        $vendor->status = 1;
+        $vendor->save();
+        $notification=array(
+            'message' => 'Vendor Actived Successfully !!',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
+
+
 }

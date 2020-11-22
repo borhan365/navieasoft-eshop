@@ -92,4 +92,28 @@ class MerchantController extends Controller
 
         return redirect()->back()->with($notification);
     }
+    
+    public function inactive_merchant($id){
+        $merchant = Merchant::find($id);
+        $merchant->status = 0;
+        $merchant->save();
+        $notification=array(
+            'message' => 'Merchant Inactived Successfully !!',
+            'alert-type' => 'error'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function active_merchant($id){
+        $merchant = Merchant::find($id);
+        $merchant->status = 1;
+        $merchant->save();
+        $notification=array(
+            'message' => 'Merchant Actived Successfully !!',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
+
 }

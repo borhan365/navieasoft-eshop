@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWithdrawsTable extends Migration
+class CreatePaymentMethodsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateWithdrawsTable extends Migration
      */
     public function up()
     {
-        Schema::create('withdraws', function (Blueprint $table) {
+        Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->integer('vendor_id');
-            $table->integer('method_id');
-            $table->string('amount');
-            $table->integer('status')->default(0);
+            $table->string('name');
+            $table->integer('status');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateWithdrawsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('withdraws');
+        Schema::dropIfExists('payment_methods');
     }
 }

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Importer;
+use App\Models\PaymentMethod;
 
-class ImporterController extends Controller
+class PaymentMethodController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class ImporterController extends Controller
      */
     public function index()
     {
-        $importers = Importer::get();
-        return view('backend.admin.importer.index', compact('importers'));
+        $methods = PaymentMethod::get();
+        return view('backend.admin.paymentmethod.index', compact('methods'));
     }
 
     /**
@@ -26,7 +26,7 @@ class ImporterController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.admin.paymentmethod.create');
     }
 
     /**
@@ -37,7 +37,20 @@ class ImporterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'status' => 'required',
+        ]);
+
+        $method = new PaymentMethod();
+        $method->name = $request->name;
+        $method->status = $request->status;
+        $method->save();
+        $notification=array(
+            'message' => 'PaymentMethod Saved Successfully !!',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
     }
 
     /**
@@ -48,8 +61,7 @@ class ImporterController extends Controller
      */
     public function show($id)
     {
-        $importer = Importer::findorfail($id);
-        return view('backend.admin.importer.details', compact('importer'));
+        //
     }
 
     /**
@@ -60,7 +72,8 @@ class ImporterController extends Controller
      */
     public function edit($id)
     {
-        //
+        $method = PaymentMethod::findorfail($id);
+        return view('backend.admin.paymentmethod.edit', compact('method'));
     }
 
     /**
@@ -72,7 +85,15 @@ class ImporterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $method = PaymentMethod::findorfail($id);
+        $method->name = $request->name;
+        $method->status = $request->status;
+        $method->save();
+        $notification=array(
+            'message' => 'PaymentMethod Updated Successfully !!',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
     }
 
     /**
@@ -83,37 +104,13 @@ class ImporterController extends Controller
      */
     public function destroy($id)
     {
-        $importer = Importer::findorfail($id);
-        $importer->delete();
+        $method = PaymentMethod::findorfail($id);
+        $method->delete();
         $notification=array(
-            'message' => 'Importer Deleted Successfully !!',
+        'message' => 'PaymentMethod Deleted Successfully !!',
             'alert-type' => 'error'
         );
 
         return redirect()->back()->with($notification);
     }
-
-    public function inactive_importer($id){
-        $importer = Importer::find($id);
-        $importer->status = 0;
-        $importer->save();
-        $notification=array(
-            'message' => 'Importer Inactived Successfully !!',
-            'alert-type' => 'error'
-        );
-
-        return redirect()->back()->with($notification);
-    }
-
-    public function active_importer($id){
-        $importer = Importer::find($id);
-        $importer->status = 1;
-        $importer->save();
-        $notification=array(
-            'message' => 'Importer Actived Successfully !!',
-            'alert-type' => 'success'
-        );
-        return redirect()->back()->with($notification);
-    }
-
 }

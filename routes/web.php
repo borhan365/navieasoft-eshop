@@ -16,7 +16,10 @@ use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\DeliveryMethodController;
+use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\SocialLinkController;
+use App\Http\Controllers\Admin\WithdrawController;
+use App\Http\Controllers\Admin\OrderController;
 
 
 /*
@@ -54,26 +57,55 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::resource('category', CategoryController::class);
 		Route::resource('subcategory', SubcategoryController::class);
 		Route::resource('prosubcategory', ProsubcategoryController::class);
+
 		//Brand Controller
 		Route::resource('brand', BrandController::class);
+
 		//Color Controller
 		Route::resource('color', ColorController::class);
+
 		//Size Controller
 		Route::resource('size', SizeController::class);
+
 		//Product Controller
 		Route::resource('product', ProductController::class);
+
 		//Page Controller
 		Route::resource('page', PageController::class);
+
 		//Delivery Method Controller
-		Route::resource('deliverymethod', DeliveryMethodController::class);		
+		Route::resource('deliverymethod', DeliveryMethodController::class);	
+
+		//Payment Method Controller
+		Route::resource('paymentmethod', PaymentMethodController::class);	
+
 		//Social Link Controller
-		Route::resource('social', SocialLinkController::class);		
+		Route::resource('social', SocialLinkController::class);	
+
+		//Social Link Controller
+		Route::resource('order', OrderController::class);	
+
 		//Vendor Controller
-		Route::resource('vendor', App\Http\Controllers\Admin\VendorController::class);		
+		Route::resource('vendor', App\Http\Controllers\Admin\VendorController::class);	
+		Route::get('admin/inactive-vendor/{id}', [App\Http\Controllers\Admin\VendorController::class, 'inactive_vendor'])->name('admin/inactive-vendor');
+		Route::get('admin/active-vendor/{id}', [App\Http\Controllers\Admin\VendorController::class, 'active_vendor'])->name('admin/active-vendor');
+
 		//Importer Controller
-		Route::resource('importer', App\Http\Controllers\Admin\ImporterController::class);		
+		Route::resource('importer', App\Http\Controllers\Admin\ImporterController::class);
+		Route::get('admin/inactive-importer/{id}', [App\Http\Controllers\Admin\ImporterController::class, 'inactive_importer'])->name('admin/inactive-importer');
+		Route::get('admin/active-importer/{id}', [App\Http\Controllers\Admin\ImporterController::class, 'active_importer'])->name('admin/active-importer');
+
 		//Merchant Controller
 		Route::resource('merchant', App\Http\Controllers\Admin\MerchantController::class);
+		Route::get('admin/inactive-merchant/{id}', [App\Http\Controllers\Admin\MerchantController::class, 'inactive_merchant'])->name('admin/inactive-merchant');
+		Route::get('admin/active-merchant/{id}', [App\Http\Controllers\Admin\MerchantController::class, 'active_merchant'])->name('admin/active-merchant');
+
+		//Withdraw Controller
+		Route::resource('withdraw', WithdrawController::class);	
+		Route::get('admin/inactive-withdraw/{id}', [WithdrawController::class, 'inactive_withdraw'])->name('admin/inactive-withdraw');
+		Route::get('admin/active-withdraw/{id}', [WithdrawController::class, 'active_withdraw'])->name('admin/active-withdraw');
+
+
 
 
 		//Ajax Request

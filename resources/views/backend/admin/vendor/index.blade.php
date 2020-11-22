@@ -45,17 +45,26 @@
                       
 	                </td>
                   	<td>
-
+                      <div class="row">
+                        <?php  if($vendor->status == 1){ ?>
+                        <a href="{{route('admin/inactive-vendor',[$vendor->id])}}"
+                           class="btn btn-success btn-sm" title="Inactive"  style="float: left;margin-right: 10px;"><i
+                                    class="fa fa-arrow-down"></i></a>
+                        <?php }else{ ?>
+                        <a href="{{route('admin/active-vendor',[$vendor->id])}}"
+                           class="btn btn-warning btn-sm" title="Active"  style="float: left;margin-right: 10px;"><i
+                                    class="fa fa-arrow-up"></i></a>
+                        <?php } ?>
                         <a href="{{URL::to('admin/vendor/'.$vendor->id)}}" title="Edit" style="float: left;margin-right: 10px;">
                             <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>
                             </button>
                         </a>
-
                         <form action="{{URL::to('admin/vendor/'.$vendor->id)}}" method="post">
                         	@csrf
                         	@method('DELETE')
                         	<button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash"></i></button>
                         </form>
+                      </div>
 
 
                   	</td>

@@ -36,6 +36,15 @@
             </a>
           </li>
 
+          <li class="nav-item has-treeview">
+            <a href="{{URL::to('admin/order')}}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Order
+              </p>
+            </a>
+          </li>
+
           <li class="nav-item has-treeview  
               {{ request()->is('admin/category/create') ? 'menu-open' : '' }}
               {{ request()->is('admin/category') ? 'menu-open' : '' }}
@@ -214,6 +223,17 @@
           </li>
 
           <li class="nav-item has-treeview
+          {{ request()->is('admin/withdraw') ? 'menu-open' : '' }}
+          ">
+            <a href="{{URL::to('admin/withdraw')}}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Withdraw
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item has-treeview
           {{ request()->is('admin/vendor') ? 'menu-open' : '' }}
           ">
             <a href="{{URL::to('admin/vendor')}}" class="nav-link">
@@ -254,7 +274,9 @@
               {{ request()->is('admin/deliverymethod/create') ? 'menu-open' : '' }}
               {{ request()->is('admin/deliverymethod') ? 'menu-open' : '' }}              
               {{ request()->is('admin/social/create') ? 'menu-open' : '' }}
-              {{ request()->is('admin/social') ? 'menu-open' : '' }}
+              {{ request()->is('admin/social') ? 'menu-open' : '' }}              
+              {{ request()->is('admin/paymentmethod/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/paymentmethod') ? 'menu-open' : '' }}
           ">
             <a href="" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
@@ -314,6 +336,35 @@
 
                   <li class="nav-item {{ request()->is('admin/deliverymethod') ? 'active' : '' }}">
                     <a href="{{URL::to('admin/deliverymethod')}}" class="nav-link {{ request()->is('admin/deliverymethod') ? 'active' : '' }}"  style="margin-left: 44px;">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Manage Method</p>
+                    </a>
+                  </li>              
+                </ul>
+              </li> 
+
+
+              <li class="nav-item has-treeview
+              {{ request()->is('admin/paymentmethod/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/paymentmethod') ? 'menu-open' : '' }}
+              ">
+                <a href="" class="nav-link" style="margin-left: 21px;">
+                  <i class="nav-icon fas fa-cog"></i>
+                  <p>
+                    Payment Method
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item {{ request()->is('admin/paymentmethod/create') ? 'active' : '' }}">
+                    <a href="{{URL::to('admin/paymentmethod/create')}}" class="nav-link {{ request()->is('admin/paymentmethod/create') ? 'active' : '' }}"  style="margin-left: 44px;">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Add Method</p>
+                    </a>
+                  </li>                   
+
+                  <li class="nav-item {{ request()->is('admin/paymentmethod') ? 'active' : '' }}">
+                    <a href="{{URL::to('admin/paymentmethod')}}" class="nav-link {{ request()->is('admin/paymentmethod') ? 'active' : '' }}"  style="margin-left: 44px;">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Manage Method</p>
                     </a>

@@ -40,4 +40,9 @@ class Vendor extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function wthdraw(){
+        return $this->hasMany('App\models\Wthdraw', 'vendor_id');
+    }
+
 }

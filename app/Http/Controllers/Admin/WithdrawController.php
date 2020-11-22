@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Withdraw;
 
 class WithdrawController extends Controller
 {
@@ -14,7 +15,8 @@ class WithdrawController extends Controller
      */
     public function index()
     {
-        //
+        $withdraws = Withdraw::get();
+        return view('backend.admin.withdraw.index', compact('withdraws'));
     }
 
     /**
@@ -46,7 +48,8 @@ class WithdrawController extends Controller
      */
     public function show($id)
     {
-        //
+        $withdraw = Withdraw::findorfail($id);
+        return view('backend.admin.withdraw.details', compact('withdraw'));
     }
 
     /**
@@ -82,4 +85,28 @@ class WithdrawController extends Controller
     {
         //
     }
+
+    public function inactive_withdraw($id){
+        $withdraw = Withdraw::find($id);
+        $withdraw->status = 0;
+        $withdraw->save();
+        $notification=array(
+            'message' => 'Withdraw Inactived Successfully !!',
+            'alert-type' => 'error'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function active_withdraw($id){
+        $withdraw = Withdraw::find($id);
+        $withdraw->status = 1;
+        $withdraw->save();
+        $notification=array(
+            'message' => 'Withdraw Actived Successfully !!',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
+
 }
