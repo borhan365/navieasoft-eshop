@@ -52,7 +52,14 @@ class OrderController extends Controller
     {
         $order = Order::findorfail($id);
         $orderDetails = OrderDetails::where('order_id', $id)->get();
-        return view('backend.admin.order.details', compact('order', 'orderDetails'));
+
+        $toal_p_price = OrderDetails::where('order_id', $id)->sum('product_price');
+        $tax = 10;
+        $shipping_charge = 100;
+
+        $total = $toal_p_price + $tax + $shipping_charge;
+
+        return view('backend.admin.order.details', compact('order', 'orderDetails', 'toal_p_price','tax', 'shipping_charge', 'total'));
     }
 
     /**
@@ -63,7 +70,10 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order = Order::findorfail($id);
+        $orderDetails = OrderDetails::where('order_id', $id)->get();
+
+        return view('backend.admin.order.edit', compact('order', 'orderDetails'));
     }
 
     /**
@@ -88,4 +98,40 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function invoice_print($id){
+        $order = Order::findorfail($id);
+        $orderDetails = OrderDetails::where('order_id', $id)->get();
+        $toal_p_price = OrderDetails::where('order_id', $id)->sum('product_price');
+        $tax = 10;
+        $shipping_charge = 100;
+        $total = $toal_p_price + $tax + $shipping_charge;
+        return view('backend.admin.order.invoice_print', compact('order', 'orderDetails', 'toal_p_price','tax', 'shipping_charge', 'total'));
+    }
+
+    public function update_shipping_address(Request $request, $id){
+        $order = Order::findorfail($id);
+        $order->shipping_address = $request->shipping_address;
+        $order->city = $request->city;
+        $order->postcode = $request->postcode;
+        $order->country = $request->country;
+        $order->save();
+        $notification=array(
+            'message' => 'Shipping Address Updated Successfully !!',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
+
+    public function update_order_summery(Request $request, $id){
+        $order = Order::findorfail($id);
+        $order->status = $request->status;
+        $order->save();
+        $notification=array(
+            'message' => 'Order Updated Successfully !!',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
+
 }

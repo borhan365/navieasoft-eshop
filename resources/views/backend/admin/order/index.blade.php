@@ -57,17 +57,17 @@
                             <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>
                             </button>
                         </a>                        
-<!-- 
+
                         <a href="{{URL::to('admin/order/'.$order->id.'/edit')}}" title="Edit" style="float: left;margin-right: 10px;">
                             <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>
                             </button>
-                        </a> -->
+                        </a>
 
-                        <form action="{{URL::to('admin/order/'.$order->id)}}" method="post">
+<!--                         <form action="{{URL::to('admin/order/'.$order->id)}}" method="post">
                         	@csrf
                         	@method('DELETE')
                         	<button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash"></i></button>
-                        </form>
+                        </form> -->
                       </div>
 
 

@@ -84,6 +84,9 @@ Route::group(['prefix' => 'admin'], function(){
 
 		//Social Link Controller
 		Route::resource('order', OrderController::class);	
+		Route::get('admin/invoice-print/{id}', [OrderController::class, 'invoice_print'])->name('admin/invoice-print');		
+		Route::post('admin/update-shipping-address/{id}', [OrderController::class, 'update_shipping_address'])->name('admin/update-shipping-address');
+		Route::post('admin/update-order-summery/{id}', [OrderController::class, 'update_order_summery'])->name('admin/update-order-summery');
 
 		//Vendor Controller
 		Route::resource('vendor', App\Http\Controllers\Admin\VendorController::class);	

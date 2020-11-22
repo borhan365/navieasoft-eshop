@@ -40,7 +40,7 @@
                 <div class="col-12">
                   <h4>
                     <i class="fas fa-globe"></i> E-Shop.
-                    <small class="float-right">Date: 2/10/2014</small>
+                    <small class="float-right">Date: {{$order->created_at}}</small>
                   </h4>
                 </div>
                 <!-- /.col -->
@@ -86,6 +86,8 @@
                     <tr>
                       <th>Qty</th>
                       <th>Product</th>
+                      <th>Color</th>
+                      <th>Size</th>
                       <th>Serial #</th>
                       <th>Subtotal</th>
                     </tr>
@@ -95,8 +97,10 @@
                     <tr>
                       <td>{{$details->qty}}</td>
                       <td>{{$details->product->name}}</td>
+                      <td>{{$details->color->name ?? ''}}</td>
+                      <td>{{$details->size->name ?? ''}}</td>
                       <td>{{$details->product_id}}</td>
-                      <td>${{$details->product->sell_price}}</td>
+                      <td>${{$details->product_price}}</td>
                     </tr>
                     @endforeach
 
@@ -111,10 +115,10 @@
                 <!-- accepted payments column -->
                 <div class="col-6">
                   <p class="lead">Payment Methods:</p>
-                  <img src="../../dist/img/credit/visa.png" alt="Visa">
-                  <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
-                  <img src="../../dist/img/credit/american-express.png" alt="American Express">
-                  <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
+                  <img src="{{asset('public/backend/dist/img/credit/visa.png')}}" alt="Visa">
+                  <img src="{{asset('public/backend/dist/img/credit/mastercard.png')}}" alt="Mastercard">
+                  <img src="{{asset('public/backend/dist/img/credit/american-express.png')}}" alt="American Express">
+                  <img src="{{asset('public/backend/dist/img/credit/paypal2.png')}}" alt="Paypal">
 
                   <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
                     Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
@@ -124,25 +128,24 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-6">
-                  <p class="lead">Amount Due 2/22/2014</p>
-
+        			<p class="lead"></p>
                   <div class="table-responsive">
                     <table class="table">
                       <tr>
                         <th style="width:50%">Subtotal:</th>
-                        <td>$250.30</td>
+                        <td>${{$toal_p_price}}</td>
                       </tr>
                       <tr>
-                        <th>Tax (9.3%)</th>
-                        <td>$10.34</td>
+                        <th>Tax (5.0%)</th>
+                        <td>${{$tax}}</td>
                       </tr>
                       <tr>
                         <th>Shipping:</th>
-                        <td>$5.80</td>
+                        <td>${{$shipping_charge}}</td>
                       </tr>
                       <tr>
                         <th>Total:</th>
-                        <td>$265.24</td>
+                        <td>${{$total}}</td>
                       </tr>
                     </table>
                   </div>
@@ -154,13 +157,8 @@
               <!-- this row will not appear when printing -->
               <div class="row no-print">
                 <div class="col-12">
-                  <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-                  <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-                    Payment
-                  </button>
-                  <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                    <i class="fas fa-download"></i> Generate PDF
-                  </button>
+                  <a href="{{route('admin/invoice-print',[$order->id])}}"><button type="button" class="btn btn-success float-right"><i class="fas fa-print"></i>Print
+                  </button></a>
                 </div>
               </div>
             </div>

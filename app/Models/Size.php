@@ -11,5 +11,7 @@ class Size extends Model
 	public function p_size(){
 		return $this->hasMany('App\Models\Product_size', 'size_id');
 	}
-
+	public function orderdetails(){
+		return $this->hasMany('App\Models\OrderDetails', 'size_id');
+	}
 }

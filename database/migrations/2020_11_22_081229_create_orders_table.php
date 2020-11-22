@@ -20,6 +20,10 @@ class CreateOrdersTable extends Migration
             $table->integer('total_qty');
             $table->integer('total_cost');
             $table->integer('payment_method');
+            $table->text('shipping_address');
+            $table->string('city');
+            $table->integer('postcode');
+            $table->string('country');
             $table->integer('status')->default(0);
             $table->timestamps();
         });
