@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\Vendor;
+use App\Models\Importer;
+use App\Models\Merchant;
+use App\Models\Customer;
 use Auth;
 
 class AdminController extends Controller
@@ -26,7 +30,13 @@ class AdminController extends Controller
     }
 
     public function dashboard(){
-    	return view('admin.home');
+
+        $vendors = Vendor::get();
+        $importers = Importer::get();
+        $merchants = Merchant::get();
+        $customers = Customer::get();
+
+    	return view('admin.home', compact('vendors', 'importers', 'merchants', 'customers'));
     }
 
     public function logout(){

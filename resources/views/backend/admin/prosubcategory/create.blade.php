@@ -86,7 +86,7 @@
 </section>
 
 
-<script src="{{asset('backend/plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('public/backend/plugins/jquery/jquery.min.js')}}"></script>
 <script type="text/javascript">
 
   $( document ).ready(function() {

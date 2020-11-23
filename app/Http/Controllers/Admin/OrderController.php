@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderDetails;
+use App\Models\PaymentMethod;
 
 
 class OrderController extends Controller
@@ -18,7 +19,8 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::get();
-        return view('backend.admin.order.index', compact('orders'));
+        $methods = PaymentMethod::where('status', 1)->get();
+        return view('backend.admin.order.index', compact('orders', 'methods'));
     }
 
     /**
@@ -133,5 +135,33 @@ class OrderController extends Controller
         );
         return redirect()->back()->with($notification);
     }
+
+   public function filter_order(Request $request){
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        $payment_method = $request->payment_method;
+        $status = $request->status;
+        $orders = Order::where(function($filter) use ($from_date, $to_date, $payment_method, $status) {
+                       if (!empty($from_date) || $from_date != '') {
+                           $filter->where('created_at', '>=' , $from_date);
+                       }
+                       if (!empty($to_date) || $to_date != '') {
+                           $filter->where('created_at', '<=' , $to_date);
+                       }                       
+                       if (!empty($payment_method) || $payment_method != '') {
+                           $filter->where('payment_method', $payment_method);
+                       }                       
+                       if (!empty($status) || $status != '') {
+                           $filter->where('status', $status);
+                       }
+                   })
+                ->paginate(20);
+
+        $methods = PaymentMethod::where('status', 1)->get();
+
+        $today_date = date('Y-m-d');
+        return view('backend.admin.order.filter_order',compact('orders','from_date', 'to_date', 'payment_method', 'status', 'today_date', 'methods'));
+   }
+
 
 }

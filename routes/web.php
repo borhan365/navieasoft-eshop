@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\SocialLinkController;
 use App\Http\Controllers\Admin\WithdrawController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\CustomerController;
 
 
 /*
@@ -88,6 +89,9 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::post('admin/update-shipping-address/{id}', [OrderController::class, 'update_shipping_address'])->name('admin/update-shipping-address');
 		Route::post('admin/update-order-summery/{id}', [OrderController::class, 'update_order_summery'])->name('admin/update-order-summery');
 
+		Route::get('admin/filter-order', [OrderController::class, 'filter_order'])->name('admin/filter-order');
+
+
 		//Vendor Controller
 		Route::resource('vendor', App\Http\Controllers\Admin\VendorController::class);	
 		Route::get('admin/inactive-vendor/{id}', [App\Http\Controllers\Admin\VendorController::class, 'inactive_vendor'])->name('admin/inactive-vendor');
@@ -102,6 +106,11 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::resource('merchant', App\Http\Controllers\Admin\MerchantController::class);
 		Route::get('admin/inactive-merchant/{id}', [App\Http\Controllers\Admin\MerchantController::class, 'inactive_merchant'])->name('admin/inactive-merchant');
 		Route::get('admin/active-merchant/{id}', [App\Http\Controllers\Admin\MerchantController::class, 'active_merchant'])->name('admin/active-merchant');
+
+		//Customer Controller
+		Route::resource('customer', CustomerController::class);
+		Route::get('admin/inactive-customer/{id}', [CustomerController::class, 'inactive_customer'])->name('admin/inactive-customer');
+		Route::get('admin/active-customer/{id}', [CustomerController::class, 'active_customer'])->name('admin/active-customer');
 
 		//Withdraw Controller
 		Route::resource('withdraw', WithdrawController::class);	

@@ -125,6 +125,7 @@
 <script src="{{asset('public/backend/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('public/backend/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
    <script>
     
@@ -172,16 +173,20 @@
         $("#example1").DataTable({
           "responsive": true,
           "autoWidth": false,
-        });
-        $('#example2').DataTable({
-          "paging": true,
-          "lengthChange": false,
-          "searching": false,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false,
+        });        
+        $("#example2").DataTable({
           "responsive": true,
+          "autoWidth": false,
+        });        
+        $("#example3").DataTable({
+          "responsive": true,
+          "autoWidth": false,
+        });        
+        $("#example4").DataTable({
+          "responsive": true,
+          "autoWidth": false,
         });
+
       });
   </script>
 

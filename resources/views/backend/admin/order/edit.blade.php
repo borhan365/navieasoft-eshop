@@ -58,20 +58,26 @@
                     <textarea name="shipping_address" class="form-control" id="" rows="2">{{$order->shipping_address ?? ''}}</textarea>
                   </div>
 	                  	
-                  <div class="form-group">
-                    <label >City</label>
-                    <input name="city" type="text" class="form-control" value="{{$order->city}}">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label >City</label>
+                        <input name="city" type="text" class="form-control" value="{{$order->city}}">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label >Post Code</label>
+                        <input name="postcode" type="text" class="form-control" value="{{$order->postcode}}">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label >Country</label>
+                        <input name="country" type="text" class="form-control" value="{{$order->country}}">
+                      </div>
+                    </div>
                   </div>
-
-                  <div class="form-group">
-                    <label >Post Code</label>
-                    <input name="postcode" type="text" class="form-control" value="{{$order->postcode}}">
-                  </div>
-                  <div class="form-group">
-                    <label >Country</label>
-                    <input name="country" type="text" class="form-control" value="{{$order->country}}">
-                  </div>
-                  	
                 </div>
                 <!-- /.card-body -->
 
@@ -85,7 +91,7 @@
           </div>
           <!--/.col (left) -->
 
-          <div class="col-md-6">
+          <div class="col-md-3">
             <!-- general form elements -->
 
             <div class="card card-info">
@@ -133,7 +139,7 @@
           <!--/.col (left) -->
 
           <!-- right column -->
-          <div class="col-md-6">
+          <div class="col-md-9">
             <!-- general form elements disabled -->
             <div class="card card-warning">
               <div class="card-header">
@@ -143,34 +149,36 @@
               <div class="card-body">
                 <form role="form">
                   <div class="row">
-                    <div class="col-sm-6">
-                      <!-- text input -->
-                      <div class="form-group">
-                        <label>Products</label>
-                        <input type="text" class="form-control" placeholder="Enter ...">
-                      </div>
+                    @foreach($orderDetails as $details)
+                    <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="inputName">Product Name</label>
+                          <input type="text" id="inputName" class="form-control" name="product_name[]" placeholder="Product Name" value="{{$details->product->name}}">
+                        </div>   
                     </div>
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label>Text Disabled</label>
-                        <input type="text" class="form-control" placeholder="Enter ..." disabled>
-                      </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="inputName">Qty</label>
+                          <input type="hidden" name="product_id[]" value="">
+                          <input type="text" id="inputName" class="form-control" name="quantity[]" placeholder="Product Color" value="{{$details->qty}}">
+                        </div>   
+                    </div>              
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="inputName">Color</label>
+                          <input type="text" id="inputName" class="form-control" name="color[]" placeholder="Product Color" value="{{$details->color->name}}">
+                        </div>   
+                    </div>  
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="inputName">Size</label>
+                          <input type="text" id="inputName" class="form-control" name="color[]" placeholder="Product Color" value="{{$details->size->name ?? ''}}">
+                        </div>   
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <!-- textarea -->
-                      <div class="form-group">
-                        <label>Textarea</label>
-                        <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label>Textarea Disabled</label>
-                        <textarea class="form-control" rows="3" placeholder="Enter ..." disabled></textarea>
-                      </div>
-                    </div>
+                    @endforeach  
                   </div>
 
                   </div>

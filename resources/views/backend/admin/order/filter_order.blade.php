@@ -16,18 +16,18 @@
                    <div class="row mb-5">
                       <div class="col-xl-2 col-md-2">
                           <label class="col-form-label"><b> From <i class="text-danger">*</i> </b></label>
-                          <input type="date" class="form-control" name="from_date">
+                          <input type="date" class="form-control" name="from_date" value="{{$from_date ?? ''}}">
                       </div>
                       <div class="col-xl-2 col-md-2">
                           <label class="col-form-label"><b> TO <i class="text-danger">*</i> </b></label>
-                          <input type="date" class="form-control" name="to_date">
+                          <input type="date" class="form-control" name="to_date" value="{{$to_date ?? ''}}">
                       </div>
                       <div class="col-xl-2 col-md-2">
                           <label class="col-form-label"><b> Method <i class="text-danger">*</i> </b></label>
                           <select class="form-control selectric" name="payment_method">
                               <option value="">----Select----</option>
                               @foreach($methods as $method)
-                              <option value="{{$method->id}}">{{$method->name}}</option>
+                              <option value="{{$method->id}}" @php echo $method->id == $payment_method?'selected':'';@endphp>{{$method->name}}</option>
                               @endforeach
                           </select>
                       </div>                                         
@@ -35,10 +35,10 @@
                           <label class="col-form-label"><b>Status<i class="text-danger">*</i> </b></label>
                           <select class="form-control select2" name="status">
                               <option value="">----Select----</option>
-                              <option value="0">Pending</option>
-                              <option value="1">Processing</option>
-                              <option value="2">Approved</option>
-                              <option value="3">Cancel</option>
+                              <option value="0" @php echo $status == 0?'selected':'';@endphp>Pending</option>
+                              <option value="1" @php echo $status == 1?'selected':'';@endphp>Processing</option>
+                              <option value="2" @php echo $status == 2?'selected':'';@endphp>Approved</option>
+                              <option value="3" @php echo $status == 3?'selected':'';@endphp>Cancel</option>
                           </select>
                       </div> 
                       <div class="col-xl-2 col-md-2">
@@ -63,8 +63,16 @@
                 </tr>
                 </thead>
                 <tbody>
-            @php $i=1 @endphp
+                  @php
+                      $i=1;
+                      $qty=0;
+                      $cost=0;
+                   @endphp
             @foreach($orders as $order)
+                  <?php
+                      $total_qty = $qty+$order->total_qty;
+                      $total_cost = $cost+$order->total_cost;
+                  ?>
                 <tr>
                   	<td>{{$i++}}</td>
                     <td>{{$order->customer->first_name." ".$order->customer->last_name }}</td>
@@ -114,7 +122,16 @@
                   	</td>
                 </tr>
 				@endforeach
-	
+	               <tfoot>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Total: <?php  echo $total_qty??'' ?></th>
+                    <th>Total(BDT): <?php  echo $total_cost??''." ৳";?></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
                 </tfoot>
               </table>
             </div>
@@ -127,6 +144,5 @@
       </div>
       <!-- /.row -->
     </section>
-
 
 @endsection

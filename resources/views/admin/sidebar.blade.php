@@ -38,12 +38,24 @@
 
           <li class="nav-item has-treeview">
             <a href="{{URL::to('admin/order')}}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon ion ion-bag"></i>
               <p>
                 Order
               </p>
             </a>
           </li>
+
+          <li class="nav-item has-treeview
+          {{ request()->is('admin/withdraw') ? 'menu-open' : '' }}
+          ">
+            <a href="{{URL::to('admin/withdraw')}}" class="nav-link">
+              <i class="nav-icon fas fa-dollar-sign"></i>
+              <p>
+                Withdraw
+              </p>
+            </a>
+          </li>
+
 
           <li class="nav-item has-treeview  
               {{ request()->is('admin/category/create') ? 'menu-open' : '' }}
@@ -54,7 +66,7 @@
               {{ request()->is('admin/prosubcategory') ? 'menu-open' : '' }}
           ">
             <a href="" class="nav-link has-treeview">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fas fa-plus-square"></i>
               <p class=" has-treeview">
                 Category
                 <i class="right fas fa-angle-left"></i>
@@ -111,7 +123,7 @@
               {{ request()->is('admin/brand') ? 'menu-open' : '' }}
           ">
             <a href="" class="nav-link has-treeview">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fab fa-bimobject"></i>
               <p class=" has-treeview">
                 Brand
                 <i class="right fas fa-angle-left"></i>
@@ -139,7 +151,7 @@
               {{ request()->is('admin/color') ? 'menu-open' : '' }}
           ">
             <a href="" class="nav-link has-treeview">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fas fa-tint"></i>
               <p class=" has-treeview">
                 Color
                 <i class="right fas fa-angle-left"></i>
@@ -199,7 +211,7 @@
               {{ request()->is('admin/product') ? 'menu-open' : '' }}
           ">
             <a href="" class="nav-link has-treeview">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fab fa-product-hunt"></i>
               <p class=" has-treeview">
                 Product
                 <i class="right fas fa-angle-left"></i>
@@ -222,22 +234,12 @@
             </ul>
           </li>
 
-          <li class="nav-item has-treeview
-          {{ request()->is('admin/withdraw') ? 'menu-open' : '' }}
-          ">
-            <a href="{{URL::to('admin/withdraw')}}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Withdraw
-              </p>
-            </a>
-          </li>
 
           <li class="nav-item has-treeview
           {{ request()->is('admin/vendor') ? 'menu-open' : '' }}
           ">
             <a href="{{URL::to('admin/vendor')}}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-user"></i>
               <p>
                 Vendors
               </p>
@@ -249,7 +251,7 @@
           {{ request()->is('admin/importer') ? 'menu-open' : '' }}
           ">
             <a href="{{URL::to('admin/importer')}}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-user-plus"></i>
               <p>
                 Importers
               </p>
@@ -260,13 +262,23 @@
           {{ request()->is('admin/merchant') ? 'menu-open' : '' }}
           ">
             <a href="{{URL::to('admin/merchant')}}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="fas fa-user-shield"></i> &nbsp;
               <p>
-                Merchant
+                 Merchant
               </p>
             </a>
           </li>
 
+          <li class="nav-item has-treeview
+          {{ request()->is('admin/customer') ? 'menu-open' : '' }}
+          ">
+            <a href="{{URL::to('admin/customer')}}" class="nav-link">
+              <i class="fas fa-user-shield"></i> &nbsp;
+              <p>
+                 Customer
+              </p>
+            </a>
+          </li>
 
           <li class="nav-item has-treeview
               {{ request()->is('admin/page/create') ? 'menu-open' : '' }}
