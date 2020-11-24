@@ -21,6 +21,9 @@ use App\Http\Controllers\Admin\SocialLinkController;
 use App\Http\Controllers\Admin\WithdrawController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\AttributeController;
+use App\Http\Controllers\Admin\AttributeValueController;
 
 
 /*
@@ -61,6 +64,12 @@ Route::group(['prefix' => 'admin'], function(){
 
 		//Brand Controller
 		Route::resource('brand', BrandController::class);
+
+		//Attribute Controller
+		Route::resource('attribute', AttributeController::class);
+
+		//Attribute Controller
+		Route::resource('attribute_value', AttributeValueController::class);
 
 		//Color Controller
 		Route::resource('color', ColorController::class);
@@ -117,6 +126,8 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::get('admin/inactive-withdraw/{id}', [WithdrawController::class, 'inactive_withdraw'])->name('admin/inactive-withdraw');
 		Route::get('admin/active-withdraw/{id}', [WithdrawController::class, 'active_withdraw'])->name('admin/active-withdraw');
 
+		//Post Controller
+		Route::resource('post', PostController::class);	
 
 
 

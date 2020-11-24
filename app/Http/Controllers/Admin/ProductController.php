@@ -14,6 +14,8 @@ use App\Models\Product;
 use App\Models\Product_size;
 use App\Models\Product_color;
 use App\Models\Product_image;
+use App\Models\Product_category;
+use App\Models\Attribute;
 use Str;
 
 class ProductController extends Controller
@@ -25,7 +27,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::simplepaginate(20);
+        $products = Product::get();
         return view('backend.admin.product.index', compact('products'));
     }
 
@@ -38,10 +40,13 @@ class ProductController extends Controller
     {
         $brands = Brand::where('status', 1)->get();
         $categories  = Category::where('status', 1)->get();
-        $prosubcategories   = Prosubcategory::where('status', 1)->get();
         $colors   = Color::where('status', 1)->get();
         $sizes   = Size::where('status', 1)->get();
-        return view('backend.admin.product.create', compact('brands', 'categories', 'prosubcategories', 'colors', 'sizes'));
+
+        $attributes = Attribute::where('status', 1)->get();
+
+
+        return view('backend.admin.product.create', compact('brands', 'categories', 'colors', 'sizes', 'attributes'));
     }
 
     /**
@@ -55,9 +60,8 @@ class ProductController extends Controller
         $product = new Product();
         $product->name = $request->name;
         $product->brand_id = $request->brand_id;
-        $product->category_id = $request->category_id;
-        $product->subcategory_id = $request->subcategory_id;
-        $product->prosubcategory_id = $request->prosubcategory_id;
+        // $product->subcategory_id = $request->subcategory_id;
+        // $product->prosubcategory_id = $request->prosubcategory_id;
 
         $product->buying_price = $request->buying_price;
         $product->market_price = $request->market_price;
@@ -83,6 +87,16 @@ class ProductController extends Controller
         $product->note = $request->note;
         $product->status = $request->status;
         $product->save();
+
+        $category_id= $request->category_id;
+        if ($category_id) {
+            foreach ($category_id as $key => $value ){
+                $product_size = new Product_category();
+                $product_size->product_id =$product->id;
+                $product_size->category_id=$value;
+                $product_size->save();
+            }   
+        }
 
         $size_id = $request->size_id;
         if ($size_id) {
@@ -164,9 +178,10 @@ class ProductController extends Controller
 
         $product_sizes = Product_size::where('product_id', $product->id)->get();
         $product_colors = Product_color::where('product_id', $product->id)->get();
+        $product_categories = Product_category::where('product_id', $product->id)->get();
 
         $productImages= Product_image::where('product_id', $id)->get();
-        return view('backend.admin.product.edit', compact('product', 'brands', 'categories', 'prosubcategories', 'colors', 'sizes', 'subcategories', 'product_sizes', 'product_colors', 'productImages'));
+        return view('backend.admin.product.edit', compact('product', 'brands', 'categories', 'prosubcategories', 'colors', 'sizes', 'subcategories', 'product_sizes', 'product_colors', 'productImages', 'product_categories'));
     }
 
     /**
@@ -182,9 +197,9 @@ class ProductController extends Controller
         $product = Product::findorfail($id);
         $product->name = $request->name;
         $product->brand_id = $request->brand_id;
-        $product->category_id = $request->category_id;
-        $product->subcategory_id = $request->subcategory_id;
-        $product->prosubcategory_id = $request->prosubcategory_id;
+        // $product->category_id = $request->category_id;
+        // $product->subcategory_id = $request->subcategory_id;
+        // $product->prosubcategory_id = $request->prosubcategory_id;
 
         $product->buying_price = $request->buying_price;
         $product->market_price = $request->market_price;
@@ -215,6 +230,17 @@ class ProductController extends Controller
         $product->note = $request->note;
         $product->status = $request->status;
         $product->save();
+
+        $ProductCategory = Product_category::where('product_id', $id)->delete();
+        $category_id = $request->category_id;
+        if ($category_id) {
+            foreach ($category_id as $key => $value ){
+                $product_category = new Product_category();
+                $product_category->product_id =$product->id;
+                $product_category->category_id=$value;
+                $product_category->save();
+            }   
+        }
 
 
         $ProductSize = Product_size::where('product_id', $id)->delete();
@@ -294,7 +320,7 @@ class ProductController extends Controller
 
 
     public function get_prosubcategory(Request $request){
-        $prosubcategories = Prosubcategory::where('subcategory_id', $request->subcategory_id)->get();
+        $prosubcategories = Category::where('parent_id', $request->subcategory_id)->get();
         return view('backend.admin.product.get_prosubcategory',compact('prosubcategories'));
     }
 

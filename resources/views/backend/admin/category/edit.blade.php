@@ -26,7 +26,7 @@
 		              </div>
 		              <!-- /.card-header -->
 		              <!-- form start -->
-		              <form class="form-horizontal" action="{{URL::to('admin/category/'.$category->id)}}" method="post">
+		              <form class="form-horizontal" action="{{URL::to('admin/category/'.$category->id)}}" method="post" enctype="multipart/form-data">
 
 		              	@csrf
 		              	@method('PATCH')
@@ -36,8 +36,55 @@
 		                    <div class="col-sm-9">
 		                      <input type="text" class="form-control" name="name" placeholder="Category Name" value="{{$category->name}}">
 		                    </div>
-		                  </div>		                  
-	                  
+		                  </div>		 
+
+		                  	<div class="form-group row">
+		                    	<label for="inputEmail3" class="col-sm-3 col-form-label">Slug</label>
+		                    	<div class="col-sm-9">
+		                      		<input type="text" class="form-control" name="slug" placeholder="Slug" value="{{$category->slug}}">
+		                    	</div>
+		                  	</div>	
+
+
+	                  		<div class="form-group row">
+			                    <label for="inputEmail3" class="col-sm-3 col-form-label">Parent Category</label>
+			                    <div class="col-sm-9">
+			                    	<select name="parent_id" id="" class="form-control">
+			                    		<option value="">---Select Parent Category---</option>
+										@foreach($categories as $parent)
+											@if($category->parent_id == 0)
+												<option value="{{$parent->id}}" @php echo $id==$parent->id?"selected":""; @endphp>{{$parent->name}}</option>
+											@else
+												<option value="{{$parent->id}}" @php echo $category->parent_id==$parent->id?"selected":""; @endphp>{{$parent->name}}</option>
+											@endif
+										@endforeach
+			                    	</select>
+			                    </div>
+		                  	</div>	
+
+
+	                  		<div class="form-group row">
+			                    <label for="inputEmail3" class="col-sm-3 col-form-label">Description</label>
+			                    <div class="col-sm-9">
+			                      	<input type="text" class="form-control" name="discription" placeholder="Description" value="{{$category->discription}}">
+			                    </div>
+		                  	</div>	
+
+		                  	<div class="form-group row">
+			                    <label for="inputEmail3" class="col-sm-3 col-form-label">Thumbnail</label>
+			                    <div class="col-sm-9">
+			                    	@if(isset($category))
+					                <div class="form-group">
+					                    <img src="{{ asset($category->image) }}" alt="Image" style="width: 30%; margin-top: 8px">
+					                    <input type="hidden" name="old_image" value="{{ $category->image }}">
+					                </div>
+				            		@endif
+
+			                      <input type="file" class="form-control" name="image" placeholder="Fetaure Image">
+			                    </div>
+		                  	</div>
+
+
 
 		                  <div class="form-group row">
 		                    <label for="inputPassword3" class="col-sm-3 col-form-label">Status</label>

@@ -38,7 +38,7 @@
 
           <li class="nav-item has-treeview">
             <a href="{{URL::to('admin/order')}}" class="nav-link">
-              <i class="nav-icon ion ion-bag"></i>
+              <i class="nav-icon fas fa-dollar-sign"></i>
               <p>
                 Order
               </p>
@@ -87,7 +87,7 @@
                 </a>
               </li>
 
-              <li class="nav-item {{ request()->is('admin/subcategory/create') ? 'active' : '' }}">
+<!--               <li class="nav-item {{ request()->is('admin/subcategory/create') ? 'active' : '' }}">
                 <a href="{{URL::to('admin/subcategory/create')}}" class="nav-link {{ request()->is('admin/subcategory/create') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Sub Category</p>
@@ -113,7 +113,7 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage Pro Sub Category</p>
                 </a>
-              </li> 
+              </li>  -->
 
             </ul>
           </li>
@@ -147,6 +147,43 @@
           </li>
 
           <li class="nav-item has-treeview  
+              {{ request()->is('admin/attribute/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/attribute') ? 'menu-open' : '' }}
+              {{ request()->is('admin/attribute_value') ? 'menu-open' : '' }}
+          ">
+            <a href="" class="nav-link has-treeview">
+              <i class="nav-icon fab fa-bimobject"></i>
+              <p class=" has-treeview">
+                Attribute
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ request()->is('admin/attribute/create') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/attribute/create')}}" class="nav-link {{ request()->is('admin/attribute/create') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Attribute</p>
+                </a>
+              </li>              
+
+              <li class="nav-item {{ request()->is('admin/attribute') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/attribute')}}" class="nav-link {{ request()->is('admin/attribute') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Attribute</p>
+                </a>
+              </li>
+
+              <li class="nav-item {{ request()->is('admin/attribute_value') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/attribute_value')}}" class="nav-link {{ request()->is('admin/attribute_value') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Attribute Value</p>
+                </a>
+              </li>  
+
+            </ul>
+          </li>
+
+<!--           <li class="nav-item has-treeview  
               {{ request()->is('admin/color/create') ? 'menu-open' : '' }}
               {{ request()->is('admin/color') ? 'menu-open' : '' }}
           ">
@@ -202,7 +239,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
 
 
 
@@ -229,6 +266,35 @@
                 <a href="{{URL::to('admin/product')}}" class="nav-link {{ request()->is('admin/product') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage Product</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+          <li class="nav-item has-treeview  
+              {{ request()->is('admin/post/create') ? 'menu-open' : '' }}
+              {{ request()->is('admin/post') ? 'menu-open' : '' }}
+          ">
+            <a href="" class="nav-link has-treeview">
+              <i class="nav-icon fab fa-product-hunt"></i>
+              <p class=" has-treeview">
+                Post
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ request()->is('admin/post/create') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/post/create')}}" class="nav-link {{ request()->is('admin/post/create') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Post</p>
+                </a>
+              </li>              
+
+              <li class="nav-item {{ request()->is('admin/post') ? 'active' : '' }}">
+                <a href="{{URL::to('admin/post')}}" class="nav-link {{ request()->is('admin/post') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Post</p>
                 </a>
               </li>
             </ul>

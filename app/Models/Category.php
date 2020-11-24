@@ -20,4 +20,15 @@ class Category extends Model
 		return $this->hasMany('App\models\Product', 'category_id');
 	}
 
+	public function post(){
+		return $this->hasMany('App\models\Post', 'category_id');
+	}
+    public function parent(){
+        return $this->belongsTo('App\models\Category', 'parent_id');
+    }
+	public function product_category(){
+		return $this->hasMany('App\Models\Product_category', 'category_id');
+	}	
+
+
 }

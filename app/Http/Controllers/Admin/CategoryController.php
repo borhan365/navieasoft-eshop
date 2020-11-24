@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
-
+use Str;
 
 class CategoryController extends Controller
 {
@@ -27,7 +27,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('backend.admin.category.create');
+        $categories = Category::get();
+        return view('backend.admin.category.create', compact('categories'));
     }
 
     /**
@@ -39,14 +40,40 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|unique:categories',
+            'name' => 'required',
+            'slug' => 'required|unique:categories',
             'status' => 'required',
         ]);
 
         $category = new Category();
         $category->name = $request->name;
+        $category->slug = $request->slug;
+
+        if ($request->parent_id == '') {
+            $category->parent_id = 0;
+        }else{
+            $category->parent_id = $request->parent_id;
+        }
+
+        $category->discription = $request->discription;
         $category->status = $request->status;
+
+        $image = $request->file('image');
+        if($image)
+        {
+            $image_name=str::random(5);
+            $ext = strtolower($image->getClientOriginalExtension());
+            $image_full_name = $image_name. '.' .$ext;
+            $upload_path = 'images/category_image/';
+            $image_url = $upload_path.$image_full_name;
+            $success = $image->move($upload_path, $image_full_name);
+            if($success)
+            {
+                $category->image = $image_url;
+            }
+        }
         $category->save();
+
         $notification=array(
             'message' => 'Category Saved Successfully !!',
             'alert-type' => 'success'
@@ -74,8 +101,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $categories = Category::get();
         $category = Category::findorfail($id);
-        return view('backend.admin.category.edit', compact('category'));
+        return view('backend.admin.category.edit', compact('category', 'categories', 'id'));
     }
 
     /**
@@ -89,7 +117,36 @@ class CategoryController extends Controller
     {
         $category = Category::findorfail($id);
         $category->name = $request->name;
+        $category->slug = $request->slug;
+
+        if ($request->parent_id == '') {
+            $category->parent_id = 0;
+        }else{
+            $category->parent_id = $request->parent_id;
+        }
+        $category->discription = $request->discription;
         $category->status = $request->status;
+
+        $image = $request->file('image');
+        if($image)
+        {
+            $image_name=str::random(5);
+            $ext = strtolower($image->getClientOriginalExtension());
+            $image_full_name = $image_name. '.' .$ext;
+            $upload_path = 'images/category_image/';
+            $image_url = $upload_path.$image_full_name;
+            $success = $image->move($upload_path, $image_full_name);
+            if($success)
+            {
+                $old_image = $request->old_image;
+                if (file_exists($old_image)) {
+                    unlink($request->old_image);
+                }
+                
+                $category->image = $image_url;
+            }
+        }
+        
         $category->save();
         $notification=array(
             'message' => 'Category Updated Successfully !!',

@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Subcategory;
+use App\Models\Prosubcategory;
+use App\Models\Post;
 use Str;
 
-class BrandController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +19,8 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::simplepaginate(20);
-        return view('backend.admin.brand.index', compact('brands'));
+        $posts = Post::get();
+        return view('backend.admin.post.index', compact('posts'));
     }
 
     /**
@@ -27,7 +30,9 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('backend.admin.brand.create');
+        $categories  = Category::where('status', 1)->get();
+        $prosubcategories   = Prosubcategory::where('status', 1)->get();
+        return view('backend.admin.post.create', compact('categories', 'prosubcategories'));
     }
 
     /**
@@ -38,35 +43,40 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|unique:brands',
-            'status' => 'required'
-        ]);
+        $post = new Post();
+        $post->title = $request->title;
+        $post->slug = $request->slug;
+        $post->meta_title = $request->meta_title;
+        $post->meta_description = $request->meta_description;
+        // $post->category_id = $request->category_id;
+        // $post->subcategory_id = $request->subcategory_id;
+        // $post->prosubcategory_id = $request->prosubcategory_id;
 
-        $brand = new Brand();
-        $brand->name = $request->name;
-        $brand->slug = $request->slug;
-        $brand->status = $request->status;
-        $image = $request->file('brand_logo');
+
+        $image = $request->file('image');
         if($image)
         {
             $image_name=str::random(5);
             $ext = strtolower($image->getClientOriginalExtension());
             $image_full_name = $image_name. '.' .$ext;
-            $upload_path = 'images/brand_logo/';
+            $upload_path = 'images/post_image/';
             $image_url = $upload_path.$image_full_name;
             $success = $image->move($upload_path, $image_full_name);
             if($success)
             {
-                $brand->brand_logo = $image_url;
+                $post->image = $image_url;
             }
         }
-        $brand->save();
+        $post->description = $request->description;
+        $post->status = $request->status;
+        $post->save();
+
         $notification=array(
-            'message' => 'Brand Added Successfully !!',
+            'message' => 'Post Saved Successfully !!',
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
+
     }
 
     /**
@@ -88,8 +98,14 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        $brand = Brand::findorfail($id);
-        return view('backend.admin.brand.edit', compact('brand'));
+        $post = Post::findorfail($id);
+        $categories  = Category::where('status', 1)->get();
+        $subcategories  = Subcategory::where('category_id', $post->category_id)->where('status', 1)->get();
+        $prosubcategories   = Prosubcategory::where('category_id', $post->category_id)
+                                            ->where('subcategory_id', $post->subcategory_id)
+                                            ->where('status', 1)
+                                            ->get();
+        return view('backend.admin.post.edit', compact('post', 'categories','subcategories', 'prosubcategories'));
     }
 
     /**
@@ -101,37 +117,43 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $post = Post::findorfail($id);
+        $post->title = $request->title;
+        $post->slug = $request->slug;
+        $post->meta_title = $request->meta_title;
+        $post->meta_description = $request->meta_description;
+        // $post->category_id = $request->category_id;
+        // $post->subcategory_id = $request->subcategory_id;
+        // $post->prosubcategory_id = $request->prosubcategory_id;
 
-        $brand = Brand::findorfail($id);
-        $brand->name = $request->name;
-        $brand->slug = $request->slug;
-        $brand->status = $request->status;
-
-        $image = $request->file('brand_logo');
+        $image = $request->file('image');
         if($image)
         {
             $image_name=str::random(5);
             $ext = strtolower($image->getClientOriginalExtension());
             $image_full_name = $image_name. '.' .$ext;
-            $upload_path = 'images/brand_logo/';
+            $upload_path = 'images/post_image/';
             $image_url = $upload_path.$image_full_name;
             $success = $image->move($upload_path, $image_full_name);
             if($success)
-            {   
+            {
                 $old_image = $request->old_image;
                 if (file_exists($old_image)) {
                     unlink($request->old_image);
                 }
-                $brand->brand_logo = $image_url;
+                
+                $post->image = $image_url;
             }
         }
-        $brand->save();
+        $post->description = $request->description;
+        $post->status = $request->status;
+        $post->save();
         $notification=array(
-            'message' => 'Brand Updated Successfully !!',
+            'message' => 'Post Updated Successfully !!',
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
-
+        
     }
 
     /**
@@ -142,16 +164,16 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        $imagePath = Brand::select('brand_logo')->where('id', $id)->first();
-        $filePath = $imagePath->brand_logo;
+        $imagePath = Post::select('image')->where('id', $id)->first();
+        $filePath = $imagePath->image;
         if (file_exists($filePath)) {
             unlink($filePath);
-            Brand::where('id', $id)->delete();
+            Post::where('id', $id)->delete();
         }else{
-            Brand::where('id', $id)->delete();
+            Post::where('id', $id)->delete();
         }
         $notification=array(
-            'message' => 'Brand Deleted Successfully !!',
+            'message' => 'Post Deleted Successfully !!',
             'alert-type' => 'error'
         );
         return redirect()->back()->with($notification);

@@ -22,17 +22,17 @@
 	            <!-- Horizontal Form -->
 		            <div class="card card-info">
 		              <div class="card-header">
-		                <h3 class="card-title">Add Category</h3>
+		                <h3 class="card-title">Add Attribute</h3>
 		              </div>
 		              <!-- /.card-header -->
 		              <!-- form start -->
-		              <form class="form-horizontal" action="{{URL::to('admin/category')}}" method="post" enctype="multipart/form-data">
+		              <form class="form-horizontal" action="{{URL::to('admin/attribute')}}" method="post" enctype="multipart/form-data">
 		              	@csrf
 		                <div class="card-body">
 		                  <div class="form-group row">
-		                    <label for="inputEmail3" class="col-sm-3 col-form-label">Category Name</label>
+		                    <label for="inputEmail3" class="col-sm-3 col-form-label"> Name</label>
 		                    <div class="col-sm-9">
-		                      <input type="text" class="form-control" name="name" placeholder="Category Name">
+		                      <input type="text" class="form-control" name="name" placeholder="Attribute Name">
 		                    </div>
 		                  </div>			                  
 
@@ -43,17 +43,7 @@
 		                    	</div>
 		                  	</div>	
 
-	                  		<div class="form-group row">
-			                    <label for="inputEmail3" class="col-sm-3 col-form-label">Parent Category</label>
-			                    <div class="col-sm-9">
-			                    	<select name="parent_id" id="" class="form-control">
-			                    		<option value="">---Select Parent Category---</option>
-										@foreach($categories as $category)
-											<option value="{{$category->id}}">{{$category->name}}</option>
-										@endforeach
-			                    	</select>
-			                    </div>
-		                  	</div>	
+
 
 	                  		<div class="form-group row">
 			                    <label for="inputEmail3" class="col-sm-3 col-form-label">Description</label>
@@ -62,22 +52,16 @@
 			                    </div>
 		                  	</div>	
 
-		                  	<div class="form-group row">
-			                    <label for="inputEmail3" class="col-sm-3 col-form-label">Thumbnail</label>
-			                    <div class="col-sm-9">
-			                      <input type="file" class="form-control" name="image" placeholder="Fetaure Image">
-			                    </div>
-		                  	</div>
 
-		                  <div class="form-group row">
-		                    <label for="inputPassword3" class="col-sm-3 col-form-label">Status</label>
-		                    <div class="col-sm-9">
-		                      <select name="status" id="" class="form-control">
-		                      	<option value="1">Active</option>
-		                      	<option value="0">Inactive</option>
-		                      </select>
-		                    </div>
-		                  </div>
+			                  <div class="form-group row">
+			                    <label for="inputPassword3" class="col-sm-3 col-form-label">Status</label>
+			                    <div class="col-sm-9">
+			                      <select name="status" id="" class="form-control">
+			                      	<option value="1">Active</option>
+			                      	<option value="0">Inactive</option>
+			                      </select>
+			                    </div>
+			                  </div>
 		                </div>
 		                <!-- /.card-body -->
 		                <div class="card-footer">

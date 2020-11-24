@@ -52,7 +52,7 @@
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Brand</label>
 		                      	<select name="brand_id" class="form-control">
-		                      		<option value="" selected="" disabled="">----Selected Brand----</option>}
+		                      		<option value="" disabled="">----Selected Brand----</option>}
                                         @foreach($brands as $brand)
 				                            <option value="{{$brand->id}}">{{$brand->name}}</option>
                                         @endforeach
@@ -61,15 +61,15 @@
 		                    
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Category</label>
-		                      	<select name="category_id" id="category_id" class="form-control" onchange="GetSubCategory(this.value)">
-		                      		<option value="" selected="" disabled="">----Selected Catgory----</option>}
+		                      	<select name="category_id[]" id="category_id" class="form-control" onchange="GetSubCategory(this.value)" multiple="multiple">
+		                      		<option value="" selected="" disabled="">----Selected Catgory----</option>
                                         @foreach($categories as $category)
 				                            <option value="{{$category->id}}">{{$category->name}}</option>
                                         @endforeach
 		                      	</select>
 		                    </div>		                    
 
-		                    <div class="col-sm-6">
+<!-- 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Sub Category</label>
 		                      	<select name="subcategory_id" id="subcategory_id" class="form-control" onchange="GetProSubCategory(this.value)">
 		                      		<option value="" selected="" disabled="">----Selected Sub Catgory----</option>
@@ -82,7 +82,7 @@
 		                      		<option value="" selected="" disabled="">----Selected Pro Sub Catgory----</option>}
 
 		                      	</select>
-		                    </div>
+		                    </div> -->
 
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Size</label>
@@ -230,7 +230,10 @@
 		      placeholder: 'Select Color'
 		    })
 		    $('#size_id').select2({
-		      placeholder: 'Select Color'
+		      placeholder: 'Select Size'
+		    })
+		    $('#category_id').select2({
+		      placeholder: 'Select Category'
 		    })
         });  
 

@@ -127,7 +127,7 @@ class ProsubcategoryController extends Controller
     }
 
     public function get_subcategory(Request $request){
-        $subcategories = Subcategory::where('category_id', $request->category_id)->get();
+        $subcategories = Category::where('parent_id', $request->category_id)->get();
         return view('backend.admin.prosubcategory.get_subcategory',compact('subcategories'));
     }
 

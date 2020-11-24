@@ -36,18 +36,25 @@
 		                    <div class="col-sm-9">
 		                      <input type="text" class="form-control" name="name" placeholder="Brand Name" value="{{$brand->name}}">
 		                    </div>
+		                  </div>			                  
+
+		                  <div class="form-group row">
+		                    <label for="inputEmail3" class="col-sm-3 col-form-label">Slug</label>
+		                    <div class="col-sm-9">
+		                      <input type="text" class="form-control" name="slug" placeholder="Slug" value="{{$brand->slug}}">
+		                    </div>
 		                  </div>		                  
 	                  
 
 				            @if(isset($brand))
 				                <div class="form-group text-center">
 				                    <img src="{{ asset($brand->brand_logo) }}" alt="Image" style="width: 20%">
-				                    <input type="hidden" name="old_brand_logo" value="{{ asset($brand->brand_logo) }}">
+				                    <input type="hidden" name="old_image" value="{{ asset($brand->brand_logo) }}">
 				                </div>
 				            @endif
 
 		                  <div class="form-group row">
-		                    <label for="inputEmail3" class="col-sm-3 col-form-label">Brand Logo</label>
+		                    <label for="inputEmail3" class="col-sm-3 col-form-label">Thumbnail</label>
 		                    <div class="col-sm-9">
 		                      <input type="file" class="form-control" name="brand_logo" placeholder="Brand logo">
 		                    </div>

@@ -17,5 +17,7 @@ class Subcategory extends Model
 	public function product(){
 		return $this->hasMany('App\models\Product', 'subcategory_id');
 	}
-
+	public function post(){
+		return $this->hasMany('App\models\Post', 'subcategory_id');
+	}
 }

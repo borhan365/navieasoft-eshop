@@ -32,14 +32,20 @@
 		                  <div class="form-group row">
 		                    <label for="inputEmail3" class="col-sm-3 col-form-label">Brand Name</label>
 		                    <div class="col-sm-9">
-		                      <input type="text" class="form-control" name="name" placeholder="Brand Name">
+		                      <input type="text" class="form-control" name="name" placeholder="Brand Name" required="">
+		                    </div>
+		                  </div>			                  
+		                  <div class="form-group row">
+		                    <label for="inputEmail3" class="col-sm-3 col-form-label">Slug</label>
+		                    <div class="col-sm-9">
+		                      <input type="text" class="form-control" name="slug" placeholder="Slug" required="">
 		                    </div>
 		                  </div>		                  
 	                  
 		                  <div class="form-group row">
-		                    <label for="inputEmail3" class="col-sm-3 col-form-label">Brand Logo</label>
+		                    <label for="inputEmail3" class="col-sm-3 col-form-label">Thumbnail</label>
 		                    <div class="col-sm-9">
-		                      <input type="file" class="form-control" name="brand_logo" placeholder="Brand logo">
+		                      <input type="file" class="form-control" name="brand_logo" placeholder="Brand logo" required="">
 		                    </div>
 		                  </div>
 	                  
@@ -47,7 +53,7 @@
 		                  <div class="form-group row">
 		                    <label for="inputPassword3" class="col-sm-3 col-form-label">Status</label>
 		                    <div class="col-sm-9">
-		                      <select name="status" id="" class="form-control">
+		                      <select name="status" id="" class="form-control" required="">
 		                      	<option value="1">Active</option>
 		                      	<option value="0">Inactive</option>
 		                      </select>
