@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Importer;
+use App\Models\Vendor;
 use Auth;
 
 class ImporterController extends Controller
@@ -26,7 +27,8 @@ class ImporterController extends Controller
     }
 
     public function dashboard(){
-    	return view('importer.home');
+        $vendors = Vendor::get();
+    	return view('importer.home', compact('vendors'));
     }
 
     public function logout(){

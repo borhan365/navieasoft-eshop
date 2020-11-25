@@ -69,26 +69,14 @@
 		                      	</select>
 		                    </div>		                    
 
-<!-- 		                    <div class="col-sm-6">
-		                    	<label for="inputEmail3" class="col-form-label">Sub Category</label>
-		                      	<select name="subcategory_id" id="subcategory_id" class="form-control" onchange="GetProSubCategory(this.value)">
-		                      		<option value="" selected="" disabled="">----Selected Sub Catgory----</option>
-                                    @foreach($subcategories as $subcategory)
-			                            <option value="{{$subcategory->id}}" @php echo $subcategory->id==$product->subcategory_id?"selected":""; @endphp>{{$subcategory->name}}</option>
-                                    @endforeach
-
-		                      	</select>
-		                    </div>		                    
-
 		                    <div class="col-sm-6">
-		                    	<label for="inputEmail3" class="col-form-label">Pro Sub Category</label>
-		                      	<select name="prosubcategory_id" id="prosubcategory_id"  class="form-control">
-		                      		<option value="" selected="" disabled="">----Selected Pro Sub Catgory----</option>
-                                    @foreach($prosubcategories as $prosubcategory)
-			                            <option value="{{$prosubcategory->id}}" @php echo $prosubcategory->id==$product->prosubcategory_id?"selected":""; @endphp>{{$prosubcategory->name}}</option>
-                                    @endforeach
+		                    	<label for="inputEmail3" class="col-form-label">Attritube</label>
+		                      	<select name="attribute_id[]" id="attribute_id" class="form-control" onchange="GetSubCategory(this.value)" multiple="multiple">
+                                        @foreach($product_attributes as $product_attribute)
+				                            <option value="{{$product_attribute->attribute_id}}" selected="">{{$product_attribute->attribute->name}}</option>
+                                        @endforeach
 		                      	</select>
-		                    </div> -->
+		                    </div>	
 
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Size</label>
@@ -272,61 +260,18 @@
 
 		    $('#color').select2({
 		      placeholder: 'Select Color'
-		    })
+		    });
 		    $('#size_id').select2({
 		      placeholder: 'Select Size'
-		    })
+		    });
 		    $('#category_id').select2({
 		      placeholder: 'Select Category'
-		    })
+		    });
+		    $('#attribute_id').select2({
+		      placeholder: 'Select Attribute'
+		    });
 
         });  
-
-
-		function GetSubCategory(value) {
-			var token =  $("input[name=_token]").val();
-			var datastr = "category_id=" + value  + "&token="+token;
-			console.log(datastr);
-			$.ajax({
-				type: "post",
-				url: "<?php echo route('admin/get-subcategory'); ?>",
-				data:datastr,
-				cache:false,
-				success:function (data) {
-					$('#subcategory_id').html(data);
-				},
-				error: function (jqXHR, status, err) {
-					alert(status);
-					console.log(err);
-				},
-				complete: function () {
-					// alert("Complete");
-				}
-			});
-		}
-
-		function GetProSubCategory(value) {
-			var token =  $("input[name=_token]").val();
-			var datastr = "subcategory_id=" + value  + "&token="+token;
-			console.log(datastr);
-			$.ajax({
-				type: "post",
-				url: "<?php echo route('admin/get-prosubcategory'); ?>",
-				data:datastr,
-				cache:false,
-				success:function (data) {
-					$('#prosubcategory_id').html(data);
-				},
-				error: function (jqXHR, status, err) {
-					alert(status);
-					console.log(err);
-				},
-				complete: function () {
-					// alert("Complete");
-				}
-			});
-		}
-
 
 
 </script>

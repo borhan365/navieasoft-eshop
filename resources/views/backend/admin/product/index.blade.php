@@ -24,6 +24,9 @@
                   <th>Buying Price</th>
                   <th>Market Price</th>
                   <th>Sell Price</th>
+                  <th>Available QTY</th>
+                  <th>Total Sell</th>
+                  <th>Total QTY</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -42,6 +45,9 @@
                     <td>{{$product->buying_price}}</td>
                     <td>{{$product->market_price}}</td>
                     <td>{{$product->sell_price}}</td>
+                    <td>{{$product->qty}}</td>
+                    <td>{{$product->total_sell}}</td>
+                    <td>{{$product->total_product}}</td>
 
 	                <td>
 	                    @php
@@ -55,6 +61,7 @@
 	                </td>
                   	<td>
 
+                      <div class="row">
                           <a href="{{URL::to('admin/product/'.$product->id.'/edit')}}" title="Edit" style="float: left; margin-left: 10px; margin-right: 10px">
                               <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>
                               </button>
@@ -65,9 +72,10 @@
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash"></i></button>
                           </form>
+                      </div>
                   	</td>
                 </tr>
-				@endforeach
+				    @endforeach
 	
                 </tfoot>
               </table>

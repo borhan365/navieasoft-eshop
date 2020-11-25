@@ -65,15 +65,14 @@
 		                    </div>
 
 		                    
-<!-- 		                    <div class="col-sm-4">
+		                    <div class="col-sm-4">
 		                    	<label for="inputEmail3" class="col-form-label">Category</label>
-		                      	<select name="category_id" id="category_id" class="form-control" onchange="GetSubCategory(this.value)">
-		                      		<option value="" selected="" disabled="">----Selected Catgory----</option>}
-                                        @foreach($categories as $category)
-				                            <option value="{{$category->id}}">{{$category->name}}</option>
-                                        @endforeach
+		                      	<select name="category_id[]" id="category_id" class="form-control" multiple="multiple" required="">
+                                    @foreach($categories as $category)
+			                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
 		                      	</select>
-		                    </div>	 -->	                    
+		                    </div>		                    
 			                    <div class="col-sm-4">
 			                    <label for="inputEmail3" class="col-form-label">Fetaure Image</label>
 			                      <input type="file" class="form-control" name="image" placeholder="Fetaure Image">
@@ -132,58 +131,12 @@
 				}
 			});
 
-		    $('#color').select2({
-		      placeholder: 'Select Color'
-		    })
-		    $('#size_id').select2({
-		      placeholder: 'Select Color'
+		    $('#category_id').select2({
+		      placeholder: 'Select Category'
 		    })
         });  
 
 
-		function GetSubCategory(value) {
-			var token =  $("input[name=_token]").val();
-			var datastr = "category_id=" + value  + "&token="+token;
-			console.log(datastr);
-			$.ajax({
-				type: "post",
-				url: "<?php echo route('admin/get-subcategory'); ?>",
-				data:datastr,
-				cache:false,
-				success:function (data) {
-					$('#subcategory_id').html(data);
-				},
-				error: function (jqXHR, status, err) {
-					alert(status);
-					console.log(err);
-				},
-				complete: function () {
-					// alert("Complete");
-				}
-			});
-		}
-
-		function GetProSubCategory(value) {
-			var token =  $("input[name=_token]").val();
-			var datastr = "subcategory_id=" + value  + "&token="+token;
-			console.log(datastr);
-			$.ajax({
-				type: "post",
-				url: "<?php echo route('admin/get-prosubcategory'); ?>",
-				data:datastr,
-				cache:false,
-				success:function (data) {
-					$('#prosubcategory_id').html(data);
-				},
-				error: function (jqXHR, status, err) {
-					alert(status);
-					console.log(err);
-				},
-				complete: function () {
-					// alert("Complete");
-				}
-			});
-		}
 
 		function Makeslug(){
 		    var post_title = $('#title').val();

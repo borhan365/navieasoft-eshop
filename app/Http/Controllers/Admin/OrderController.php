@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\PaymentMethod;
+use App\Models\Product;
 
 
 class OrderController extends Controller
@@ -126,9 +127,39 @@ class OrderController extends Controller
     }
 
     public function update_order_summery(Request $request, $id){
-        $order = Order::findorfail($id);
-        $order->status = $request->status;
-        $order->save();
+
+        $order_summery = Order::findorfail($id);
+        if ($order_summery->status == 2) {
+            $notification=array(
+                'message' => 'Order Completed Already!',
+                'alert-type' => 'warning'
+            );
+            return redirect()->back()->with($notification);
+        }
+
+        $order_summery->status = $request->status;
+        $order_summery->save();
+
+        if ($request->status == 2) {
+            $product_id = $request->product_id;
+            $product_sales_qty = $request->qty;
+            foreach ($product_id as $key => $value) {
+                $a = Product::where('id', $value)->first();
+                $b = $product_sales_qty[$key];
+                $available_stock = $a->qty-$b;
+                $t_s = $a->total_sell;
+                $total_sell = $t_s+$b;
+                $total_product = $available_stock+$total_sell;
+                $product_id = $value;
+                $data = array();
+                $data['qty'] = $available_stock;
+                $data['total_sell'] = $total_sell;
+                $data['total_product'] = $total_product;
+                Product::where('id', $value)->update($data);
+            }
+        }
+
+
         $notification=array(
             'message' => 'Order Updated Successfully !!',
             'alert-type' => 'success'

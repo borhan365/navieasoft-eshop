@@ -183,7 +183,7 @@
             </ul>
           </li>
 
-<!--           <li class="nav-item has-treeview  
+          <li class="nav-item has-treeview  
               {{ request()->is('admin/color/create') ? 'menu-open' : '' }}
               {{ request()->is('admin/color') ? 'menu-open' : '' }}
           ">
@@ -239,7 +239,7 @@
                 </a>
               </li>
             </ul>
-          </li> -->
+          </li>
 
 
 

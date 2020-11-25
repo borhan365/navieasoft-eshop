@@ -107,6 +107,12 @@
                     <label >Total QTY</label>
                     <input name="total_qty" type="text" class="form-control" value="{{$order->total_qty}}" readonly="">
                   </div>
+                  @foreach($orderDetails as $details)
+                    <div class="row">
+                    <input type="hidden" name="product_id[]" value="{{$details->product->id}}">
+                    <input type="hidden" name="qty[]" value="{{$details->qty}}">
+                    </div>
+                  @endforeach
                   <div class="form-group">
                     <label >Total Cost</label>
                     <input name="total_cost" type="text" class="form-control" value="{{$order->total_cost}}" readonly="">
@@ -160,7 +166,6 @@
                     <div class="col-md-2">
                         <div class="form-group">
                           <label for="inputName">Qty</label>
-                          <input type="hidden" name="product_id[]" value="">
                           <input type="text" id="inputName" class="form-control" name="quantity[]" placeholder="Product Color" value="{{$details->qty}}">
                         </div>   
                     </div>              

@@ -15,6 +15,7 @@ use App\Models\Product_size;
 use App\Models\Product_color;
 use App\Models\Product_image;
 use App\Models\Product_category;
+use App\Models\Product_attribute;
 use App\Models\Attribute;
 use Str;
 
@@ -59,6 +60,7 @@ class ProductController extends Controller
     {
         $product = new Product();
         $product->name = $request->name;
+        $product->slug = Str::slug($request->name);
         $product->brand_id = $request->brand_id;
         // $product->subcategory_id = $request->subcategory_id;
         // $product->prosubcategory_id = $request->prosubcategory_id;
@@ -94,6 +96,16 @@ class ProductController extends Controller
                 $product_size = new Product_category();
                 $product_size->product_id =$product->id;
                 $product_size->category_id=$value;
+                $product_size->save();
+            }   
+        }
+
+        $attribute_id= $request->attribute_id;
+        if ($attribute_id) {
+            foreach ($attribute_id as $key => $value ){
+                $product_size = new Product_attribute();
+                $product_size->product_id =$product->id;
+                $product_size->attribute_id=$value;
                 $product_size->save();
             }   
         }
@@ -166,12 +178,8 @@ class ProductController extends Controller
 
         $brands = Brand::where('status', 1)->get();
         $categories  = Category::where('status', 1)->get();
-        $subcategories  = Subcategory::where('category_id', $product->category_id)->where('status', 1)->get();
 
-        $prosubcategories   = Prosubcategory::where('category_id', $product->category_id)
-                                            ->where('subcategory_id', $product->subcategory_id)
-                                            ->where('status', 1)
-                                            ->get();
+
 
         $colors   = Color::where('status', 1)->get();
         $sizes   = Size::where('status', 1)->get();
@@ -179,9 +187,9 @@ class ProductController extends Controller
         $product_sizes = Product_size::where('product_id', $product->id)->get();
         $product_colors = Product_color::where('product_id', $product->id)->get();
         $product_categories = Product_category::where('product_id', $product->id)->get();
-
+        $product_attributes = Product_attribute::where('product_id', $product->id)->get();
         $productImages= Product_image::where('product_id', $id)->get();
-        return view('backend.admin.product.edit', compact('product', 'brands', 'categories', 'prosubcategories', 'colors', 'sizes', 'subcategories', 'product_sizes', 'product_colors', 'productImages', 'product_categories'));
+        return view('backend.admin.product.edit', compact('product', 'brands', 'categories', 'colors', 'sizes', 'product_sizes', 'product_colors', 'productImages', 'product_categories', 'product_attributes'));
     }
 
     /**
@@ -197,9 +205,6 @@ class ProductController extends Controller
         $product = Product::findorfail($id);
         $product->name = $request->name;
         $product->brand_id = $request->brand_id;
-        // $product->category_id = $request->category_id;
-        // $product->subcategory_id = $request->subcategory_id;
-        // $product->prosubcategory_id = $request->prosubcategory_id;
 
         $product->buying_price = $request->buying_price;
         $product->market_price = $request->market_price;
@@ -239,6 +244,17 @@ class ProductController extends Controller
                 $product_category->product_id =$product->id;
                 $product_category->category_id=$value;
                 $product_category->save();
+            }   
+        }
+
+        $ProductAttribute = Product_attribute::where('product_id', $id)->delete();
+        $attribute_id = $request->attribute_id;
+        if ($attribute_id) {
+            foreach ($attribute_id as $key => $value ){
+                $product_attribute = new Product_attribute();
+                $product_attribute->product_id =$product->id;
+                $product_attribute->attribute_id=$value;
+                $product_attribute->save();
             }   
         }
 

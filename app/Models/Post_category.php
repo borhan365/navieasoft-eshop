@@ -5,10 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product_attribute extends Model
+class Post_category extends Model
 {
     use HasFactory;
-	public function attribute(){
-		return $this->belongsTo('App\Models\Attribute', 'attribute_id');
-	}
 }

@@ -15,9 +15,22 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         \App\Models\Admin::factory()->create();
-        \App\Models\Vendor::factory()->create();
         \App\Models\Importer::factory()->create();
         \App\Models\Merchant::factory()->create();
-        \App\Models\Customer::factory()->create();
+        $this->call(BrandSeeder::class);
+        $this->call(VendorSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(CustomerSeeder::class);
+        $this->call(AttributeSeeder::class);
+        $this->call(Attribute_valueSeeder::class);
+        $this->call(OrderSeeder::class);
+        $this->call(OrderDetailsSeeder::class);
+        $this->call(PaymentMethodSeeder::class);
+        $this->call(DeliveryMethodSeeder::class);
+        $this->call(WithdrawSeeder::class);
+        $this->call(ProductSeeder::class);
+        $this->call(Product_categorySeeder::class);
+        $this->call(SocialLinkSeeder::class);
+
     }
 }

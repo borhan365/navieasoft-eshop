@@ -46,13 +46,12 @@
 		                    
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Product Name</label>
-		                      <input type="text" class="form-control" name="name" placeholder="Product Name">
+		                      	<input type="text" class="form-control" name="name" placeholder="Product Name">
 		                    </div>
 
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Brand</label>
 		                      	<select name="brand_id" class="form-control">
-		                      		<option value="" disabled="">----Selected Brand----</option>}
                                         @foreach($brands as $brand)
 				                            <option value="{{$brand->id}}">{{$brand->name}}</option>
                                         @endforeach
@@ -61,10 +60,18 @@
 		                    
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Category</label>
-		                      	<select name="category_id[]" id="category_id" class="form-control" onchange="GetSubCategory(this.value)" multiple="multiple">
-		                      		<option value="" selected="" disabled="">----Selected Catgory----</option>
+		                      	<select name="category_id[]" id="category_id" class="form-control" multiple="multiple">
                                         @foreach($categories as $category)
 				                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+		                      	</select>
+		                    </div>			
+
+		                    <div class="col-sm-6">
+		                    	<label for="inputEmail3" class="col-form-label">Attritube</label>
+		                      	<select name="attribute_id[]" id="attribute_id" class="form-control" multiple="multiple">
+                                        @foreach($attributes as $attribute)
+				                            <option value="{{$attribute->id}}">{{$attribute->name}}</option>
                                         @endforeach
 		                      	</select>
 		                    </div>		                    
@@ -79,7 +86,7 @@
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Pro Sub Category</label>
 		                      	<select name="prosubcategory_id" id="prosubcategory_id"  class="form-control">
-		                      		<option value="" selected="" disabled="">----Selected Pro Sub Catgory----</option>}
+		                      		<option value="" selected="" disabled="">----Selected Pro Sub Catgory----</option>
 
 		                      	</select>
 		                    </div> -->
@@ -228,13 +235,16 @@
 
 		    $('#color').select2({
 		      placeholder: 'Select Color'
-		    })
+		    });
 		    $('#size_id').select2({
 		      placeholder: 'Select Size'
-		    })
+		    });
 		    $('#category_id').select2({
 		      placeholder: 'Select Category'
-		    })
+		    });
+		    $('#attribute_id').select2({
+		      placeholder: 'Select Attribute'
+		    });
         });  
 
 

@@ -65,13 +65,13 @@
                 <tbody>
                   @php
                       $i=1;
-                      $qty=0;
-                      $cost=0;
+                      $total_qty=0;
+                      $total_cost=0;
                    @endphp
             @foreach($orders as $order)
                   <?php
-                      $total_qty = $qty+$order->total_qty;
-                      $total_cost = $cost+$order->total_cost;
+                      $total_qty = $total_qty+$order->total_qty;
+                      $total_cost = $total_cost+$order->total_cost;
                   ?>
                 <tr>
                   	<td>{{$i++}}</td>

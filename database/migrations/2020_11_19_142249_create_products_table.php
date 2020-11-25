@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->nullable();
+            $table->string('user_type')->nullable();
             $table->integer('brand_id')->nullable();
             $table->string('name');
             $table->string('slug');
@@ -30,6 +31,8 @@ class CreateProductsTable extends Migration
             $table->string('market_price')->nullable();
             $table->string('sell_price');
             $table->integer('qty');
+            $table->integer('total_sell')->nullable();
+            $table->integer('total_product')->nullable();
             $table->text('note');
             $table->integer('status');
             $table->timestamps();

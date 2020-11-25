@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
-use App\Models\Subcategory;
-use App\Models\Prosubcategory;
+use App\Models\Post_category;
 use App\Models\Post;
 use Str;
 
@@ -31,8 +30,7 @@ class PostController extends Controller
     public function create()
     {
         $categories  = Category::where('status', 1)->get();
-        $prosubcategories   = Prosubcategory::where('status', 1)->get();
-        return view('backend.admin.post.create', compact('categories', 'prosubcategories'));
+        return view('backend.admin.post.create', compact('categories'));
     }
 
     /**
@@ -48,10 +46,6 @@ class PostController extends Controller
         $post->slug = $request->slug;
         $post->meta_title = $request->meta_title;
         $post->meta_description = $request->meta_description;
-        // $post->category_id = $request->category_id;
-        // $post->subcategory_id = $request->subcategory_id;
-        // $post->prosubcategory_id = $request->prosubcategory_id;
-
 
         $image = $request->file('image');
         if($image)
@@ -70,6 +64,16 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->status = $request->status;
         $post->save();
+
+        $category_id= $request->category_id;
+        if ($category_id) {
+            foreach ($category_id as $key => $value ){
+                $post_category = new Post_category();
+                $post_category->post_id =$post->id;
+                $post_category->category_id=$value;
+                $post_category->save();
+            }   
+        }
 
         $notification=array(
             'message' => 'Post Saved Successfully !!',
@@ -100,12 +104,8 @@ class PostController extends Controller
     {
         $post = Post::findorfail($id);
         $categories  = Category::where('status', 1)->get();
-        $subcategories  = Subcategory::where('category_id', $post->category_id)->where('status', 1)->get();
-        $prosubcategories   = Prosubcategory::where('category_id', $post->category_id)
-                                            ->where('subcategory_id', $post->subcategory_id)
-                                            ->where('status', 1)
-                                            ->get();
-        return view('backend.admin.post.edit', compact('post', 'categories','subcategories', 'prosubcategories'));
+        $post_categories = Post_category::where('post_id', $id)->get();
+        return view('backend.admin.post.edit', compact('post', 'categories', 'post_categories'));
     }
 
     /**
@@ -122,9 +122,6 @@ class PostController extends Controller
         $post->slug = $request->slug;
         $post->meta_title = $request->meta_title;
         $post->meta_description = $request->meta_description;
-        // $post->category_id = $request->category_id;
-        // $post->subcategory_id = $request->subcategory_id;
-        // $post->prosubcategory_id = $request->prosubcategory_id;
 
         $image = $request->file('image');
         if($image)
@@ -148,6 +145,18 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->status = $request->status;
         $post->save();
+
+        $PostCategory = Post_category::where('post_id', $id)->delete();
+        $category_id= $request->category_id;
+        if ($category_id) {
+            foreach ($category_id as $key => $value ){
+                $post_category = new Post_category();
+                $post_category->post_id =$post->id;
+                $post_category->category_id=$value;
+                $post_category->save();
+            }   
+        }
+
         $notification=array(
             'message' => 'Post Updated Successfully !!',
             'alert-type' => 'success'
@@ -172,6 +181,9 @@ class PostController extends Controller
         }else{
             Post::where('id', $id)->delete();
         }
+        
+        $PostCategory = Post_category::where('post_id', $id)->delete();
+
         $notification=array(
             'message' => 'Post Deleted Successfully !!',
             'alert-type' => 'error'

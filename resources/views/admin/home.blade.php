@@ -257,7 +257,7 @@
               <a class="nav-link" id="profile-tab" data-toggle="tab" href="#Importer" role="tab" aria-controls="Importer" aria-selected="false">Importer</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#Merchat" role="tab" aria-controls="Merchat" aria-selected="false">Merchat</a>
+              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#Merchat" role="tab" aria-controls="Merchat" aria-selected="false">Merchant</a>
             </li>            
             <li class="nav-item">
               <a class="nav-link" id="contact-tab" data-toggle="tab" href="#Customer" role="tab" aria-controls="Customer" aria-selected="false">Customer</a>

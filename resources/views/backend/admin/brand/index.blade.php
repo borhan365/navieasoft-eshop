@@ -27,7 +27,7 @@
             @foreach($brands as $brand)
                 <tr>
                   	<td>{{$i++}}</td>
-                    <td><img src="{{ asset($brand->brand_logo) }}" alt="" style=" background: #fff;width: 150px;height: 90px;text-align: center;box-sizing: border-box;box-shadow: 6px 9px 11px -5px rgba(0,0,0,0.30);"></td>
+                    <td><img src="{{ asset($brand->brand_logo) }}" alt="" style=" background: #fff;width: 100;height: 50px;text-align: center;box-sizing: border-box;box-shadow: 6px 9px 11px -5px rgba(0,0,0,0.30);"></td>
                     <td>{{$brand->name}}</td>
                     <td>{{$brand->slug}}</td>
 	                <td>

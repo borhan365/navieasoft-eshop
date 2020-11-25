@@ -66,48 +66,31 @@
 		                    </div>
 
 		                    
-		                    <!-- <div class="col-sm-4">
+		                    <div class="col-sm-4">
 		                    	<label for="inputEmail3" class="col-form-label">Category</label>
-		                      	<select name="category_id" id="category_id" class="form-control" onchange="GetSubCategory(this.value)">
-		                      		<option value="" selected="" disabled="">----Selected Catgory----</option>}
+		                      	<select name="category_id[]" id="category_id" class="form-control" multiple="multiple">
                                         @foreach($categories as $category)
-				                            <option value="{{$category->id}}" @php echo $category->id==$post->category_id?"selected":""; @endphp>{{$category->name}}</option>
+                                        	@foreach($post_categories as $post_category)
+				                            		<option value="{{$category->id}}" @php echo $category->id==$post_category->category_id?"selected":""; @endphp>{{$category->name}}</option>
+				                            @endforeach
                                         @endforeach
-		                      	</select>
-		                    </div> -->		                    
 
-		                    <!-- <div class="col-sm-4">
-		                    	<label for="inputEmail3" class="col-form-label">Sub Category</label>
-		                      	<select name="subcategory_id" id="subcategory_id" class="form-control" onchange="GetProSubCategory(this.value)">
-		                      		<option value="" selected="" disabled="">----Selected Sub Catgory----</option>
-                                    @foreach($subcategories as $subcategory)
-			                            <option value="{{$subcategory->id}}" @php echo $subcategory->id==$post->subcategory_id?"selected":""; @endphp>{{$subcategory->name}}</option>
-                                    @endforeach
 		                      	</select>
-		                    </div> -->		                    
+		                    </div>		                    
+		                    <div class="col-sm-4">
+			             		<label for="inputEmail3" class="col-form-label">Feature Image</label>
+		                    	@if(isset($post))
+				                <div class="form-group">
+				                    <img src="{{ asset($post->image) }}" alt="Image" style="width: 30%; margin-top: 8px">
+				                    <input type="hidden" name="old_image" value="{{ $post->image }}">
+				                </div>
+			            		@endif
+		                      	<input type="file" class="form-control" name="image" >
+		                    </div>	                  	
 
-		                    <!-- <div class="col-sm-4">
-		                    	<label for="inputEmail3" class="col-form-label">Pro Sub Category</label>
-		                      	<select name="prosubcategory_id" id="prosubcategory_id"  class="form-control">
-		                      		<option value="" selected="" disabled="">----Selected Pro Sub Catgory----</option>
-                                    @foreach($prosubcategories as $prosubcategory)
-			                            <option value="{{$prosubcategory->id}}" @php echo $prosubcategory->id==$post->prosubcategory_id?"selected":""; @endphp>{{$prosubcategory->name}}</option>
-                                    @endforeach
-		                      	</select>
-		                    </div> -->
 		                  </div>		                  
 
 
-			                    <div class="col-sm-4">
-				             		<label for="inputEmail3" class="col-form-label">Feature Image</label>
-			                    	@if(isset($post))
-					                <div class="form-group">
-					                    <img src="{{ asset($post->image) }}" alt="Image" style="width: 30%; margin-top: 8px">
-					                    <input type="hidden" name="old_image" value="{{ $post->image }}">
-					                </div>
-				            		@endif
-			                      	<input type="file" class="form-control" name="image" >
-			                    </div>	                  	
 
 		                  	<div class="form-group row">
 		                    	<label for="inputEmail3" class="col-sm-2 col-form-label">Post Description</label> 
@@ -157,58 +140,11 @@
 				}
 			});
 
-		    $('#color').select2({
-		      placeholder: 'Select Color'
-		    })
-		    $('#size_id').select2({
-		      placeholder: 'Select Color'
+		    $('#category_id').select2({
+		      placeholder: 'Select Category'
 		    })
         });  
 
-
-		function GetSubCategory(value) {
-			var token =  $("input[name=_token]").val();
-			var datastr = "category_id=" + value  + "&token="+token;
-			console.log(datastr);
-			$.ajax({
-				type: "post",
-				url: "<?php echo route('admin/get-subcategory'); ?>",
-				data:datastr,
-				cache:false,
-				success:function (data) {
-					$('#subcategory_id').html(data);
-				},
-				error: function (jqXHR, status, err) {
-					alert(status);
-					console.log(err);
-				},
-				complete: function () {
-					// alert("Complete");
-				}
-			});
-		}
-
-		function GetProSubCategory(value) {
-			var token =  $("input[name=_token]").val();
-			var datastr = "subcategory_id=" + value  + "&token="+token;
-			console.log(datastr);
-			$.ajax({
-				type: "post",
-				url: "<?php echo route('admin/get-prosubcategory'); ?>",
-				data:datastr,
-				cache:false,
-				success:function (data) {
-					$('#prosubcategory_id').html(data);
-				},
-				error: function (jqXHR, status, err) {
-					alert(status);
-					console.log(err);
-				},
-				complete: function () {
-					// alert("Complete");
-				}
-			});
-		}
 
 		function Makeslug(){
 		    var post_title = $('#title').val();
