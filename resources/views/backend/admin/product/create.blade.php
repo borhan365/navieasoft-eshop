@@ -107,7 +107,7 @@
 		                  		
 			                    <div class="col-sm-2">
 			                    	<label for="inputEmail3" class="col-form-label">Product Variation</label>
-			                      	<input type="checkbox" name="product_veriation" onclick="showVariation()">
+			                      	<input type="checkbox" name="product_veriation" onchange="showVariation()">
 			                    </div>
 
 			                    <div class="col-sm-12" id="productVeriation" style="display: block">
@@ -124,7 +124,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-							                      	<select name="attribute_id[]" id="attribute_id" class="form-control" onclick="GetAttributeValue(this.value)">
+							                      	<select name="attribute_id[]" id="attribute_id" class="form-control attribute_id">
 							                      		<option value="">---Select Attribute---</option>
 														@foreach($attributes as $attribute)
 															<option value="{{$attribute->id}}">{{$attribute->name}}</option>
@@ -132,7 +132,7 @@
 							                      	</select>
                                                 </td>
                                                 <td>
-							                      	<select name="attribute_value_id[]" id="attribute_value_id" class="form-control">
+							                      	<select name="attribute_value_id[]" id="attribute_value_id" class="form-control attribute_value_id">
 							                      	</select>
                                                 </td>
 
@@ -284,9 +284,9 @@
 			$(document).on('click', '.addVer', function(){
 				var html = '';
 				html += '<tr>';
-				html += '<td><select name="attribute_id[]" id="attribute_id" class="form-control"  onclick="GetAttributeValue(this.value)">@foreach($attributes as $attribute)<option value="{{$attribute->id}}">{{$attribute->name}}</option>@endforeach</select></td>';
+				html += '<td><select name="attribute_id[]" id="attribute_id" class="form-control attribute_id"><option value="">---Select Attribute---</option>@foreach($attributes as $attribute)<option value="{{$attribute->id}}">{{$attribute->name}}</option>@endforeach</select></td>';
 
-				html += '<td><select name="attribute_value_id[]" id="attribute_value_id" class="form-control"></select></td>';
+				html += '<td><select name="attribute_value_id[]" id="attribute_value_id" class="form-control attribute_value_id"></select></td>';
 
 				html += '<td><input type="text" class="form-control" name="price[]"></td>';
 				html += '<td><input type="file" class="form-control" name="img[]"></td>';
@@ -309,26 +309,56 @@
         });  
 
 
-		function GetAttributeValue(value) {
-			var token =  $("input[name=_token]").val();
-			var datastr = "attribute_id=" + value  + "&token="+token;
-			$.ajax({
-				type: "post",
-				url: "<?php echo route('admin/get-attribute-value'); ?>",
-				data:datastr,
-				cache:false,
-				success:function (data) {
-					$('#attribute_value_id').html(data);
-				},
-				error: function (jqXHR, status, err) {
-					alert(status);
-					console.log(err);
-				},
-				complete: function () {
-					// alert("Complete");
-				}
-			});
-		}
+		$(document).ready(function(){
+			$(document).on("change", ".attribute_id", function(e){
+				var $this = $(this);
+				console.log($this);
+				var token =  $("input[name=_token]").val();
+				var datastr = "attribute_id=" + e.target.value  + "&token="+token;
+				$.ajax({
+					type: "post",
+					url: "<?php echo route('admin/get-attribute-value'); ?>",
+					data:datastr,
+					cache:false,
+					success:function (data) {
+						console.log(data);
+						$this.parent().siblings().find('.attribute_value_id').html(data);
+					},
+					error: function (jqXHR, status, err) {
+						alert(status);
+						console.log(err);
+					},
+					complete: function () {
+						// alert("Complete");
+					}
+				});
+			})
+		})
+
+
+
+		// function GetAttributeValue(value) {
+			// var $this = $(this);
+			// console.log($this);
+			// var token =  $("input[name=_token]").val();
+			// var datastr = "attribute_id=" + value  + "&token="+token;
+			// $.ajax({
+			// 	type: "post",
+			// 	url: "<?php echo route('admin/get-attribute-value'); ?>",
+			// 	data:datastr,
+			// 	cache:false,
+			// 	success:function (data) {
+			// 		$this.parent().siblings().find('#attribute_value_id').html(data);
+			// 	},
+			// 	error: function (jqXHR, status, err) {
+			// 		alert(status);
+			// 		console.log(err);
+			// 	},
+			// 	complete: function () {
+			// 		// alert("Complete");
+			// 	}
+			// });
+		// }
 
 		function showVariation() {
 			$('#productVeriation').toggle();
