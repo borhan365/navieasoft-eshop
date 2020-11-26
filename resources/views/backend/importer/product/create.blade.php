@@ -1,4 +1,4 @@
-@extends('layouts.admin.app')
+@extends('layouts.importer.app')
 
 @section('content')
 
@@ -37,7 +37,7 @@
 		              </div>
 		              <!-- /.card-header -->
 		              <!-- form start -->
-		              <form class="form-horizontal" action="{{URL::to('admin/product')}}" method="post" enctype="multipart/form-data">
+		              <form class="form-horizontal" action="{{URL::to('importer/product')}}" method="post" enctype="multipart/form-data">
 		              	@csrf
 		                <div class="card-body">
 		                  <div class="form-group row">
@@ -101,62 +101,13 @@
                                         @endforeach
 		                      	</select>
 		                    </div>	
+
 		                  </div>		                  
 		                  
 		                  	<div class="form-group row">
-		                  		
-			                    <div class="col-sm-2">
-			                    	<label for="inputEmail3" class="col-form-label">Product Variation</label>
-			                      	<input type="checkbox" name="product_veriation" onclick="showVariation()">
-			                    </div>
-
-			                    <div class="col-sm-12" id="productVeriation" style="display: block">
-                                    <table class="table table-striped" id="productVer">
-                                        <thead>
-                                        <tr>
-                                            <th>Attribute</th>
-                                            <th>Attribute Value</th>
-                                            <th>Price</th>
-                                            <th>Image</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-							                      	<select name="attribute_id[]" id="attribute_id" class="form-control" onclick="GetAttributeValue(this.value)">
-							                      		<option value="">---Select Attribute---</option>
-														@foreach($attributes as $attribute)
-															<option value="{{$attribute->id}}">{{$attribute->name}}</option>
-														@endforeach
-							                      	</select>
-                                                </td>
-                                                <td>
-							                      	<select name="attribute_value_id[]" id="attribute_value_id" class="form-control">
-							                      	</select>
-                                                </td>
-
-                                                <td>
-													<input type="text" class="form-control" name="price[]">
-                                                </td>
-                                                <td>
-													<input type="file" class="form-control" name="img[]">
-                                                </td>
-                                                <td> 
-                                                	<button id="addVer"  type="button" class="btn btn-success addVer"><i class="fa fa-plus-circle"></i> </button>
-                                                </td>
-                                            </tr>
-                                            <tr></tr>
-
-                                        </tbody>
-                                    </table>  
-
-			                    </div>	
-		                  	</div>
-		                  	<div class="form-group row">
 			                    <div class="col-sm-4">
-			                    	<label for="inputEmail3" class="col-form-label">Buying Price</label>
-			                      	<input type="number" step=".01" class="form-control" name="buying_price">
+			                    <label for="inputEmail3" class="col-form-label">Buying Price</label>
+			                      <input type="number" step=".01" class="form-control" name="buying_price">
 			                    </div>			                    
 
 			                    <div class="col-sm-4">
@@ -165,14 +116,14 @@
 			                    </div>
 
 			                    <div class="col-sm-4">
-			                    	<label for="inputEmail3" class="col-form-label">Selling Price</label>
-			                      	<input type="number"  step=".01" class="form-control" name="sell_price">
+			                    <label for="inputEmail3" class="col-form-label">Selling Price</label>
+			                      <input type="number"  step=".01" class="form-control" name="sell_price">
 			                    </div>
 
 
 			                    <div class="col-sm-4">
 			                    	<label for="inputEmail3" class=" col-form-label">Product Qty</label>
-			                      	<input type="number" class="form-control" name="qty">
+			                      <input type="number" class="form-control" name="qty">
 			                    </div> 
 		                  	</div>
 
@@ -280,18 +231,8 @@
 			});
 
 
-
-			$(document).on('click', '.addVer', function(){
-				var html = '';
-				html += '<tr>';
-				html += '<td><select name="attribute_id[]" id="attribute_id" class="form-control"  onclick="GetAttributeValue(this.value)">@foreach($attributes as $attribute)<option value="{{$attribute->id}}">{{$attribute->name}}</option>@endforeach</select></td>';
-
-				html += '<td><select name="attribute_value_id[]" id="attribute_value_id" class="form-control"></select></td>';
-
-				html += '<td><input type="text" class="form-control" name="price[]"></td>';
-				html += '<td><input type="file" class="form-control" name="img[]"></td>';
-				html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="fa fa-minus-circle"></span></button></td></tr>';
-				$('#productVer').append(html);
+			$(document).on('click', '.remove', function(){
+				$(this).closest('tr').remove();
 			});
 
 		    $('#color').select2({
@@ -309,30 +250,7 @@
         });  
 
 
-		function GetAttributeValue(value) {
-			var token =  $("input[name=_token]").val();
-			var datastr = "attribute_id=" + value  + "&token="+token;
-			$.ajax({
-				type: "post",
-				url: "<?php echo route('admin/get-attribute-value'); ?>",
-				data:datastr,
-				cache:false,
-				success:function (data) {
-					$('#attribute_value_id').html(data);
-				},
-				error: function (jqXHR, status, err) {
-					alert(status);
-					console.log(err);
-				},
-				complete: function () {
-					// alert("Complete");
-				}
-			});
-		}
 
-		function showVariation() {
-			$('#productVeriation').toggle();
-		}
 
 
 

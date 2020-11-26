@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Importer;
+use App\Models\Product;
 
 class ImporterController extends Controller
 {
@@ -49,7 +50,9 @@ class ImporterController extends Controller
     public function show($id)
     {
         $importer = Importer::findorfail($id);
-        return view('backend.admin.importer.details', compact('importer'));
+        $importer_details = Importer::where('id', $id)->first();
+        $total_products = Product::where('user_id', $id)->where('user_type', $importer_details->type)->count();
+        return view('backend.admin.importer.details', compact('importer', 'total_products'));
     }
 
     /**

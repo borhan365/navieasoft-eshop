@@ -16,6 +16,7 @@ class VendorSeeder extends Seeder
     public function run()
     {
         DB::table('vendors')->insert([
+            'type' => 'vendor',
             'name' => 'Vendor Khan',
             'email' => 'vendor@vendor.com',
             'phone' => '0155000000',
@@ -30,6 +31,7 @@ class VendorSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
         DB::table('vendors')->insert([
+            'type' => 'vendor',
             'name' => 'Didarul Islam Akand',
             'email' => 'didarul@vendor.com',
             'phone' => '012000010',

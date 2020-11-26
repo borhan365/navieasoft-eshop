@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Attribute;
+use App\Models\Attribute_value;
 
 class AttributeController extends Controller
 {
@@ -122,5 +123,9 @@ class AttributeController extends Controller
         return redirect()->back()->with($notification);
     }
 
+    public function get_attribute_value(Request $request){
+        $attribute_values = Attribute_value::where('attribute_id', $request->attribute_id)->get();
+        return view('backend.admin.attribute.get_attribute_value',compact('attribute_values'));
+    }
 
 }

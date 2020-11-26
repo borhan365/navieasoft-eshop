@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\AttributeValueController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -135,6 +136,7 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::post('admin/get-subcategory', [ProsubcategoryController::class, 'get_subcategory'])->name('admin/get-subcategory');
 		Route::post('admin/get-prosubcategory', [ProductController::class, 'get_prosubcategory'])->name('admin/get-prosubcategory');
 
+		Route::post('admin/get-attribute-value', [AttributeController::class, 'get_attribute_value'])->name('admin/get-attribute-value');
 	});
 
 });
@@ -165,6 +167,10 @@ Route::group(['prefix' => 'importer'], function(){
 	Route::group(['middleware'=>'importer.auth'], function(){
 		Route::get('dashboard', [ImporterController::class, 'dashboard'])->name('importer.home');		
 		Route::post('logout', [ImporterController::class, 'logout'])->name('importer.logout');
+
+		//Product Controller
+		Route::resource('product', App\Http\Controllers\Importer\ProductController::class);
+
 	});
 
 });

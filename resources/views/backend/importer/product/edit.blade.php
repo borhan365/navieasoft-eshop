@@ -1,4 +1,4 @@
-@extends('layouts.admin.app')
+@extends('layouts.importer.app')
 
 @section('content')
 
@@ -36,7 +36,7 @@
 		              </div>
 		              <!-- /.card-header -->
 		              <!-- form start -->
-		              <form class="form-horizontal" action="{{URL::to('admin/product/'.$product->id)}}" method="post" enctype="multipart/form-data">
+		              <form class="form-horizontal" action="{{URL::to('importer/product/'.$product->id)}}" method="post" enctype="multipart/form-data">
 		              	@csrf
 		              	@method('PATCH')
 		                <div class="card-body">

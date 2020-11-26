@@ -55,7 +55,7 @@
                     <b>Company</b> <a class="float-right">{{$importer->company ?? ''}}</a>
                   </li>
                   <li class="list-group-item">
-                    <b>Total Products</b> <a class="float-right">1</a>
+                    <b>Total Products</b> <a class="float-right">{{$total_products}}</a>
                   </li>
                   
                 </ul>

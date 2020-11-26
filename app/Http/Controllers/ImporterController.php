@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Importer;
 use App\Models\Vendor;
+use App\Models\Product;
 use Auth;
 
 class ImporterController extends Controller
@@ -27,8 +28,14 @@ class ImporterController extends Controller
     }
 
     public function dashboard(){
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
+
+        $products = Product::where('user_id', $user_id)->where('user_type', $user_type)->count();
+
         $vendors = Vendor::get();
-    	return view('importer.home', compact('vendors'));
+    	return view('importer.home', compact('vendors', 'products'));
     }
 
     public function logout(){

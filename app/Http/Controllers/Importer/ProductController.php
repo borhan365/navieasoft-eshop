@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Importer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Subcategory;
-use App\Models\Prosubcategory;
 use App\Models\Color;
 use App\Models\Size;
 use App\Models\Product;
@@ -29,8 +27,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::get();
-        return view('backend.admin.product.index', compact('products'));
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
+
+        $products = Product::where('user_id', $user_id)->where('user_type', $user_type)->get();
+        return view('backend.importer.product.index', compact('products'));
     }
 
     /**
@@ -52,7 +54,7 @@ class ProductController extends Controller
         $attributes = Attribute::where('status', 1)->get();
 
 
-        return view('backend.admin.product.create', compact('brands', 'categories', 'colors', 'sizes', 'attributes', 'user_id', 'user_type'));
+        return view('backend.importer.product.create', compact('brands', 'categories', 'colors', 'sizes', 'attributes', 'user_id', 'user_type'));
     }
 
     /**
@@ -186,8 +188,6 @@ class ProductController extends Controller
         $brands = Brand::where('status', 1)->get();
         $categories  = Category::where('status', 1)->get();
 
-
-
         $colors   = Color::where('status', 1)->get();
         $sizes   = Size::where('status', 1)->get();
 
@@ -196,7 +196,7 @@ class ProductController extends Controller
         $product_categories = Product_category::where('product_id', $product->id)->get();
         $product_attributes = Product_attribute::where('product_id', $product->id)->get();
         $productImages= Product_image::where('product_id', $id)->get();
-        return view('backend.admin.product.edit', compact('product', 'brands', 'categories', 'colors', 'sizes', 'product_sizes', 'product_colors', 'productImages', 'product_categories', 'product_attributes'));
+        return view('backend.importer.product.edit', compact('product', 'brands', 'categories', 'colors', 'sizes', 'product_sizes', 'product_colors', 'productImages', 'product_categories', 'product_attributes'));
     }
 
     /**
@@ -317,7 +317,6 @@ class ProductController extends Controller
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
-
     }
 
     /**
@@ -336,7 +335,7 @@ class ProductController extends Controller
         }else{
             Product::where('id', $id)->delete();
         }
-        
+
         $ProductCategory = Product_category::where('product_id', $id)->delete();
         $ProductAttribute = Product_attribute::where('product_id', $id)->delete();
         $ProductSize = Product_size::where('product_id', $id)->delete();
@@ -349,11 +348,4 @@ class ProductController extends Controller
         );
         return redirect()->back()->with($notification);
     }
-
-
-    public function get_prosubcategory(Request $request){
-        $prosubcategories = Category::where('parent_id', $request->subcategory_id)->get();
-        return view('backend.admin.product.get_prosubcategory',compact('prosubcategories'));
-    }
-
 }

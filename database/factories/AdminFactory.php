@@ -24,6 +24,7 @@ class AdminFactory extends Factory
     public function definition()
     {
         return [
+            'type' => 'admin',
             'name' => 'Didarul Islam Akand',
             'email' => 'admin@admin.com',
             'email_verified_at' => now(),

@@ -28,7 +28,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview">
-            <a href="{{URL::to('admin/dashboard')}}" class="nav-link">
+            <a href="{{URL::to('importer/dashboard')}}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -43,8 +43,8 @@
 
 
           <li class="nav-item has-treeview  
-              {{ request()->is('admin/product/create') ? 'menu-open' : '' }}
-              {{ request()->is('admin/product') ? 'menu-open' : '' }}
+              {{ request()->is('importer/product/create') ? 'menu-open' : '' }}
+              {{ request()->is('importer/product') ? 'menu-open' : '' }}
           ">
             <a href="" class="nav-link has-treeview">
               <i class="nav-icon fab fa-product-hunt"></i>
@@ -54,15 +54,15 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item {{ request()->is('admin/product/create') ? 'active' : '' }}">
-                <a href="{{URL::to('admin/product/create')}}" class="nav-link {{ request()->is('admin/product/create') ? 'active' : '' }}">
+              <li class="nav-item {{ request()->is('importer/product/create') ? 'active' : '' }}">
+                <a href="{{URL::to('importer/product/create')}}" class="nav-link {{ request()->is('importer/product/create') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Product</p>
                 </a>
               </li>              
 
-              <li class="nav-item {{ request()->is('admin/product') ? 'active' : '' }}">
-                <a href="{{URL::to('admin/product')}}" class="nav-link {{ request()->is('admin/product') ? 'active' : '' }}">
+              <li class="nav-item {{ request()->is('importer/product') ? 'active' : '' }}">
+                <a href="{{URL::to('importer/product')}}" class="nav-link {{ request()->is('importer/product') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage Product</p>
                 </a>

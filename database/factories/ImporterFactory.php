@@ -24,6 +24,7 @@ class ImporterFactory extends Factory
     public function definition()
     {
         return [
+            'type' => 'importer',
             'name' => 'Importer Khan',
             'email' => 'importer@importer.com',
             'email_verified_at' => now(),
