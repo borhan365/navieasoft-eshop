@@ -16,6 +16,7 @@ class OrderSeeder extends Seeder
     {
         DB::table('orders')->insert([
             'id' => 1,
+            'shop_id' => 1,
             'invoice_id' => 12001,
             'customer_id' => 2,
             'total_qty' => 2,
@@ -29,6 +30,7 @@ class OrderSeeder extends Seeder
         ]);
         DB::table('orders')->insert([
             'id' => 2,
+            'shop_id' => 2,
             'invoice_id' => 12001,
             'customer_id' => 3,
             'total_qty' => 3,

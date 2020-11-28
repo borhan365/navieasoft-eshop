@@ -34,6 +34,7 @@ class CreateProductsTable extends Migration
             $table->integer('total_sell')->nullable();
             $table->integer('total_product')->nullable();
             $table->text('note');
+            $table->integer('product_veriation')->nullable();
             $table->integer('status');
             $table->timestamps();
         });

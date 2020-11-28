@@ -93,7 +93,7 @@ Route::group(['prefix' => 'admin'], function(){
 		//Social Link Controller
 		Route::resource('social', SocialLinkController::class);	
 
-		//Social Link Controller
+		//Order Controller
 		Route::resource('order', OrderController::class);	
 		Route::get('admin/invoice-print/{id}', [OrderController::class, 'invoice_print'])->name('admin/invoice-print');		
 		Route::post('admin/update-shipping-address/{id}', [OrderController::class, 'update_shipping_address'])->name('admin/update-shipping-address');
@@ -152,6 +152,26 @@ Route::group(['prefix' => 'vendor'], function(){
 	Route::group(['middleware'=>'vendor.auth'], function(){
 		Route::get('dashboard', [VendorController::class, 'dashboard'])->name('vendor.home');		
 		Route::post('logout', [VendorController::class, 'logout'])->name('vendor.logout');
+
+		//Product Controller
+		Route::resource('product', App\Http\Controllers\Vendor\ProductController::class);
+
+		//Withdraw Controller
+		Route::resource('withdraw', App\Http\Controllers\Vendor\WithdrawController::class);	
+
+		//Order Controller
+		Route::resource('order', App\Http\Controllers\Vendor\OrderController::class);	
+		Route::get('vendor/invoice-print/{id}', [App\Http\Controllers\Vendor\OrderController::class, 'invoice_print'])->name('vendor/invoice-print');		
+		Route::post('vendor/update-shipping-address/{id}', [App\Http\Controllers\Vendor\OrderController::class, 'update_shipping_address'])->name('vendor/update-shipping-address');
+		Route::post('vendor/update-order-summery/{id}', [App\Http\Controllers\Vendor\OrderController::class, 'update_order_summery'])->name('vendor/update-order-summery');
+
+		Route::get('vendor/filter-order', [App\Http\Controllers\Vendor\OrderController::class, 'filter_order'])->name('vendor/filter-order');
+
+
+
+		//Ajax Request
+		Route::post('vendor/get-attribute-value', [App\Http\Controllers\Vendor\ProductController::class, 'get_attribute_value'])->name('vendor/get-attribute-value');
+
 	});
 
 });
@@ -170,6 +190,7 @@ Route::group(['prefix' => 'importer'], function(){
 
 		//Product Controller
 		Route::resource('product', App\Http\Controllers\Importer\ProductController::class);
+
 
 	});
 

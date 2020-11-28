@@ -56,7 +56,7 @@
               <div class="inner">
                 <?php
                     $date = date('Y-m-d');
-                    $today_sells = App\Models\Order::select('total_cost', 'total_qty')->where('status', 1)->where( 'created_at', 'LIKE', '%' . $date .'%')->get();
+                    $today_sells = App\Models\Order::select('total_cost', 'total_qty')->where('status', 2)->where( 'created_at', 'LIKE', '%' . $date .'%')->get();
                     $sell = 0;
                 ?>
                   @foreach($today_sells as $data)
