@@ -1,6 +1,7 @@
-@extends('layouts.vendor.app')
+@extends('layouts.merchant.app')
 
 @section('content')
+
 
 
 <style>
@@ -32,138 +33,61 @@
 	            <!-- Horizontal Form -->
 		            <div class="card card-info">
 		              <div class="card-header">
-		                <h3 class="card-title">Edit Product</h3>
+		                <h3 class="card-title">Add Product</h3>
 		              </div>
 		              <!-- /.card-header -->
 		              <!-- form start -->
-		              <form class="form-horizontal" action="{{URL::to('vendor/product/'.$product->id)}}" method="post" enctype="multipart/form-data">
+		              <form class="form-horizontal" action="{{URL::to('merchant/product')}}" method="post" enctype="multipart/form-data">
 		              	@csrf
-		              	@method('PATCH')
 		                <div class="card-body">
 		                  <div class="form-group row">
 
             				<input type="hidden" name="created_at" value="<?php echo date('Y-m-d H:i:s'); ?>">
-		                    <input type="hidden" name="user_id" value="{{$product->user_id}}">
-            				<input type="hidden" name="user_type" value="{{$product->user_type}}">
-
+            				<input type="hidden" name="user_id" value="{{$user_id}}">
+            				<input type="hidden" name="user_type" value="{{$user_type}}">
+		                    
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Product Name</label>
-		                      <input type="text" class="form-control" name="name" placeholder="Product Name" value="{{$product->name}}">
+		                      	<input type="text" class="form-control" name="name" placeholder="Product Name" required="">
 		                    </div>
 
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Brand</label>
-		                      	<select name="brand_id" class="form-control">
-		                      		<option value="" selected="" disabled="">----Selected Brand----</option>}
+		                      	<select name="brand_id" class="form-control" required="">
                                         @foreach($brands as $brand)
-				                            <option value="{{$brand->id}}" @php echo $brand->id==$product->brand_id?"selected":""; @endphp>{{$brand->name}}</option>
+				                            <option value="{{$brand->id}}">{{$brand->name}}</option>
                                         @endforeach
 		                      	</select>
 		                    </div>
 		                    
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Category</label>
-		                      	<select name="category_id[]" id="category_id" class="form-control" onchange="GetSubCategory(this.value)"  multiple="multiple">
-		                      		<option value="" disabled="">----Selected Catgory----</option>}
-                                        @foreach($product_categories as $product_category)
-				                            <option value="{{$product_category->category_id}}" selected="">{{$product_category->category->name}}</option>
+		                      	<select name="category_id[]" id="category_id" class="form-control" multiple="multiple" required="">
+                                        @foreach($categories as $category)
+				                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+		                      	</select>
+		                    </div>			
+
+		                    <div class="col-sm-6">
+		                    	<label for="inputEmail3" class="col-form-label">Attritube</label>
+		                      	<select name="attribute_id[]" id="attribute_id" class="form-control" multiple="multiple" required="">
+                                        @foreach($attributes as $attribute)
+				                            <option value="{{$attribute->id}}">{{$attribute->name}}</option>
                                         @endforeach
 		                      	</select>
 		                    </div>		                    
 
 		                    <div class="col-sm-6">
-		                    	<label for="inputEmail3" class="col-form-label">Attritube</label>
-		                      	<select name="attribute_id[]" id="attribute_id" class="form-control" onchange="GetSubCategory(this.value)" multiple="multiple">
-                                        @foreach($product_attributes as $product_attribute)
-				                            <option value="{{$product_attribute->attribute_id}}" selected="">{{$product_attribute->attribute->name}}</option>
+		                    	<label for="inputEmail3" class="col-form-label">Size</label>
+		                      	<select name="size_id[]" id="size_id" class="form-control"  multiple="multiple">
+                                        @foreach($sizes as $size)
+				                            <option value="{{$size->id}}"> {{$size->name}}</option>
                                         @endforeach
 		                      	</select>
 		                    </div>	
-
-		                    <div class="col-sm-6">
-		                    	<label for="inputEmail3" class="col-form-label">Size</label>
-		                      	<select name="size_id[]" id="size_id" class="form-control"  multiple="multiple">
-
-                                	@foreach($product_sizes as $p_size)
-		                            	<option value="{{$p_size->size_id}}" selected=""> {{$p_size->size->name}}</option>
-		                            @endforeach
-
-		                      	</select>
-		                    </div>	
-
 		                  </div>		                  
 		                  
-
-		                  	@if($product->product_veriation)
-		                  	<div class="form-group row">
-			                    <div class="col-sm-2">
-			                    	<label for="inputEmail3" class="col-form-label">Product Variation</label>
-			                      	<input type="checkbox" id="product_veriation" name="product_veriation" onchange="showVariation()" checked="" value="{{$product->product_veriation}}">
-			                    </div>
-
-			                    <div class="col-sm-12" id="productVeriation">
-                                    <table class="table table-striped" id="productVer">
-                                        <thead>
-                                        <tr>
-                                            <th>Attribute</th>
-                                            <th>Value</th>
-                                            <th>Attribute</th>
-                                            <th>Value</th>
-                                            <th>Price</th>
-                                            <th>Image</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        	@foreach($ProductVariations as $ProductVariation)
-                                            <tr>
-                                                <td>
-							                      	<select name="var_attribute_id[]" id="attribute_id" class="form-control attribute_id">
-							                      		<option value="">---Select Attribute---</option>
-														@foreach($attributes as $attribute)
-															<option value="{{$attribute->id}}" @php echo $attribute->id==$ProductVariation->var_attribute_id?"selected":""; @endphp>{{$attribute->name}}</option>
-														@endforeach
-							                      	</select>
-                                                </td>
-                                                <td>
-							                      	<select name="var_attribute_value_id[]" id="attribute_value_id" class="form-control attribute_value_id">
-							                      		<option value="{{$ProductVariation->var_attribute_value_id}}">{{$ProductVariation->var_attribute_value->value}}</option>
-							                      	</select>
-                                                </td>
-                                                <td>
-							                      	<select name="var_attribute_id2[]" id="attribute_id2" class="form-control attribute_id2">
-							                      		<option value="">---Select Attribute---</option>
-														@foreach($attributes as $attribute)
-															<option value="{{$attribute->id}}" @php echo $attribute->id==$ProductVariation->var_attribute_id2?"selected":""; @endphp>{{$attribute->name}}</option>
-														@endforeach
-							                      	</select>
-                                                </td>
-                                                <td>
-							                      	<select name="var_attribute_value_id2[]" id="attribute_value_id2" class="form-control attribute_value_id2">
-							                      		<option value="{{$ProductVariation->var_attribute_value_id2}}">{{$ProductVariation->var_attribute_value2->value}}</option>
-							                      	</select>
-                                                </td>
-                                                <td>
-													<input type="text" class="form-control" name="var_price[]" value="{{$ProductVariation->var_price}}">
-                                                </td>
-                                                <td style="width: 250px">
-							                    	@if(isset($ProductVariation))
-										                <img src="{{ asset($ProductVariation->var_img) }}" alt="Image" style="width: 30%;">
-										                <input type="hidden" name="old_var_img" value="{{ $ProductVariation->var_img }}">
-							                    	@endif
-													<input type="file" class="form-control" name="var_img[]">
-                                                </td>
-                                                <td> 
-                                                	<button id="addVer"  type="button" class="btn btn-success btn-sm addVer"><i class="fa fa-plus-circle"></i> </button>
-                                                </td>
-                                            </tr>
-                                            <tr></tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>  
-			                    </div>	
-		                  	</div>
-		                  	@else
 		                  	<div class="form-group row">
 		                  		
 			                    <div class="col-sm-2">
@@ -234,28 +158,26 @@
 
 			                    </div>	
 		                  	</div>
-			                @endif
-
 		                  	<div class="form-group row">
 			                    <div class="col-sm-4">
-			                    <label for="inputEmail3" class="col-form-label">Buying Price</label>
-			                      <input type="number" step=".01" class="form-control" name="buying_price" value="{{$product->buying_price}}">
+			                    	<label for="inputEmail3" class="col-form-label">Buying Price</label>
+			                      	<input type="number" step=".01" class="form-control" name="buying_price" required="">
 			                    </div>			                    
 
 			                    <div class="col-sm-4">
 			                    <label for="inputEmail3" class="col-form-label">Market Price</label>
-			                      <input type="number" step=".01" class="form-control" name="market_price" value="{{$product->market_price}}">
+			                      <input type="number" step=".01" class="form-control" name="market_price" required="">
 			                    </div>
 
 			                    <div class="col-sm-4">
-			                    <label for="inputEmail3" class="col-form-label">Selling Price</label>
-			                      <input type="number"  step=".01" class="form-control" name="sell_price" value="{{$product->sell_price}}">
+			                    	<label for="inputEmail3" class="col-form-label">Selling Price</label>
+			                      	<input type="number"  step=".01" class="form-control" name="sell_price" required="">
 			                    </div>
 
 
 			                    <div class="col-sm-4">
 			                    	<label for="inputEmail3" class=" col-form-label">Product Qty</label>
-			                      <input type="number" class="form-control" name="qty" value="{{$product->qty}}">
+			                      	<input type="number" class="form-control" name="qty" required="">
 			                    </div> 
 		                  	</div>
 
@@ -263,69 +185,33 @@
 			                    <div class="col-sm-4">
 			                    <label for="inputEmail3" class="col-form-label">Product Color</label>
 									<select class="form-control" id="color" name="color_id[]" multiple="multiple">
-										@foreach($product_colors as $color)
-									  		<option value="{{$color->color_id}}" selected="">{{$color->color->name}}</option>
+										@foreach($colors as $color)
+									  		<option value="{{$color->id}}">{{$color->name}}</option>
 									  	@endforeach
 									</select>
 			                    </div> 
-
 			                    <div class="col-sm-4">
-				             		<label for="inputEmail3" class="col-form-label">Feature Image</label>
-			                      	<input type="file" class="form-control" name="image" >
-			                    	@if(isset($product))
-					                <div class="form-group">
-					                    <img src="{{ asset($product->image) }}" alt="Image" style="width: 30%; margin-top: 8px">
-					                    <input type="hidden" name="old_image" value="{{ $product->image }}">
-					                </div>
-				            		@endif
+			                    <label for="inputEmail3" class="col-form-label">Fetaure Image</label>
+			                      <input type="file" class="form-control" name="image" placeholder="Fetaure Image" required="">
 			                    </div>
-
-
 			                    <div class="col-sm-4">
 			                    	<label for="inputEmail3" class="col-form-label">Product Image</label>
-									@if(count($productImages) > 0)
-				                    	@foreach($productImages as $productImage)
-					                    	@if(isset($productImage))
-								                <div class="form-group">
-								                    <img src="{{ asset($productImage->product_image) }}" alt="Image" style="width: 30%">
-								                    <input type="hidden" name="old_product_image" value="{{ $productImage->product_image }}">
-								                </div>
-					                    	@endif
-	                                    <table class="table table-striped" id="productImage">
-	                                        <thead>
-	                                        <tr>
-	                                            <th>Image</th>
-	                                            <th>Action</th>
-	                                        </tr>
-	                                        </thead>
-	                                        <tbody>
-	                                            <tr>
-	                                                <td><input type="file" class="form-control" name="product_image[]"></td>
-	                                                <td> <button id="add"  type="button" class="btn btn-success add"><i class="fa fa-plus-circle"></i> </button></td>
-	                                            </tr>
-	                                            <tr></tr>
+                                    <table class="table table-striped" id="productImage">
+                                        <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="file" class="form-control" name="product_image[]" required=""></td>
+                                                <td> <button id="add"  type="button" class="btn btn-success btn-sm add"><i class="fa fa-plus-circle"></i> </button></td>
+                                            </tr>
+                                            <tr></tr>
 
-	                                        </tbody>
-	                                    </table>  
-                                    @endforeach
-                                   	@else
-	                                    <table class="table table-striped" id="productImage">
-	                                        <thead>
-	                                        <tr>
-	                                            <th>Image</th>
-	                                            <th>Action</th>
-	                                        </tr>
-	                                        </thead>
-	                                        <tbody>
-	                                            <tr>
-	                                                <td><input type="file" class="form-control" name="product_image[]" ></td>
-	                                                <td> <button id="add"  type="button" class="btn btn-success add"><i class="fa fa-plus-circle"></i> </button></td>
-	                                            </tr>
-	                                            <tr></tr>
-
-	                                        </tbody>
-	                                    </table> 
-                                    @endif
+                                        </tbody>
+                                    </table>     
 			                    </div>
 
 		                  	</div>		                  	
@@ -335,7 +221,7 @@
 		                    <div class="col-sm-9  mt-3">
 						        <div class="col-md-12">
 						            <div class="mb-3">
-						                <textarea name="description" class="textarea" style="width: 100%; height: 500px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{!!$product->description!!}</textarea>
+						                <textarea name="description" class="textarea" style="width: 100%; height: 500px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required=""></textarea>
 						            </div>
 						        </div>
 		                    </div>
@@ -346,7 +232,7 @@
 		                  	<div class="form-group row">
 			                    <label for="inputEmail3" class="col-sm-2 col-form-label">Note</label>
 			                    <div class="col-sm-9">
-			                      <input type="text" class="form-control" name="note" placeholder="Note" value="{{$product->note}}">
+			                      <input type="text" class="form-control" name="note" placeholder="Note" required="">
 			                    </div> 
 		                  	</div>
 
@@ -354,15 +240,15 @@
 		                    <label for="inputPassword3" class="col-sm-2 col-form-label">Status</label>
 		                    <div class="col-sm-9">
 		                      <select name="status" id="" class="form-control">
-                        			<option value="1" @php echo $product->status==1?"selected":""; @endphp>Active</option>
-                        			<option value="0" @php echo $product->status==0?"selected":""; @endphp>Inactive</option>
+		                      	<option value="1">Active</option>
+		                      	<option value="0">Inactive</option>
 		                      </select>
 		                    </div>
 		                  </div>
 		                </div>
 		                <!-- /.card-body -->
 		                <div class="card-footer">
-		                  <button type="submit" class="btn btn-info">Update</button>
+		                  <button type="submit" class="btn btn-info">Save</button>
 		                  <button type="reset" class="btn btn-default float-right">Cancel</button>
 		                </div>
 		                <!-- /.card-footer -->
@@ -398,6 +284,8 @@
 				$(this).closest('tr').remove();
 			});
 
+
+
 			$(document).on('click', '.addVer', function(){
 				var html = '';
 				html += '<tr>';
@@ -418,7 +306,6 @@
 				$('#productVer').append(html);
 			});
 
-
 		    $('#color').select2({
 		      placeholder: 'Select Color'
 		    });
@@ -431,7 +318,6 @@
 		    $('#attribute_id').select2({
 		      placeholder: 'Select Attribute'
 		    });
-
         });  
 
 
@@ -442,7 +328,7 @@
 				var datastr = "attribute_id=" + e.target.value  + "&token="+token;
 				$.ajax({
 					type: "post",
-					url: "<?php echo route('vendor/get-attribute-value'); ?>",
+					url: "<?php echo route('merchant/get-attribute-value'); ?>",
 					data:datastr,
 					cache:false,
 					success:function (data) {
@@ -467,7 +353,7 @@
 				var datastr = "attribute_id=" + e.target.value  + "&token="+token;
 				$.ajax({
 					type: "post",
-					url: "<?php echo route('vendor/get-attribute-value'); ?>",
+					url: "<?php echo route('merchant/get-attribute-value'); ?>",
 					data:datastr,
 					cache:false,
 					success:function (data) {
@@ -496,6 +382,9 @@
 				$('#product_veriation').val(1)
 			}
 		}
+
+
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>

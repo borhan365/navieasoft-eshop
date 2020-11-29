@@ -26,7 +26,6 @@ use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\AttributeValueController;
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -191,6 +190,8 @@ Route::group(['prefix' => 'importer'], function(){
 		//Product Controller
 		Route::resource('product', App\Http\Controllers\Importer\ProductController::class);
 
+		//Ajax Request
+		Route::post('importer/get-attribute-value', [App\Http\Controllers\Vendor\ProductController::class, 'get_attribute_value'])->name('importer/get-attribute-value');
 
 	});
 
@@ -207,6 +208,17 @@ Route::group(['prefix' => 'merchant'], function(){
 	Route::group(['middleware'=>'merchant.auth'], function(){
 		Route::get('dashboard', [MerchantController::class, 'dashboard'])->name('merchant.home');		
 		Route::post('logout', [MerchantController::class, 'logout'])->name('merchant.logout');
+
+		//Product Controller
+		Route::resource('product', App\Http\Controllers\Merchant\ProductController::class);
+
+		Route::get('vendors', [MerchantController::class, 'vendors'])->name('merchant/vendors');	
+		Route::get('vendor-profile/{id}', [MerchantController::class, 'vendor_profile'])->name('merchant/vendor-profile');		
+		Route::get('send-message/{id}', [MerchantController::class, 'send_message'])->name('merchant/send-message');	
+
+		//Ajax Request
+		Route::post('merchant/get-attribute-value', [App\Http\Controllers\Merchant\ProductController::class, 'get_attribute_value'])->name('merchant/get-attribute-value');
+
 	});
 
 });

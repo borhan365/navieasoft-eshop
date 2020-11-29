@@ -7,6 +7,7 @@ use App\Models\Vendor;
 use App\Models\Product;
 use App\Models\Shop;
 use Auth;
+use Session;
 
 class VendorController extends Controller
 {
@@ -39,7 +40,8 @@ class VendorController extends Controller
     }
 
     public function logout(){
-        if (Auth::guard('vendor')->logout()) {
+        if (Auth::guard('vendor')) {
+            session::flush();
             return redirect()->route('vendor.login')->with('status', 'Logout Successully!');
         }
     }

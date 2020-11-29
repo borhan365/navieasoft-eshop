@@ -36,8 +36,6 @@ class ProductController extends Controller
         $user_id = Auth::user()->id;
         $user_type = Auth::user()->type;
 
-        
-
         $products = Product::where('user_id', $user_id)->where('user_type', $user_type)->get();
         return view('backend.vendor.product.index', compact('products'));
     }
@@ -429,6 +427,7 @@ class ProductController extends Controller
         $ProductSize = Product_size::where('product_id', $id)->delete();
         $ProductColor = Product_color::where('product_id', $id)->delete();
         $ProductImage = Product_image::where('product_id', $id)->delete(); 
+        $ProductVariation = Product_variation::where('product_id', $id)->delete(); 
 
         $notification=array(
             'message' => 'Product Deleted Successfully !!',

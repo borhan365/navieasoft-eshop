@@ -19,12 +19,13 @@
         <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="{{asset('public/backend/dist/img/AdminLTELogo.png')}}" class="user-image" alt="User Image">
-                <span class="hidden-xs" style="color: #fff;">{{ Auth::user()->name  ?? '' }}</span>
+                <span class="hidden-xs" style="color: #fff;"> {{ Auth::user()->name  ?? '' }}</span>
             </a>
             <ul class="dropdown-menu">
                 <!-- User image -->
                 <li class="user-header" style="background-color: #06B0B0">
                     <img src="{{asset('public/backend/dist/img/AdminLTELogo.png')}}" class="img-circle" alt="User Image">
+
                     <p>
                        {{ Auth::user()->name ?? ''  }}
                         <small>E-shop</small>
@@ -39,13 +40,13 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('admin.logout') }}"
+                                    <a class="dropdown-item" href="{{ route('merchant.logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('merchant.logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>

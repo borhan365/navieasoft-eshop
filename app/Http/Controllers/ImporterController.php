@@ -7,6 +7,7 @@ use App\Models\Importer;
 use App\Models\Vendor;
 use App\Models\Product;
 use Auth;
+use Session;
 
 class ImporterController extends Controller
 {
@@ -39,7 +40,8 @@ class ImporterController extends Controller
     }
 
     public function logout(){
-        if (Auth::guard('importer')->logout()) {
+        if (Auth::guard('importer')) {
+            session::flush();
             return redirect()->route('importer.login')->with('status', 'Logout Successully!');
         }
     }

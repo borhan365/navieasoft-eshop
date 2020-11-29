@@ -32,7 +32,7 @@
 	            <!-- Horizontal Form -->
 		            <div class="card card-info">
 		              <div class="card-header">
-		                <h3 class="card-title">Add Product</h3>
+		                <h3 class="card-title">Edit Product</h3>
 		              </div>
 		              <!-- /.card-header -->
 		              <!-- form start -->
@@ -93,6 +93,149 @@
 
 		                  </div>		                  
 		                  
+
+		                  	@if($product->product_veriation)
+		                  	<div class="form-group row">
+			                    <div class="col-sm-2">
+			                    	<label for="inputEmail3" class="col-form-label">Product Variation</label>
+			                      	<input type="checkbox" id="product_veriation" name="product_veriation" onchange="showVariation()" checked="" value="{{$product->product_veriation}}">
+			                    </div>
+
+			                    <div class="col-sm-12" id="productVeriation">
+                                    <table class="table table-striped" id="productVer">
+                                        <thead>
+                                        <tr>
+                                            <th>Attribute</th>
+                                            <th>Value</th>
+                                            <th>Attribute</th>
+                                            <th>Value</th>
+                                            <th>Price</th>
+                                            <th>Image</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        	@foreach($ProductVariations as $ProductVariation)
+                                            <tr>
+                                                <td>
+							                      	<select name="var_attribute_id[]" id="attribute_id" class="form-control attribute_id">
+							                      		<option value="">---Select Attribute---</option>
+														@foreach($attributes as $attribute)
+															<option value="{{$attribute->id}}" @php echo $attribute->id==$ProductVariation->var_attribute_id?"selected":""; @endphp>{{$attribute->name}}</option>
+														@endforeach
+							                      	</select>
+                                                </td>
+                                                <td>
+							                      	<select name="var_attribute_value_id[]" id="attribute_value_id" class="form-control attribute_value_id">
+							                      		<option value="{{$ProductVariation->var_attribute_value_id}}">{{$ProductVariation->var_attribute_value->value}}</option>
+							                      	</select>
+                                                </td>
+                                                <td>
+							                      	<select name="var_attribute_id2[]" id="attribute_id2" class="form-control attribute_id2">
+							                      		<option value="">---Select Attribute---</option>
+														@foreach($attributes as $attribute)
+															<option value="{{$attribute->id}}" @php echo $attribute->id==$ProductVariation->var_attribute_id2?"selected":""; @endphp>{{$attribute->name}}</option>
+														@endforeach
+							                      	</select>
+                                                </td>
+                                                <td>
+							                      	<select name="var_attribute_value_id2[]" id="attribute_value_id2" class="form-control attribute_value_id2">
+							                      		<option value="{{$ProductVariation->var_attribute_value_id2}}">{{$ProductVariation->var_attribute_value2->value}}</option>
+							                      	</select>
+                                                </td>
+                                                <td>
+													<input type="text" class="form-control" name="var_price[]" value="{{$ProductVariation->var_price}}">
+                                                </td>
+                                                <td style="width: 250px">
+							                    	@if(isset($ProductVariation))
+										                <img src="{{ asset($ProductVariation->var_img) }}" alt="Image" style="width: 30%;">
+										                <input type="hidden" name="old_var_img" value="{{ $ProductVariation->var_img }}">
+							                    	@endif
+													<input type="file" class="form-control" name="var_img[]">
+                                                </td>
+                                                <td> 
+                                                	<button id="addVer"  type="button" class="btn btn-success btn-sm addVer"><i class="fa fa-plus-circle"></i> </button>
+                                                </td>
+                                            </tr>
+                                            <tr></tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>  
+			                    </div>	
+		                  	</div>
+		                  	@else
+		                  	<div class="form-group row">
+		                  		
+			                    <div class="col-sm-2">
+			                    	<label for="inputEmail3" class="col-form-label">Product Variation</label>
+			                      	<input type="checkbox" id="product_veriation" name="product_veriation" onchange="showVariation()" value="0">
+			                    </div>
+
+			                    <div class="col-sm-12" id="productVeriation" style="display: none">
+                                    <table class="table table-striped" id="productVer">
+                                        <thead>
+                                        <tr>
+                                            <th>Attribute</th>
+                                            <th>Value</th>
+                                            <th>Attribute</th>
+                                            <th>Value</th>
+                                            <th>Price</th>
+                                            <th>Image</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+							                      	<select name="var_attribute_id[]" id="attribute_id" class="form-control attribute_id">
+							                      		<option value="">---Select Attribute---</option>
+														@foreach($attributes as $attribute)
+															<option value="{{$attribute->id}}">{{$attribute->name}}</option>
+														@endforeach
+							                      	</select>
+                                                </td>
+                                                <td>
+							                      	<select name="var_attribute_value_id[]" id="attribute_value_id" class="form-control attribute_value_id">
+							                      	</select>
+                                                </td>
+
+
+
+                                                <td>
+							                      	<select name="var_attribute_id2[]" id="attribute_id2" class="form-control attribute_id2">
+							                      		<option value="">---Select Attribute---</option>
+														@foreach($attributes as $attribute)
+															<option value="{{$attribute->id}}">{{$attribute->name}}</option>
+														@endforeach
+							                      	</select>
+                                                </td>
+
+                                                <td>
+							                      	<select name="var_attribute_value_id2[]" id="attribute_value_id2" class="form-control attribute_value_id2">
+							                      	</select>
+                                                </td>
+
+
+
+                                                <td>
+													<input type="text" class="form-control" name="var_price[]">
+                                                </td>
+                                                <td>
+													<input type="file" class="form-control" name="var_img[]">
+                                                </td>
+                                                <td> 
+                                                	<button id="addVer"  type="button" class="btn btn-success btn-sm addVer"><i class="fa fa-plus-circle"></i> </button>
+                                                </td>
+                                            </tr>
+                                            <tr></tr>
+
+                                        </tbody>
+                                    </table>  
+
+			                    </div>	
+		                  	</div>
+			                @endif
+
 		                  	<div class="form-group row">
 			                    <div class="col-sm-4">
 			                    <label for="inputEmail3" class="col-form-label">Buying Price</label>
@@ -255,10 +398,26 @@
 				$(this).closest('tr').remove();
 			});
 
+			$(document).on('click', '.addVer', function(){
+				var html = '';
+				html += '<tr>';
 
-			$(document).on('click', '.remove', function(){
-				$(this).closest('tr').remove();
+				html += '<td><select name="var_attribute_id[]" id="attribute_id" class="form-control attribute_id"><option value="">---Select Attribute---</option>@foreach($attributes as $attribute)<option value="{{$attribute->id}}">{{$attribute->name}}</option>@endforeach</select></td>';
+				html += '<td><select name="var_attribute_value_id[]" id="attribute_value_id" class="form-control attribute_value_id"></select></td>';
+
+
+				
+				html += '<td><select name="var_attribute_id2[]" id="attribute_id2" class="form-control attribute_id2"><option value="">---Select Attribute---</option>@foreach($attributes as $attribute)<option value="{{$attribute->id}}">{{$attribute->name}}</option>@endforeach</select></td>';
+
+				html += '<td><select name="var_attribute_value_id2[]" id="attribute_value_id2" class="form-control attribute_value_id2"></select></td>';
+
+
+				html += '<td><input type="text" class="form-control" name="var_price[]"></td>';
+				html += '<td><input type="file" class="form-control" name="var_img[]"></td>';
+				html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="fa fa-minus-circle"></span></button></td></tr>';
+				$('#productVer').append(html);
 			});
+
 
 		    $('#color').select2({
 		      placeholder: 'Select Color'
@@ -276,6 +435,67 @@
         });  
 
 
+		$(document).ready(function(){
+			$(document).on("change", ".attribute_id", function(e){
+				var $this = $(this);
+				var token =  $("input[name=_token]").val();
+				var datastr = "attribute_id=" + e.target.value  + "&token="+token;
+				$.ajax({
+					type: "post",
+					url: "<?php echo route('importer/get-attribute-value'); ?>",
+					data:datastr,
+					cache:false,
+					success:function (data) {
+						console.log(data);
+						$this.parent().siblings().find('.attribute_value_id').html(data);
+					},
+					error: function (jqXHR, status, err) {
+						alert(status);
+						console.log(err);
+					},
+					complete: function () {
+						// alert("Complete");
+					}
+				});
+			})
+		})
+
+		$(document).ready(function(){
+			$(document).on("change", ".attribute_id2", function(e){
+				var $this = $(this);
+				var token =  $("input[name=_token]").val();
+				var datastr = "attribute_id=" + e.target.value  + "&token="+token;
+				$.ajax({
+					type: "post",
+					url: "<?php echo route('importer/get-attribute-value'); ?>",
+					data:datastr,
+					cache:false,
+					success:function (data) {
+						console.log(data);
+						$this.parent().siblings().find('.attribute_value_id2').html(data);
+					},
+					error: function (jqXHR, status, err) {
+						alert(status);
+						console.log(err);
+					},
+					complete: function () {
+						// alert("Complete");
+					}
+				});
+			})
+		})
+
+
+
+		function showVariation() {
+			var value = $('#product_veriation').val();
+			$('#productVeriation').toggle();
+			if (value == 1) {
+				$('#product_veriation').val(0)
+			}else{
+				$('#product_veriation').val(1)
+			}
+		}
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>

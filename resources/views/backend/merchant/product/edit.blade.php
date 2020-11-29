@@ -1,4 +1,4 @@
-@extends('layouts.vendor.app')
+@extends('layouts.merchant.app')
 
 @section('content')
 
@@ -36,7 +36,7 @@
 		              </div>
 		              <!-- /.card-header -->
 		              <!-- form start -->
-		              <form class="form-horizontal" action="{{URL::to('vendor/product/'.$product->id)}}" method="post" enctype="multipart/form-data">
+		              <form class="form-horizontal" action="{{URL::to('merchant/product/'.$product->id)}}" method="post" enctype="multipart/form-data">
 		              	@csrf
 		              	@method('PATCH')
 		                <div class="card-body">
@@ -442,7 +442,7 @@
 				var datastr = "attribute_id=" + e.target.value  + "&token="+token;
 				$.ajax({
 					type: "post",
-					url: "<?php echo route('vendor/get-attribute-value'); ?>",
+					url: "<?php echo route('merchant/get-attribute-value'); ?>",
 					data:datastr,
 					cache:false,
 					success:function (data) {
@@ -467,7 +467,7 @@
 				var datastr = "attribute_id=" + e.target.value  + "&token="+token;
 				$.ajax({
 					type: "post",
-					url: "<?php echo route('vendor/get-attribute-value'); ?>",
+					url: "<?php echo route('merchant/get-attribute-value'); ?>",
 					data:datastr,
 					cache:false,
 					success:function (data) {

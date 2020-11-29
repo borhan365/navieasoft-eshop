@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Merchant;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,8 +18,10 @@ use App\Models\Product_category;
 use App\Models\Product_attribute;
 use App\Models\Attribute;
 use App\Models\Product_variation;
+use App\Models\Attribute_value;
 use Str;
 use Auth;
+
 
 class ProductController extends Controller
 {
@@ -30,8 +32,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::get();
-        return view('backend.admin.product.index', compact('products'));
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
+
+        $products = Product::where('user_id', $user_id)->where('user_type', $user_type)->get();
+        return view('backend.merchant.product.index', compact('products'));
     }
 
     /**
@@ -52,8 +58,7 @@ class ProductController extends Controller
 
         $attributes = Attribute::where('status', 1)->get();
 
-
-        return view('backend.admin.product.create', compact('brands', 'categories', 'colors', 'sizes', 'attributes', 'user_id', 'user_type'));
+        return view('backend.merchant.product.create', compact('brands', 'categories', 'colors', 'sizes', 'attributes', 'user_id', 'user_type'));
     }
 
     /**
@@ -221,22 +226,19 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findorfail($id);
-
         $brands = Brand::where('status', 1)->get();
         $categories  = Category::where('status', 1)->get();
-
         $attributes = Attribute::where('status', 1)->get();
-
         $colors   = Color::where('status', 1)->get();
         $sizes   = Size::where('status', 1)->get();
-
         $product_sizes = Product_size::where('product_id', $product->id)->get();
         $product_colors = Product_color::where('product_id', $product->id)->get();
         $product_categories = Product_category::where('product_id', $product->id)->get();
         $product_attributes = Product_attribute::where('product_id', $product->id)->get();
         $productImages= Product_image::where('product_id', $id)->get();
         $ProductVariations= Product_variation::where('product_id', $id)->get();
-        return view('backend.admin.product.edit', compact('product', 'brands', 'categories', 'colors', 'sizes', 'product_sizes', 'product_colors', 'productImages', 'product_categories', 'product_attributes', 'ProductVariations', 'attributes'));
+
+        return view('backend.merchant.product.edit', compact('product', 'brands', 'categories', 'colors', 'sizes', 'product_sizes', 'product_colors', 'productImages', 'product_categories', 'product_attributes', 'ProductVariations', 'attributes'));
     }
 
     /**
@@ -248,7 +250,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $product = Product::findorfail($id);
         $product->user_id = $request->user_id;
         $product->user_type = $request->user_type;
@@ -379,16 +380,13 @@ class ProductController extends Controller
                 $product_variation->var_price = $var_price[$key];
 
                 if($request->hasFile('var_img')){
-
                     $image_name=str::random(5);
                     $ext = strtolower($var_img[$key]->getClientOriginalExtension());
                     $image_full_name = $image_name. '.' .$ext;
                     $upload_path = 'images/product_variation_image/';
                     $image_url = $upload_path.$image_full_name;
                     $success = $var_img[$key]->move($upload_path, $image_full_name);
-
                     $product_variation->var_img = $image_url;
-
                     if ($request->old_var_img) {
                      unlink($request->old_var_img);
                     }
@@ -403,7 +401,6 @@ class ProductController extends Controller
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
-
     }
 
     /**
@@ -422,7 +419,6 @@ class ProductController extends Controller
         }else{
             Product::where('id', $id)->delete();
         }
-        
         $ProductCategory = Product_category::where('product_id', $id)->delete();
         $ProductAttribute = Product_attribute::where('product_id', $id)->delete();
         $ProductSize = Product_size::where('product_id', $id)->delete();
@@ -437,10 +433,9 @@ class ProductController extends Controller
         return redirect()->back()->with($notification);
     }
 
-
-    public function get_prosubcategory(Request $request){
-        $prosubcategories = Category::where('parent_id', $request->subcategory_id)->get();
-        return view('backend.admin.product.get_prosubcategory',compact('prosubcategories'));
+    public function get_attribute_value(Request $request){
+        $attribute_values = Attribute_value::where('attribute_id', $request->attribute_id)->get();
+        return view('backend.merchant.attribute.get_attribute_value',compact('attribute_values'));
     }
 
 }

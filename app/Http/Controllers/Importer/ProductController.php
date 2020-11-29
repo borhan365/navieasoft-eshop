@@ -15,6 +15,7 @@ use App\Models\Product_image;
 use App\Models\Product_category;
 use App\Models\Product_attribute;
 use App\Models\Attribute;
+use App\Models\Product_variation;
 use Str;
 use Auth;
 
@@ -97,6 +98,11 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->note = $request->note;
         $product->status = $request->status;
+
+        if ($request->product_veriation) {
+            $product->product_veriation = $request->product_veriation;
+        }
+
         $product->save();
 
         $category_id= $request->category_id;
@@ -141,21 +147,54 @@ class ProductController extends Controller
 
         $image = $request->file('product_image');
         if ($image) {
-            if($image){
-                foreach ($image as $value ){
-                    $product_image = new Product_image();
-                    $image_name=str::random(5);
-                    $ext = strtolower($value->getClientOriginalExtension());
-                    $image_full_name = $image_name. '.' .$ext;
-                    $upload_path = 'images/product_more_image/';
-                    $image_url = $upload_path.$image_full_name;
-                    $success = $value->move($upload_path, $image_full_name);
-                    $product_image->product_id = $product->id;
-                    $product_image->product_image = $image_url;
-                    $product_image->save();
-                }
+            foreach ($image as $value ){
+                $product_image = new Product_image();
+                $image_name=str::random(5);
+                $ext = strtolower($value->getClientOriginalExtension());
+                $image_full_name = $image_name. '.' .$ext;
+                $upload_path = 'images/product_more_image/';
+                $image_url = $upload_path.$image_full_name;
+                $success = $value->move($upload_path, $image_full_name);
+                $product_image->product_id = $product->id;
+                $product_image->product_image = $image_url;
+                $product_image->save();
             }
         }
+
+        $var_attribute_id = $request->var_attribute_id;
+        $var_attribute_value_id = $request->var_attribute_value_id;
+        $var_attribute_id2 = $request->var_attribute_id2;
+        $var_attribute_value_id2 = $request->var_attribute_value_id2;
+        $var_price = $request->var_price;
+
+        $var_img = $request->file('var_img');
+
+        if ($var_attribute_id) {
+            foreach ($var_attribute_id as $key => $value ){
+                $product_variation = new Product_variation();
+
+                $product_variation->product_id = $product->id;
+                $product_variation->var_attribute_id = $value;
+
+
+                $product_variation->var_attribute_value_id = $var_attribute_value_id[$key];
+                $product_variation->var_attribute_id2 = $var_attribute_id2[$key];
+                $product_variation->var_attribute_value_id2 = $var_attribute_value_id2[$key];
+                $product_variation->var_price = $var_price[$key];
+
+                $image_name=str::random(5);
+                $ext = strtolower($var_img[$key]->getClientOriginalExtension());
+                $image_full_name = $image_name. '.' .$ext;
+                $upload_path = 'images/product_variation_image/';
+                $image_url = $upload_path.$image_full_name;
+                $success = $var_img[$key]->move($upload_path, $image_full_name);
+
+                $product_variation->var_img = $image_url;
+
+                $product_variation->save();
+            } 
+        }
+
 
         $notification=array(
             'message' => 'Product Saved Successfully !!',
@@ -184,19 +223,19 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findorfail($id);
-
         $brands = Brand::where('status', 1)->get();
         $categories  = Category::where('status', 1)->get();
-
+        $attributes = Attribute::where('status', 1)->get();
         $colors   = Color::where('status', 1)->get();
         $sizes   = Size::where('status', 1)->get();
-
         $product_sizes = Product_size::where('product_id', $product->id)->get();
         $product_colors = Product_color::where('product_id', $product->id)->get();
         $product_categories = Product_category::where('product_id', $product->id)->get();
         $product_attributes = Product_attribute::where('product_id', $product->id)->get();
         $productImages= Product_image::where('product_id', $id)->get();
-        return view('backend.importer.product.edit', compact('product', 'brands', 'categories', 'colors', 'sizes', 'product_sizes', 'product_colors', 'productImages', 'product_categories', 'product_attributes'));
+        $ProductVariations= Product_variation::where('product_id', $id)->get();
+
+        return view('backend.importer.product.edit', compact('product', 'brands', 'categories', 'colors', 'sizes', 'product_sizes', 'product_colors', 'productImages', 'product_categories', 'product_attributes', 'ProductVariations', 'attributes'));
     }
 
     /**
@@ -341,6 +380,7 @@ class ProductController extends Controller
         $ProductSize = Product_size::where('product_id', $id)->delete();
         $ProductColor = Product_color::where('product_id', $id)->delete();
         $ProductImage = Product_image::where('product_id', $id)->delete(); 
+        $ProductVariation = Product_variation::where('product_id', $id)->delete(); 
 
         $notification=array(
             'message' => 'Product Deleted Successfully !!',
@@ -348,4 +388,10 @@ class ProductController extends Controller
         );
         return redirect()->back()->with($notification);
     }
+
+    public function get_attribute_value(Request $request){
+        $attribute_values = Attribute_value::where('attribute_id', $request->attribute_id)->get();
+        return view('backend.importer.attribute.get_attribute_value',compact('attribute_values'));
+    }
+
 }

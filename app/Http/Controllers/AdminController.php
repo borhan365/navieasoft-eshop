@@ -9,6 +9,7 @@ use App\Models\Importer;
 use App\Models\Merchant;
 use App\Models\Customer;
 use Auth;
+use Session;
 
 class AdminController extends Controller
 {
@@ -35,7 +36,8 @@ class AdminController extends Controller
     }
 
     public function logout(){
-        if (Auth::guard('admin')->logout()) {
+        if (Auth::guard('admin')) {
+            session::flush();
             return redirect()->route('admin.login')->with('status', 'Logout Successully!');
         }
         
