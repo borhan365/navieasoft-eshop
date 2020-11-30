@@ -90,6 +90,19 @@
           </li>
 
 
+          <li class="nav-item has-treeview
+          {{ request()->is('vendor/merchants') ? 'menu-open' : '' }}
+          ">
+            <a href="{{route('vendor/merchants')}}" class="nav-link">
+              <i class="nav-icon fa fa-user"></i>
+              <p>
+                Merchant
+              </p>
+            </a>
+          </li>
+
+
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

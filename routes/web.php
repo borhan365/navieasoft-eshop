@@ -166,7 +166,11 @@ Route::group(['prefix' => 'vendor'], function(){
 
 		Route::get('vendor/filter-order', [App\Http\Controllers\Vendor\OrderController::class, 'filter_order'])->name('vendor/filter-order');
 
-
+		Route::get('merchants', [VendorController::class, 'merchants'])->name('vendor/merchants');	
+		Route::get('merchant-profile/{id}', [VendorController::class, 'merchant_profile'])->name('vendor/merchant-profile');		
+		Route::get('send-message/{id}', [VendorController::class, 'send_message'])->name('vendor/send-message');		
+		Route::post('message', [VendorController::class, 'message'])->name('vendor/message');
+		Route::get('show-message/{id}', [VendorController::class, 'show_message'])->name('vendor/show-message');	
 
 		//Ajax Request
 		Route::post('vendor/get-attribute-value', [App\Http\Controllers\Vendor\ProductController::class, 'get_attribute_value'])->name('vendor/get-attribute-value');
@@ -215,9 +219,11 @@ Route::group(['prefix' => 'merchant'], function(){
 		Route::get('vendors', [MerchantController::class, 'vendors'])->name('merchant/vendors');	
 		Route::get('vendor-profile/{id}', [MerchantController::class, 'vendor_profile'])->name('merchant/vendor-profile');		
 		Route::get('send-message/{id}', [MerchantController::class, 'send_message'])->name('merchant/send-message');	
+		Route::post('message', [MerchantController::class, 'message'])->name('merchant/message');
 
 		//Ajax Request
 		Route::post('merchant/get-attribute-value', [App\Http\Controllers\Merchant\ProductController::class, 'get_attribute_value'])->name('merchant/get-attribute-value');
+
 
 	});
 

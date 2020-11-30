@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Merchant;
 use App\Models\Vendor;
 use App\Models\Product;
+use App\Models\Message;
 use Auth;
 use Session;
 
@@ -51,7 +52,41 @@ class MerchantController extends Controller
     }
 
     public function send_message($id){
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
+
         $vendor = Vendor::where('id', $id)->first();
-        return view('backend.merchant.vendors.send_message', compact('vendor'));
+
+        $messages = Message::where('sender_id', $user_id)->where('recever_id', $id)->get();
+
+        return view('backend.merchant.vendors.send_message', compact('vendor', 'user_id', 'user_type', 'messages', 'user'));
     }
+
+
+    public function message(Request $request){
+
+        $sender_id = $request->sender_id;
+        $sender_type = $request->sender_type;
+        $recever_id = $request->recever_id;
+        $recever_type = $request->recever_type;
+        $text = $request->message;
+        $subject = $request->subject;
+        
+
+        $message = new Message();
+        $message->sender_id = $sender_id;
+        $message->sender_type = $sender_type;
+        $message->recever_id = $recever_id;
+        $message->recever_type = $recever_type;
+        $message->subject = $subject;
+        $message->message = $text;
+        $message->is_read = 0;
+        $message->save();
+
+        session()->flash('notif', "Sent Successully Done !! ");
+        return redirect()->back();
+
+    }
+
 }
