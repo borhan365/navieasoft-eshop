@@ -33,7 +33,7 @@
               <div class="inner">
                 <?php
                     $date = date('Y-m-d');
-                    $today_sells = App\Models\Order::select('total_cost', 'total_qty')->where('status', 2)->where( 'created_at', 'LIKE', '%' . $date .'%')->get();
+                    $today_sells = App\Models\Order::select('total_cost', 'total_qty')->where('status', 2)->where( 'created_at', 'LIKE', '%' . $date .'%')->where('shop_id', $shop->id)->get();
                     $sell = 0;
                 ?>
                   @foreach($today_sells as $data)
@@ -58,7 +58,7 @@
               <div class="inner">
                 <?php
                     $date = date('Y-m-d');
-                    $today_orders = App\Models\Order::where( 'created_at', 'LIKE', '%' . $date .'%')->count();
+                    $today_orders = App\Models\Order::where( 'created_at', 'LIKE', '%' . $date .'%')->where('shop_id', $shop->id)->count();
                 ?>
                 <h3>{{$today_orders}}</h3>
 
@@ -75,7 +75,7 @@
             <div class="small-box bg-info">
               <div class="inner">
                 <?php
-                    $total_orders = App\Models\Order::count();
+                    $total_orders = App\Models\Order::where('shop_id', $shop->id)->count();
                 ?>
                 <h3>{{$total_orders}}</h3>
 
@@ -92,7 +92,7 @@
             <div class="small-box bg-success">
               <div class="inner">
                 <?php
-                    $success_orders = App\Models\Order::where('status', 2)->count();
+                    $success_orders = App\Models\Order::where('status', 2)->where('shop_id', $shop->id)->count();
                 ?>
                 <h3>{{$success_orders}}</h3>
 
@@ -109,7 +109,7 @@
             <div class="small-box bg-warning">
               <div class="inner">
                 <?php
-                    $pending_orders = App\Models\Order::where('status', 0)->count();
+                    $pending_orders = App\Models\Order::where('status', 0)->where('shop_id', $shop->id)->count();
                 ?>
                 <h3>{{$pending_orders}}</h3>
 
@@ -126,7 +126,7 @@
             <div class="small-box bg-primary">
               <div class="inner">
                 <?php
-                    $processing_orders = App\Models\Order::where('status', 1)->count();
+                    $processing_orders = App\Models\Order::where('status', 1)->where('shop_id', $shop->id)->count();
                 ?>
                 <h3>{{$processing_orders}}</h3>
 
@@ -144,7 +144,7 @@
             <div class="small-box bg-danger">
               <div class="inner">
                 <?php
-                    $cancel_orders = App\Models\Order::where('status', 3)->count();
+                    $cancel_orders = App\Models\Order::where('status', 3)->where('shop_id', $shop->id)->count();
                 ?>
                 <h3>{{$cancel_orders}}</h3>
 
@@ -163,7 +163,7 @@
             <div class="small-box bg-warning">
               <div class="inner">
 
-                <h3>0</h3>
+                <h3>{{$products}}</h3>
 
                 <p>Total Product</p>
               </div>

@@ -57,6 +57,11 @@
                             </button>
                         </a>
 
+                        <a href="{{route('merchant/show-message', $vendor->id)}}" title="Send Message" style="float: left;margin-right: 10px;">
+                            <button type="submit" class="btn btn-info btn-sm"><i class="fas fa-reply-all"></i>
+                            </button>
+                        </a>
+
                       </div>
 
 

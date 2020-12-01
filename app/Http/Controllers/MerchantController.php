@@ -7,6 +7,8 @@ use App\Models\Merchant;
 use App\Models\Vendor;
 use App\Models\Product;
 use App\Models\Message;
+use App\Models\Message_replay;
+use App\Models\Shop;
 use Auth;
 use Session;
 
@@ -30,7 +32,14 @@ class MerchantController extends Controller
     }
 
     public function dashboard(){
-        return view('merchant.home');
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
+
+        $shop = Shop::where('owner_id', $user_id)->where('owner_type', $user_type)->first();
+        $products = Product::where('user_id', $user_id)->where('user_type', $user_type)->count();
+
+        return view('merchant.home', compact('shop', 'products'));
     }
 
     public function logout(){
@@ -88,5 +97,28 @@ class MerchantController extends Controller
         return redirect()->back();
 
     }
+
+    public function show_message($id){
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
+
+        $messages = Message::where('sender_id', $user_id)->where('recever_id', $id)->get();
+        $vendor = Vendor::where('id', $id)->where('type', 'vendor')->first();
+
+        return view('backend.merchant.vendors.show_message', compact('user_id', 'user_type', 'messages', 'user', 'vendor'));
+    }
+
+    public function vendor_replay($id){
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
+        $message = Message::where('id', $id)->first();
+
+        $replay_message = Message_replay::where('message_id', $id)->first();
+
+        return view('backend.merchant.vendors.vendor_replay', compact('user_id', 'user_type', 'message', 'user', 'replay_message'));
+    }
+
 
 }

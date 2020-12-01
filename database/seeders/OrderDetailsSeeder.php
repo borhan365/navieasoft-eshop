@@ -59,5 +59,23 @@ class OrderDetailsSeeder extends Seeder
             'size_id' => 2,
             'qty' => 1,
         ]);
+        DB::table('order_details')->insert([
+            'id' => 6,
+            'order_id' => 3,
+            'product_id' => 3,
+            'product_price' => 1000,
+            'color_id' => 2,
+            'size_id' => 2,
+            'qty' => 1,
+        ]);
+        DB::table('order_details')->insert([
+            'id' => 7,
+            'order_id' => 3,
+            'product_id' => 1,
+            'product_price' => 1000,
+            'color_id' => 2,
+            'size_id' => 2,
+            'qty' => 1,
+        ]);
     }
 }

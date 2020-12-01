@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Shop;
 use App\Models\Merchant;
 use App\Models\Message;
+use App\Models\Message_replay;
 use Auth;
 use Session;
 
@@ -49,8 +50,12 @@ class VendorController extends Controller
     }
 
     public function merchants(){
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
+
         $merchants = Merchant::where('status', 1)->get();
-        return view('backend.vendor.merchants.index', compact('merchants'));
+        return view('backend.vendor.merchants.index', compact('merchants', 'user_id', 'user_type'));
     }
 
     public function merchant_profile($id){
@@ -59,23 +64,22 @@ class VendorController extends Controller
         return view('backend.vendor.merchants.merchant_profile', compact('merchant', 'total_product'));
     }
 
-    public function send_message($id){
-        $user = Auth::user();
-        $user_id = Auth::user()->id;
-        $user_type = Auth::user()->type;
+    // public function send_message($id){
+    //     $user = Auth::user();
+    //     $user_id = Auth::user()->id;
+    //     $user_type = Auth::user()->type;
 
-        $merchant = Merchant::where('id', $id)->first();
+    //     $merchant = Merchant::where('id', $id)->first();
 
-        // $messages = Message::where('sender_id', $user_id)->where('recever_id', $id)->get();
 
-        $messages = Message::where(function ($query) use ($user_id, $id) {
-            $query->where('sender_id', $user_id)->where('recever_id', $id);
-        })->oRwhere(function ($query) use ($user_id, $id) {
-            $query->where('recever_id', $id)->where('sender_id', $id);
-        })->get();
+    //     $messages = Message::where(function ($query) use ($user_id, $id) {
+    //         $query->where('sender_id', $user_id)->where('recever_id', $id);
+    //     })->oRwhere(function ($query) use ($user_id, $id) {
+    //         $query->where('recever_id', $id)->where('sender_id', $id);
+    //     })->get();
 
-        return view('backend.vendor.merchants.send_message', compact('merchant', 'user_id', 'user_type', 'messages'));
-    }
+    //     return view('backend.vendor.merchants.send_message', compact('merchant', 'user_id', 'user_type', 'messages'));
+    // }
 
     public function message(Request $request){
 
@@ -103,17 +107,50 @@ class VendorController extends Controller
     }
 
 
-
     public function show_message($id){
         $user = Auth::user();
         $user_id = Auth::user()->id;
         $user_type = Auth::user()->type;
-
         $messages = Message::where('recever_id', $user_id)->where('sender_id', $id)->get();
+        $merchant = Merchant::where('id', $id)->where('type', 'merchant')->first();
 
-        return view('backend.vendor.merchants.show_message', compact('user_id', 'user_type', 'messages', 'user'));
+        return view('backend.vendor.merchants.show_message', compact('user_id', 'user_type', 'messages', 'user', 'merchant'));
     }
 
+    public function replay_message($id){
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
+        $message = Message::where('id', $id)->first();
+
+        $replay_message = Message_replay::where('message_id', $id)->first();
+
+        $a = Message::where('id', $id)->update([
+           'is_read' => 1
+        ]);
+
+
+        return view('backend.vendor.merchants.replay_message', compact('user_id', 'user_type', 'message', 'user', 'replay_message'));
+    }
+
+    public function replay(Request $request, $id){
+        $replay_msg = $request->replay;
+
+        $exist_replay = Message_replay::where('message_id', $id)->first();
+        if ($exist_replay) {
+            session()->flash('exist_replay', "You Already Replaied !! ");
+            return redirect()->back();
+        }else{
+            $replay = new Message_replay();
+            $replay->message_id = $id;
+            $replay->replay_msg = $replay_msg;
+            $replay->save();
+            session()->flash('notif', "Your Message Sent Successfully !! ");
+            return redirect()->back();
+        }
+
+
+    }
 
 
 }

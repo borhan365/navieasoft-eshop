@@ -36,6 +36,28 @@
             </a>
           </li>
 
+
+          <li class="nav-item has-treeview">
+            <a href="{{URL::to('merchant/order')}}" class="nav-link">
+              <i class="nav-icon fas fa-dollar-sign"></i>
+              <p>
+                Order
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item has-treeview
+          {{ request()->is('merchant/withdraw') ? 'menu-open' : '' }}
+          ">
+            <a href="{{URL::to('merchant/withdraw')}}" class="nav-link">
+              <i class="nav-icon fas fa-dollar-sign"></i>
+              <p>
+                Withdraw
+              </p>
+            </a>
+          </li>
+          
+
 <!--           <li class="nav-item has-treeview">
             <a href="{{URL::to('merchant/order')}}" class="nav-link">
               <i class="nav-icon fas fa-dollar-sign"></i>

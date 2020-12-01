@@ -24,6 +24,7 @@ class MerchantFactory extends Factory
     public function definition()
     {
         return [
+            'type' => 'merchant',
             'name' => 'Merchant Khan',
             'email' => 'merchant@merchant.com',
             'email_verified_at' => now(),

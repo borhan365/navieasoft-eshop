@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -23,20 +22,20 @@
 			           <strong>{{session()->get('notif')}}</strong>
 			       </div>     
 			    @endif
+          		@if(session()->has('exist_replay'))
+			       <div class="alert alert-warning">
+			           <strong>{{session()->get('exist_replay')}}</strong>
+			       </div>     
+			    @endif
 	            <!-- Horizontal Form -->
 		            <div class="card card-info">
 		              <div class="card-header">
-		                <h3 class="card-title">Contact With {{$vendor->name}}</h3>
+		                <h3 class="card-title">Vendor's Replay - </h3>
 		              </div>
-		              <!-- /.card-header -->
+		              <!-- /.card-header --> 
 		              <!-- form start -->
-		              <form class="form-horizontal" action="{{URL::to('merchant/message')}}" method="post" enctype="multipart/form-data">
+		              <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
 		              	@csrf
-
-						<input type="hidden" name="sender_id" id="sender_id" value="{{$user_id}}">
-						<input type="hidden" name="sender_type" id="sender_type" value="{{$user_type}}">
-						<input type="hidden" name="recever_id" id="recever_id" value="{{$vendor->id}}">
-						<input type="hidden" name="recever_type" id="recever_type" value="{{$vendor->type}}">
 
 		                <div class="card-body">
 		                  <div class="form-group row">
@@ -49,7 +48,7 @@
 		                  	<div class="form-group row">
 		                    	<label for="inputEmail3" class="col-sm-3 col-form-label">Subject</label>
 		                    	<div class="col-sm-9">
-		                      		<input type="text" class="form-control" name="subject">
+		                      		<input type="text" class="form-control" name="subject" value="{{$message->subject}}" disabled="">
 		                    	</div>
 		                  	</div>	
 
@@ -57,16 +56,21 @@
 	                  		<div class="form-group row">
 			                    <label for="inputEmail3" class="col-sm-3 col-form-label">Message</label>
 			                    <div class="col-sm-9">
-			                      	<textarea name="message" id="" cols="30" rows="5" class="form-control"></textarea>
+			                      	<textarea name="message" id="" cols="30" rows="5" class="form-control"  disabled="">{{$message->message}}</textarea>
+			                    </div>
+		                  	</div>	
+
+	                  		<div class="form-group row">
+			                    <label for="inputEmail3" class="col-sm-3 col-form-label">Replay</label>
+			                    <div class="col-sm-9">
+			                      	<textarea name="replay" id="" cols="30" rows="5" class="form-control" >{{$replay_message->replay_msg ?? ''}}</textarea>
 			                    </div>
 		                  	</div>	
 
 
 		                </div>
 		                <!-- /.card-body -->
-		                <div class="card-footer">
-		                  <button type="submit" class="btn btn-info">Send</button>
-		                </div>
+
 		                <!-- /.card-footer -->
 		              </form>
 	            </div>

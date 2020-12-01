@@ -1,4 +1,4 @@
-@extends('layouts.vendor.app')
+@extends('layouts.merchant.app')
 
 @section('content')
 
@@ -26,7 +26,7 @@
             @foreach($messages as $message)
                 <tr>
                   	<td>{{$i++}}</td>
-                    <td>{{$merchant->name}}</td>
+                    <td>{{$vendor->name}}</td>
                     <td>{{$message->subject}}</td>
                     <td>
                         @if($message->is_read == 0)
@@ -39,8 +39,8 @@
                   	<td>
                       <div class="row">
 
-                        <a href="{{route('vendor/replay-message', $message->id)}}" title="Send Message" style="float: left;margin-right: 10px;">
-                            <button type="submit" class="btn btn-info btn-sm"><i class="fas fa-reply-all"></i>
+                        <a href="{{route('merchant/vendor-replay', $message->id)}}" title="Send Message" style="float: left;margin-right: 10px;">
+                            <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>
                             </button>
                         </a>
 

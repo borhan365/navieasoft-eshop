@@ -42,5 +42,19 @@ class OrderSeeder extends Seeder
             'country' => 'Bangladesh',
             'status' => 0,
         ]);
+        DB::table('orders')->insert([
+            'id' => 3,
+            'shop_id' => 3,
+            'invoice_id' => 20100,
+            'customer_id' => 3,
+            'total_qty' => 2,
+            'total_cost' => 2000,
+            'payment_method' => 1,
+            'shipping_address' => 'Jatrabari, Dhaka',
+            'city' => 'Dhaka',
+            'postcode' => 1500,
+            'country' => 'Bangladesh',
+            'status' => 0,
+        ]);
     }
 }

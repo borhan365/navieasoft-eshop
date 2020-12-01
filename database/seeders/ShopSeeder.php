@@ -57,5 +57,27 @@ class ShopSeeder extends Seeder
             'phone_verified' => Null,
             'address_verified' => Null,
         ]);
+
+        DB::table('shops')->insert([
+            'owner_id' => '1',
+            'owner_type' => 'merchant',
+            'name' => 'Merchant Shop',
+            'legal_name' => 'Merchant Shop',
+            'slug' => 'merchant-shop',
+            'email' => 'merchantshop@gmail.com',
+            'description' => 'Merchant Shop',
+            'external_url' => 'www.google.com',
+            'timezone_id' => 1,
+            'current_billing_plan' => '',
+            'stripe_id' => 'merchantshop@gmail.com',
+            'card_holder_name' => 'Merchant Shop',
+            'card_brand' => 'Debit',
+            'card_last_four' => 1200,
+            'active' => Null,
+            'payment_verified' => Null,
+            'id_verified' => Null,
+            'phone_verified' => Null,
+            'address_verified' => Null,
+        ]);
     }
 }

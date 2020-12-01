@@ -1,4 +1,4 @@
-@extends('layouts.admin.app')
+@extends('layouts.merchant.app')
 
 @section('content')
 
@@ -50,7 +50,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" action="{{route('admin/update-shipping-address', [$order->id])}}" method="post">
+              <form role="form" action="{{route('merchant/update-shipping-address', [$order->id])}}" method="post">
               	@csrf
                 <div class="card-body">
                   <div class="form-group">
@@ -100,7 +100,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" action="{{route('admin/update-order-summery', [$order->id])}}" method="post">
+              <form role="form" action="{{route('merchant/update-order-summery', [$order->id])}}" method="post">
               	@csrf
                 <div class="card-body">
                   <div class="form-group">
@@ -159,14 +159,14 @@
                     <div class="col-md-4">
                         <div class="form-group">
                           <label for="inputName">Product Name</label>
-                          <input type="text" id="inputName" class="form-control" name="product_name[]" placeholder="Product Name" value="{{$details->product->name}}">
+                          <input type="text" id="inputName" class="form-control" name="product_name[]" placeholder="Product Name" value="{{$details->product->name ?? ''}}">
                         </div>   
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
                           <label for="inputName">Qty</label>
-                          <input type="text" id="inputName" class="form-control" name="quantity[]" placeholder="Product Color" value="{{$details->qty}}">
+                          <input type="text" id="inputName" class="form-control" name="quantity[]" placeholder="Product Color" value="{{$details->qty ?? ''}}">
                         </div>   
                     </div>              
 

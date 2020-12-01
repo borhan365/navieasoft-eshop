@@ -171,6 +171,9 @@ Route::group(['prefix' => 'vendor'], function(){
 		Route::get('send-message/{id}', [VendorController::class, 'send_message'])->name('vendor/send-message');		
 		Route::post('message', [VendorController::class, 'message'])->name('vendor/message');
 		Route::get('show-message/{id}', [VendorController::class, 'show_message'])->name('vendor/show-message');	
+		Route::get('replay-message/{id}', [VendorController::class, 'replay_message'])->name('vendor/replay-message');	
+
+		Route::post('replay/{id}', [VendorController::class, 'replay'])->name('vendor/replay');
 
 		//Ajax Request
 		Route::post('vendor/get-attribute-value', [App\Http\Controllers\Vendor\ProductController::class, 'get_attribute_value'])->name('vendor/get-attribute-value');
@@ -213,6 +216,18 @@ Route::group(['prefix' => 'merchant'], function(){
 		Route::get('dashboard', [MerchantController::class, 'dashboard'])->name('merchant.home');		
 		Route::post('logout', [MerchantController::class, 'logout'])->name('merchant.logout');
 
+		Route::resource('order', App\Http\Controllers\Merchant\OrderController::class);	
+		Route::get('merchant/invoice-print/{id}', [App\Http\Controllers\Merchant\OrderController::class, 'invoice_print'])->name('merchant/invoice-print');	
+
+		Route::post('update-shipping-address/{id}', [App\Http\Controllers\Merchant\OrderController::class, 'update_shipping_address'])->name('merchant/update-shipping-address');
+		Route::post('update-order-summery/{id}', [App\Http\Controllers\Merchant\OrderController::class, 'update_order_summery'])->name('merchant/update-order-summery');
+
+		Route::get('filter-order', [App\Http\Controllers\Merchant\OrderController::class, 'filter_order'])->name('merchant/filter-order');
+
+		//Withdraw Controller
+		Route::resource('withdraw', App\Http\Controllers\Merchant\WithdrawController::class);	
+
+		
 		//Product Controller
 		Route::resource('product', App\Http\Controllers\Merchant\ProductController::class);
 
@@ -220,6 +235,10 @@ Route::group(['prefix' => 'merchant'], function(){
 		Route::get('vendor-profile/{id}', [MerchantController::class, 'vendor_profile'])->name('merchant/vendor-profile');		
 		Route::get('send-message/{id}', [MerchantController::class, 'send_message'])->name('merchant/send-message');	
 		Route::post('message', [MerchantController::class, 'message'])->name('merchant/message');
+
+
+		Route::get('show-message/{id}', [MerchantController::class, 'show_message'])->name('merchant/show-message');
+		Route::get('vendor-replay/{id}', [MerchantController::class, 'vendor_replay'])->name('merchant/vendor-replay');	
 
 		//Ajax Request
 		Route::post('merchant/get-attribute-value', [App\Http\Controllers\Merchant\ProductController::class, 'get_attribute_value'])->name('merchant/get-attribute-value');

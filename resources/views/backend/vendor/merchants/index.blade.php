@@ -52,13 +52,18 @@
                             </button>
                         </a>
 
-                        <a href="{{route('vendor/send-message', $merchant->id)}}" title="Send Message" style="float: left;margin-right: 10px;">
+<!--                         <a href="{{route('vendor/send-message', $merchant->id)}}" title="Send Message" style="float: left;margin-right: 10px;">
                             <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-paper-plane"></i>
                             </button>
-                        </a>
+                        </a> -->
 
                         <a href="{{route('vendor/show-message', $merchant->id)}}" title="Send Message" style="float: left;margin-right: 10px;">
-                            <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-paper-plane"></i>
+                            <button type="submit" class="btn btn-info btn-sm"><i class="fas fa-comment-dots"></i> 
+                              <?php
+                                $count_msg = App\Models\Message::where('sender_id', $merchant->id)->where('sender_type', 'merchant')->where('recever_id', $user_id)->where('recever_type', $user_type)->select('is_read')->where('is_read', 0)->count();
+                              ?>
+                              <span class="count">{{$count_msg}}</span>
+
                             </button>
                         </a>
 

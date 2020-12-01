@@ -22,5 +22,9 @@ class ShopPaymentMethodSeeder extends Seeder
             'shop_id' => 1,
             'payment_method_id' => 2,
         ]);
+        DB::table('shop_payment_methods')->insert([
+            'shop_id' => 3,
+            'payment_method_id' => 1,
+        ]);
     }
 }
