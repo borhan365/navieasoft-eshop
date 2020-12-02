@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SocialLinkSeeder::class);
         $this->call(ShopSeeder::class);
         $this->call(ShopPaymentMethodSeeder::class);
+        $this->call(SubscriptionSeeder::class);
 
     }
 }

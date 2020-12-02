@@ -347,6 +347,17 @@
           </li>
 
           <li class="nav-item has-treeview
+          {{ request()->is('admin/subscription') ? 'menu-open' : '' }}
+          ">
+            <a href="{{URL::to('admin/subscription')}}" class="nav-link">
+              <i class="fas fa-envelope"></i>  &nbsp;
+              <p>
+                 Subscription
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item has-treeview
               {{ request()->is('admin/page/create') ? 'menu-open' : '' }}
               {{ request()->is('admin/page') ? 'menu-open' : '' }}              
               {{ request()->is('admin/deliverymethod/create') ? 'menu-open' : '' }}

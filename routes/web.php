@@ -24,6 +24,8 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\AttributeValueController;
+use App\Http\Controllers\Admin\SubscriptionController;
+use App\Http\Controllers\Admin\MailController;
 
 
 /*
@@ -91,6 +93,11 @@ Route::group(['prefix' => 'admin'], function(){
 
 		//Social Link Controller
 		Route::resource('social', SocialLinkController::class);	
+
+		//Subscription Controller
+		Route::resource('subscription', SubscriptionController::class);
+		Route::post('send-email', [MailController::class, 'send_email'])->name('admin/send-email');
+
 
 		//Order Controller
 		Route::resource('order', OrderController::class);	
