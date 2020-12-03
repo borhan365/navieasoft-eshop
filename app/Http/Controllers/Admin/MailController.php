@@ -15,16 +15,12 @@ class MailController extends Controller
             'subject' => 'required',
             'text' => 'required',
         ]);
-
 		$email = $request->email;
-
         $details = [
             'subject' => $request->subject,
             'text' => $request->text
         ];
-
         Mail::to($email)->send(new SendMail($details));
-
 	    $notification=array(
 	      'message' => 'Email Successfull',
 	      'alert-type' => 'success'
