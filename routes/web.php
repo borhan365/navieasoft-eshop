@@ -133,6 +133,8 @@ Route::group(['prefix' => 'admin'], function(){
 		Route::get('admin/inactive-withdraw/{id}', [WithdrawController::class, 'inactive_withdraw'])->name('admin/inactive-withdraw');
 		Route::get('admin/active-withdraw/{id}', [WithdrawController::class, 'active_withdraw'])->name('admin/active-withdraw');
 
+		Route::post('bulk-delete-withdraw-request', [WithdrawController::class, 'bulk_delete'])->name('admin/bulk-delete-withdraw-request');
+
 		//Post Controller
 		Route::resource('post', PostController::class);	
 

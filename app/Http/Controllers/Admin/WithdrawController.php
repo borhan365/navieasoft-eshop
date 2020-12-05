@@ -109,4 +109,24 @@ class WithdrawController extends Controller
         return redirect()->back()->with($notification);
     }
 
+
+    public function bulk_delete(Request $request){
+
+        $datas = $request->id;
+        if($datas){
+            foreach ($datas as $value){
+                $data = Withdraw::find($value);
+                $data->status = 1;
+                $data->save();
+
+            }
+            $notification=array(
+                'message' => 'All Withdraw Successfully Approved !!! ',
+                'alert-type' => 'success'
+            );
+            return redirect()->back()->with($notification);
+        }
+
+    }
+
 }
