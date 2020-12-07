@@ -37,7 +37,7 @@ class MerchantController extends Controller
         $user_type = Auth::user()->type;
 
         $shop = Shop::where('owner_id', $user_id)->where('owner_type', $user_type)->first();
-        $products = Product::where('user_id', $user_id)->where('user_type', $user_type)->count();
+        $products = Product::where('merchant_id', $user_id)->count();
 
         return view('merchant.home', compact('shop', 'products'));
     }
@@ -56,7 +56,7 @@ class MerchantController extends Controller
 
     public function vendor_profile($id){
         $vendor = Vendor::where('id', $id)->first();
-        $total_product = Product::where('user_id', $id)->where('user_type', 'vendor')->count();
+        $total_product = Product::where('vendor_id', $id)->count();
         return view('backend.merchant.vendors.vendor_profile', compact('vendor', 'total_product'));
     }
 

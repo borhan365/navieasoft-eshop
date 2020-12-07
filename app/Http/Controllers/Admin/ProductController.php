@@ -65,8 +65,10 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product = new Product();
-        $product->user_id = $request->user_id;
-        $product->user_type = $request->user_type;
+        $product->admin_id = $request->user_id;
+        $product->vendor_id = Null;
+        $product->merchant_id = Null;
+        $product->importer_id = Null;
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
         $product->brand_id = $request->brand_id;
@@ -236,6 +238,8 @@ class ProductController extends Controller
         $product_attributes = Product_attribute::where('product_id', $product->id)->get();
         $productImages= Product_image::where('product_id', $id)->get();
         $ProductVariations= Product_variation::where('product_id', $id)->get();
+
+        
         return view('backend.admin.product.edit', compact('product', 'brands', 'categories', 'colors', 'sizes', 'product_sizes', 'product_colors', 'productImages', 'product_categories', 'product_attributes', 'ProductVariations', 'attributes'));
     }
 
@@ -250,8 +254,10 @@ class ProductController extends Controller
     {
 
         $product = Product::findorfail($id);
-        $product->user_id = $request->user_id;
-        $product->user_type = $request->user_type;
+        $product->admin_id = $request->user_id;
+        $product->vendor_id = Null;
+        $product->merchant_id = Null;
+        $product->importer_id = Null;
         $product->name = $request->name;
         $product->brand_id = $request->brand_id;
 

@@ -44,7 +44,6 @@
 
             				<input type="hidden" name="created_at" value="<?php echo date('Y-m-d H:i:s'); ?>">
             				<input type="hidden" name="user_id" value="{{$user_id}}">
-            				<input type="hidden" name="user_type" value="{{$user_type}}">
 		                    
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Product Name</label>

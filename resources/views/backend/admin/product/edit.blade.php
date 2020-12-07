@@ -43,8 +43,7 @@
 		                  <div class="form-group row">
 
             				<input type="hidden" name="created_at" value="<?php echo date('Y-m-d H:i:s'); ?>">
-		                    <input type="hidden" name="user_id" value="{{$product->user_id}}">
-            				<input type="hidden" name="user_type" value="{{$product->user_type}}">
+		                    <input type="hidden" name="user_id" value="{{$product->admin_id}}">
 
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Product Name</label>

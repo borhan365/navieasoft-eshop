@@ -12,14 +12,14 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <form action="{{route('admin/bulk-delete-withdraw-request')}}" method="post">
-                @csrf
+
+            <form action="{{route('admin/bulk-approve-withdraw-request')}}" method="post">
+                            @csrf
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th class="text-center pt-3">
                       <div class="custom-checkbox custom-checkbox-table custom-control">
-
                           <button type="submit" name="btn" class="btn btn-success"><i
                                       class="fas fa-arrow-circle-up"></i></Button>
 
@@ -42,6 +42,8 @@
             @php $i=1 @endphp
             @foreach($withdraws as $withdraw)
                 <tr>
+              
+                  
                     <td class="text-center pt-2">
                         <div class="custom-checkbox custom-control">
                             <input type="checkbox" data-checkboxes="mygroup"
@@ -52,6 +54,7 @@
                                    class="custom-control-label">&nbsp;</label>
                         </div>
                     </td>
+
                   	<td>{{$i++}}</td>
                     <td>{{$withdraw->vendor->company ?? ''}}</td>
                     <td>{{$withdraw->vendor->name ?? ''}}</td>
@@ -94,6 +97,7 @@
                         </form> -->
                       </div>
 
+                  </form>
 
                   	</td>
                 </tr>
@@ -101,7 +105,6 @@
 	
                 </tfoot>
               </table>
-              </form>
             </div>
             <!-- /.card-body -->
           </div>

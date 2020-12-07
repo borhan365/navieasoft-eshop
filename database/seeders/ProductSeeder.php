@@ -15,8 +15,10 @@ class ProductSeeder extends Seeder
     public function run()
     {
         DB::table('products')->insert([
-            'user_id' => 1,
-            'user_type' => 'admin',
+            'admin_id' => 1,
+            'vendor_id' => ,
+            'merchant_id' => ,
+            'importer_id' => ,
             'brand_id' => 5,
             'name' => 'Man Shoe',
             'slug' => 'man-Shoe',
@@ -35,8 +37,10 @@ class ProductSeeder extends Seeder
             'status' => 1
         ]);
         DB::table('products')->insert([
-            'user_id' => 2,
-            'user_type' => 'vendor',
+            'admin_id' => 1,
+            'vendor_id' => 1,
+            'merchant_id' => ,
+            'importer_id' => ,
             'brand_id' => 5,
             'name' => 'Woman Shoe',
             'slug' => 'woman-Shoe',
@@ -55,8 +59,10 @@ class ProductSeeder extends Seeder
             'status' => 1
         ]);
         DB::table('products')->insert([
-            'user_id' => 1,
-            'user_type' => 'merchant',
+            'admin_id' => 1,
+            'vendor_id' => ,
+            'merchant_id' => 1,
+            'importer_id' => ,
             'brand_id' => 5,
             'name' => 'Babay Shoe',
             'slug' => 'Babay-shoe',

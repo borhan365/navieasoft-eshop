@@ -70,8 +70,10 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product = new Product();
-        $product->user_id = $request->user_id;
-        $product->user_type = $request->user_type;
+        $product->admin_id = $request->user_id;
+        $product->vendor_id = Null;
+        $product->merchant_id = $request->user_id;
+        $product->importer_id = Null;
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
         $product->brand_id = $request->brand_id;
@@ -251,8 +253,10 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::findorfail($id);
-        $product->user_id = $request->user_id;
-        $product->user_type = $request->user_type;
+        $product->admin_id = $request->user_id;
+        $product->vendor_id = Null;
+        $product->merchant_id = $request->user_id;
+        $product->importer_id = Null;
         $product->name = $request->name;
         $product->brand_id = $request->brand_id;
 

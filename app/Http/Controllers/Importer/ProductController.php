@@ -32,7 +32,7 @@ class ProductController extends Controller
         $user_id = Auth::user()->id;
         $user_type = Auth::user()->type;
 
-        $products = Product::where('user_id', $user_id)->where('user_type', $user_type)->get();
+        $products = Product::where('importer_id', $user_id)->get();
         return view('backend.importer.product.index', compact('products'));
     }
 
@@ -67,8 +67,10 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product = new Product();
-        $product->user_id = $request->user_id;
-        $product->user_type = $request->user_type;
+        $product->admin_id = $request->user_id;
+        $product->vendor_id = Null;
+        $product->merchant_id = Null;
+        $product->importer_id = $request->user_id;
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
         $product->brand_id = $request->brand_id;
@@ -161,39 +163,41 @@ class ProductController extends Controller
             }
         }
 
-        $var_attribute_id = $request->var_attribute_id;
-        $var_attribute_value_id = $request->var_attribute_value_id;
-        $var_attribute_id2 = $request->var_attribute_id2;
-        $var_attribute_value_id2 = $request->var_attribute_value_id2;
-        $var_price = $request->var_price;
+        if ($request->product_veriation) {
+            $var_attribute_id = $request->var_attribute_id;
+            $var_attribute_value_id = $request->var_attribute_value_id;
+            $var_attribute_id2 = $request->var_attribute_id2;
+            $var_attribute_value_id2 = $request->var_attribute_value_id2;
+            $var_price = $request->var_price;
 
-        $var_img = $request->file('var_img');
+            $var_img = $request->file('var_img');
 
-        if ($var_attribute_id) {
-            foreach ($var_attribute_id as $key => $value ){
-                $product_variation = new Product_variation();
+            if ($var_attribute_id) {
+                foreach ($var_attribute_id as $key => $value ){
+                    $product_variation = new Product_variation();
 
-                $product_variation->product_id = $product->id;
-                $product_variation->var_attribute_id = $value;
+                    $product_variation->product_id = $product->id;
+                    $product_variation->var_attribute_id = $value;
 
 
-                $product_variation->var_attribute_value_id = $var_attribute_value_id[$key];
-                $product_variation->var_attribute_id2 = $var_attribute_id2[$key];
-                $product_variation->var_attribute_value_id2 = $var_attribute_value_id2[$key];
-                $product_variation->var_price = $var_price[$key];
+                    $product_variation->var_attribute_value_id = $var_attribute_value_id[$key];
+                    $product_variation->var_attribute_id2 = $var_attribute_id2[$key];
+                    $product_variation->var_attribute_value_id2 = $var_attribute_value_id2[$key];
+                    $product_variation->var_price = $var_price[$key];
 
-                $image_name=str::random(5);
-                $ext = strtolower($var_img[$key]->getClientOriginalExtension());
-                $image_full_name = $image_name. '.' .$ext;
-                $upload_path = 'images/product_variation_image/';
-                $image_url = $upload_path.$image_full_name;
-                $success = $var_img[$key]->move($upload_path, $image_full_name);
+                    $image_name=str::random(5);
+                    $ext = strtolower($var_img[$key]->getClientOriginalExtension());
+                    $image_full_name = $image_name. '.' .$ext;
+                    $upload_path = 'images/product_variation_image/';
+                    $image_url = $upload_path.$image_full_name;
+                    $success = $var_img[$key]->move($upload_path, $image_full_name);
 
-                $product_variation->var_img = $image_url;
+                    $product_variation->var_img = $image_url;
 
-                $product_variation->save();
-            } 
-        }
+                    $product_variation->save();
+                } 
+            }
+        }   
 
 
         $notification=array(
@@ -249,8 +253,10 @@ class ProductController extends Controller
     {
 
         $product = Product::findorfail($id);
-        $product->user_id = $request->user_id;
-        $product->user_type = $request->user_type;
+        $product->admin_id = $request->user_id;
+        $product->vendor_id = Null;
+        $product->merchant_id = Null;
+        $product->importer_id = $request->user_id;
         $product->name = $request->name;
         $product->brand_id = $request->brand_id;
 
@@ -350,6 +356,49 @@ class ProductController extends Controller
                  }
             }
         }
+
+        $ProductVariation = Product_variation::where('product_id', $id)->delete();  
+
+        if ($request->product_veriation) {
+
+            $var_attribute_id = $request->var_attribute_id;
+            $var_attribute_value_id = $request->var_attribute_value_id;
+            $var_attribute_id2 = $request->var_attribute_id2;
+            $var_attribute_value_id2 = $request->var_attribute_value_id2;
+            $var_price = $request->var_price;
+
+            $var_img = $request->file('var_img');
+            if ($var_attribute_id) {
+                foreach ($var_attribute_id as $key => $value ){
+                    $product_variation = new Product_variation();
+
+                    $product_variation->product_id = $product->id;
+                    $product_variation->var_attribute_id = $value;
+
+
+                    $product_variation->var_attribute_value_id = $var_attribute_value_id[$key];
+                    $product_variation->var_attribute_id2 = $var_attribute_id2[$key];
+                    $product_variation->var_attribute_value_id2 = $var_attribute_value_id2[$key];
+                    $product_variation->var_price = $var_price[$key];
+
+                    if($request->hasFile('var_img')){
+                        $image_name=str::random(5);
+                        $ext = strtolower($var_img[$key]->getClientOriginalExtension());
+                        $image_full_name = $image_name. '.' .$ext;
+                        $upload_path = 'images/product_variation_image/';
+                        $image_url = $upload_path.$image_full_name;
+                        $success = $var_img[$key]->move($upload_path, $image_full_name);
+                        $product_variation->var_img = $image_url;
+                        if ($request->old_var_img) {
+                         unlink($request->old_var_img);
+                        }
+
+                    }
+                    $product_variation->save();
+                } 
+            }
+        }
+        
 
         $notification=array(
             'message' => 'Product Updated Successfully !!',

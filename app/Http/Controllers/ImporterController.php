@@ -33,7 +33,7 @@ class ImporterController extends Controller
         $user_id = Auth::user()->id;
         $user_type = Auth::user()->type;
 
-        $products = Product::where('user_id', $user_id)->where('user_type', $user_type)->count();
+        $products = Product::where('importer_id', $user_id)->count();
 
         $vendors = Vendor::get();
     	return view('importer.home', compact('vendors', 'products'));

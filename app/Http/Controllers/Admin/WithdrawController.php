@@ -110,7 +110,7 @@ class WithdrawController extends Controller
     }
 
 
-    public function bulk_delete(Request $request){
+    public function bulk_approve(Request $request){
 
         $datas = $request->id;
         if($datas){
