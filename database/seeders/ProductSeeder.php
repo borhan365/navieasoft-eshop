@@ -16,9 +16,9 @@ class ProductSeeder extends Seeder
     {
         DB::table('products')->insert([
             'admin_id' => 1,
-            'vendor_id' => ,
-            'merchant_id' => ,
-            'importer_id' => ,
+            'vendor_id' => Null,
+            'merchant_id' => Null,
+            'importer_id' => Null,
             'brand_id' => 5,
             'name' => 'Man Shoe',
             'slug' => 'man-Shoe',
@@ -39,8 +39,8 @@ class ProductSeeder extends Seeder
         DB::table('products')->insert([
             'admin_id' => 1,
             'vendor_id' => 1,
-            'merchant_id' => ,
-            'importer_id' => ,
+            'merchant_id' => Null,
+            'importer_id' => Null,
             'brand_id' => 5,
             'name' => 'Woman Shoe',
             'slug' => 'woman-Shoe',
@@ -60,9 +60,9 @@ class ProductSeeder extends Seeder
         ]);
         DB::table('products')->insert([
             'admin_id' => 1,
-            'vendor_id' => ,
+            'vendor_id' => Null,
             'merchant_id' => 1,
-            'importer_id' => ,
+            'importer_id' => Null,
             'brand_id' => 5,
             'name' => 'Babay Shoe',
             'slug' => 'Babay-shoe',

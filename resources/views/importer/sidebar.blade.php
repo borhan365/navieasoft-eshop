@@ -38,10 +38,6 @@
 
 
 
-
-
-
-
           <li class="nav-item has-treeview  
               {{ request()->is('importer/product/create') ? 'menu-open' : '' }}
               {{ request()->is('importer/product') ? 'menu-open' : '' }}
@@ -70,6 +66,15 @@
             </ul>
           </li>
 
+
+          <li class="nav-item has-treeview">
+            <a href="{{URL::to('importer/shop')}}" class="nav-link">
+              <i class="fas fa-shopping-cart"></i> &nbsp;
+              <p>
+                Shop Now
+              </p>
+            </a>
+          </li>
 
 
         </ul>

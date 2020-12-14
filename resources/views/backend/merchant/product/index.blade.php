@@ -17,9 +17,6 @@
                   <th>Sl.</th>
                   <th>Image</th>
                   <th>Name</th>
-                  <!-- <th>Category</th> -->
-<!--                   <th>SubCategory</th>
-                  <th>ProSubCategory</th> -->
                   <th>Brand</th>
                   <th>Buying Price</th>
                   <th>Market Price</th>
@@ -38,9 +35,6 @@
                   	<td>{{$i++}}</td>
                     <td><img src="{{ asset($product->image) }}" alt="" style=" background: #fff;width: 130px;height: 60px;text-align: center;box-sizing: border-box;box-shadow: 6px 9px 11px -5px rgba(0,0,0,0.30);"></td>
                     <td>{{$product->name}}</td>
-                    <!-- <td>{{$product->category->name ?? ''}}</td> -->
-<!--                     <td>{{$product->subcategory->name ?? ''}}</td>
-                    <td>{{$product->prosubcategory->name ?? ''}}</td> -->
                     <td>{{$product->brand->name ?? ''}}</td>
                     <td>{{$product->buying_price}}</td>
                     <td>{{$product->market_price}}</td>

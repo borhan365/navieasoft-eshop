@@ -69,29 +69,65 @@
 		                    </div>			
 
 		                    <div class="col-sm-6">
-		                    	<label for="inputEmail3" class="col-form-label">Attritube</label>
-		                      	<select name="attribute_id[]" id="attribute_id" class="form-control" multiple="multiple" required="">
-                                        @foreach($attributes as $attribute)
-				                            <option value="{{$attribute->id}}">{{$attribute->name}}</option>
-                                        @endforeach
-		                      	</select>
-		                    </div>		                    
-
-		                    <div class="col-sm-6">
-		                    	<label for="inputEmail3" class="col-form-label">Size</label>
-		                      	<select name="size_id[]" id="size_id" class="form-control"  multiple="multiple">
-                                        @foreach($sizes as $size)
-				                            <option value="{{$size->id}}"> {{$size->name}}</option>
-                                        @endforeach
+		                    	<label for="inputEmail3" class="col-form-label">Product Style</label>
+		                      	<select name="" id="product_veriation" class="form-control" onchange="showVariation(0)">
+				                    <option value="" selected="" disabled="">---Select---</option>
+				                    <option value="1">Simple Product</option>
+				                    <option value="2">Variation Product</option>
 		                      	</select>
 		                    </div>	
+
 		                  </div>		                  
 		                  
 		                  	<div class="form-group row">
+			                    <div class="col-sm-2">
+			                    	<label for="inputEmail3" class="col-form-label" id="SimpleProductTitle" style="display: none">Simple Product</label>
+			                      	<!-- <input type="checkbox" id="product_veriation" name="product_veriation" onchange="showVariation()" value="0"> -->
+			                    </div>
+
+			                    <div class="col-sm-6" id="SimpleProduct" style="display: none">
+                                    <table class="table table-striped" id="SimplePro">
+                                        <thead>
+                                        <tr>
+                                            <th>Attribute</th>
+                                            <th>Value</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+							                      	<select name="attribute_id[]" id="attribute_id1" class="form-control attribute_id">
+							                      		<option value="">---Select Attribute---</option>
+														@foreach($attributes as $attribute)
+															<option value="{{$attribute->id}}">{{$attribute->name}}</option>
+														@endforeach
+							                      	</select>
+                                                </td>
+                                                <td>
+							                      	<select name="attribute_value_id[]" id="attribute_value_id" class="form-control attribute_value_id">
+							                      	</select>
+                                                </td>
+
+                                                <td> 
+                                                	<button id="addSimpleProduct"  type="button" class="btn btn-success btn-sm addSimpleProduct"><i class="fa fa-plus-circle"></i> </button>
+                                                </td>
+                                            </tr>
+                                            <tr></tr>
+
+                                        </tbody>
+                                    </table>  
+
+			                    </div>	
+		                  	</div>
+
+
+
+		                  	<div class="form-group row">
 		                  		
 			                    <div class="col-sm-2">
-			                    	<label for="inputEmail3" class="col-form-label">Product Variation</label>
-			                      	<input type="checkbox" id="product_veriation" name="product_veriation" onchange="showVariation()" value="0">
+			                    	<label for="inputEmail3" class="col-form-label" id="product_veriation_title" style="display: none">Product Variation</label>
+			                      	<input type="hidden" name="product_veriation" value="0" id="productV">
 			                    </div>
 
 			                    <div class="col-sm-12" id="productVeriation" style="display: none">
@@ -110,7 +146,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-							                      	<select name="var_attribute_id[]" id="attribute_id" class="form-control attribute_id">
+							                      	<select name="var_attribute_id[]" id="attribute_id1" class="form-control attribute_id">
 							                      		<option value="">---Select Attribute---</option>
 														@foreach($attributes as $attribute)
 															<option value="{{$attribute->id}}">{{$attribute->name}}</option>
@@ -305,6 +341,19 @@
 				$('#productVer').append(html);
 			});
 
+
+			$(document).on('click', '.addSimpleProduct', function(){
+				var html = '';
+				html += '<tr>';
+
+				html += '<td><select name="attribute_id[]" id="attribute_id" class="form-control attribute_id"><option value="">---Select Attribute---</option>@foreach($attributes as $attribute)<option value="{{$attribute->id}}">{{$attribute->name}}</option>@endforeach</select></td>';
+				html += '<td><select name="attribute_value_id[]" id="attribute_value_id" class="form-control attribute_value_id"></select></td>';
+
+				html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="fa fa-minus-circle"></span></button></td></tr>';
+				$('#SimplePro').append(html);
+			});
+
+
 		    $('#color').select2({
 		      placeholder: 'Select Color'
 		    });
@@ -374,11 +423,23 @@
 
 		function showVariation() {
 			var value = $('#product_veriation').val();
-			$('#productVeriation').toggle();
+
+			// $('#productVeriation').toggle();
+
+			// $('#productVeriation').show();
+
 			if (value == 1) {
-				$('#product_veriation').val(0)
+				$('#SimpleProductTitle').show();
+				$('#SimpleProduct').show();
+				$('#productVeriation').hide();
+				$('#product_veriation_title').hide();
+				$('#productV').val(0);
 			}else{
-				$('#product_veriation').val(1)
+				$('#productVeriation').show();
+				$('#product_veriation_title').show();
+				$('#SimpleProduct').hide();
+				$('#SimpleProductTitle').hide();
+				$('#productV').val(1);
 			}
 		}
 

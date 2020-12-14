@@ -71,33 +71,111 @@
 		                    </div>		                    
 
 		                    <div class="col-sm-6">
-		                    	<label for="inputEmail3" class="col-form-label">Attritube</label>
-		                      	<select name="attribute_id[]" id="attribute_id" class="form-control" onchange="GetSubCategory(this.value)" multiple="multiple">
-                                        @foreach($product_attributes as $product_attribute)
-				                            <option value="{{$product_attribute->attribute_id}}" selected="">{{$product_attribute->attribute->name}}</option>
-                                        @endforeach
-		                      	</select>
-		                    </div>	
-
-		                    <div class="col-sm-6">
-		                    	<label for="inputEmail3" class="col-form-label">Size</label>
-		                      	<select name="size_id[]" id="size_id" class="form-control"  multiple="multiple">
-
-                                	@foreach($product_sizes as $p_size)
-		                            	<option value="{{$p_size->size_id}}" selected=""> {{$p_size->size->name}}</option>
-		                            @endforeach
-
+		                    	<label for="inputEmail3" class="col-form-label">Product Style</label>
+		                      	<select name="" id="product_veriation" class="form-control" onclick="showVariation(0)">
+				                    <option value="" selected="">---Select---</option>
+				                    <option value="1" @php echo $product->product_veriation==0?"selected":""; @endphp>Simple Product</option>
+				                    <option value="2" @php echo $product->product_veriation==1?"selected":""; @endphp>Variation Product</option>
 		                      	</select>
 		                    </div>	
 
 		                  </div>		                  
 		                  
+		                  	@if($product->product_veriation == 0)
+		                  	<div class="form-group row">
+			                    <div class="col-sm-2">
+			                    	<label for="inputEmail3" class="col-form-label" id="SimpleProductTitle" style="display: none">Simple Product</label>
+			                      	<!-- <input type="checkbox" id="product_veriation" name="product_veriation" onchange="showVariation()" value="0"> -->
+			                    </div>
 
-		                  	@if($product->product_veriation)
+			                    <div class="col-sm-6" id="SimpleProduct" >
+                                    <table class="table table-striped" id="SimplePro">
+                                        <thead>
+	                                        <tr>
+	                                            <th>Attribute</th>
+	                                            <th>Value</th>
+	                                            <th>Action</th>
+	                                        </tr>
+                                        </thead>
+                                        <tbody>
+											@foreach($product->attributes as $product_attribute)
+                                            <tr>
+                                                <td>
+							                      	<select name="attribute_id[]" id="attribute_id1" class="form-control attribute_id">
+							                      		<option value="">---Select Attribute---</option>
+							                      		@foreach($attributes as $attribute)
+															<option value="{{$attribute->id}}" @php echo $attribute->id==$product_attribute->attribute_id?"selected":""; @endphp>{{$attribute->name}}</option>
+														@endforeach
+							                      	</select>
+                                                </td>
+                                                <td>
+							                      	<select name="attribute_value_id[]" id="attribute_value_id" class="form-control attribute_value_id">
+							                      		<option value="{{ $product_attribute->product_attribute_attribute_value->attribute_value->id}}">{{ $product_attribute->product_attribute_attribute_value->attribute_value->value}}</option>
+							                      	</select>
+                                                </td>
+
+                                                <td> 
+                                                	<button id="addSimpleProduct"  type="button" class="btn btn-success btn-sm addSimpleProduct"><i class="fa fa-plus-circle"></i> </button>
+                                                </td>
+                                            </tr>
+											@endforeach
+                                            <tr></tr>
+
+                                        </tbody>
+                                    </table>  
+
+			                    </div>	
+		                  	</div>
+		                  	@else
+		                  	<div class="form-group row">
+			                    <div class="col-sm-2">
+			                    	<label for="inputEmail3" class="col-form-label" id="SimpleProductTitle" style="display: none">Simple Product</label>
+			                      	<!-- <input type="checkbox" id="product_veriation" name="product_veriation" onchange="showVariation()" value="0"> -->
+			                    </div>
+
+			                    <div class="col-sm-6" id="SimpleProduct" style="display: none">
+                                    <table class="table table-striped" id="SimplePro">
+                                        <thead>
+                                        <tr>
+                                            <th>Attribute</th>
+                                            <th>Value</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+							                      	<select name="attribute_id[]" id="attribute_id1" class="form-control attribute_id">
+							                      		<option value="">---Select Attribute---</option>
+														@foreach($attributes as $attribute)
+															<option value="{{$attribute->id}}">{{$attribute->name}}</option>
+														@endforeach
+							                      	</select>
+                                                </td>
+                                                <td>
+							                      	<select name="attribute_value_id[]" id="attribute_value_id" class="form-control attribute_value_id">
+							                      	</select>
+                                                </td>
+
+                                                <td> 
+                                                	<button id="addSimpleProduct"  type="button" class="btn btn-success btn-sm addSimpleProduct"><i class="fa fa-plus-circle"></i> </button>
+                                                </td>
+                                            </tr>
+                                            <tr></tr>
+
+                                        </tbody>
+                                    </table>  
+
+			                    </div>	
+		                  	</div>
+		                  	@endif
+
+
+		                  	@if($product->product_veriation == 1)
 		                  	<div class="form-group row">
 			                    <div class="col-sm-2">
 			                    	<label for="inputEmail3" class="col-form-label">Product Variation</label>
-			                      	<input type="checkbox" id="product_veriation" name="product_veriation" onchange="showVariation()" checked="" value="{{$product->product_veriation}}">
+			                      	<!-- <input type="checkbox" id="product_veriation" name="product_veriation" value="0"> -->
 			                    </div>
 
 			                    <div class="col-sm-12" id="productVeriation">
@@ -166,8 +244,8 @@
 		                  	<div class="form-group row">
 		                  		
 			                    <div class="col-sm-2">
-			                    	<label for="inputEmail3" class="col-form-label">Product Variation</label>
-			                      	<input type="checkbox" id="product_veriation" name="product_veriation" onchange="showVariation()" value="0">
+			                    		<label for="inputEmail3" class="col-form-label" id="product_veriation_title" style="display: none">Product Variation</label>
+			                      	<!-- <input type="checkbox" id="product_veriation" name="product_veriation" value="0"> -->
 			                    </div>
 
 			                    <div class="col-sm-12" id="productVeriation" style="display: none">
@@ -418,6 +496,18 @@
 			});
 
 
+			$(document).on('click', '.addSimpleProduct', function(){
+				var html = '';
+				html += '<tr>';
+
+				html += '<td><select name="attribute_id[]" id="attribute_id" class="form-control attribute_id"><option value="">---Select Attribute---</option>@foreach($attributes as $attribute)<option value="{{$attribute->id}}">{{$attribute->name}}</option>@endforeach</select></td>';
+				html += '<td><select name="attribute_value_id[]" id="attribute_value_id" class="form-control attribute_value_id"></select></td>';
+
+				html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="fa fa-minus-circle"></span></button></td></tr>';
+				$('#SimplePro').append(html);
+			});
+
+
 		    $('#color').select2({
 		      placeholder: 'Select Color'
 		    });
@@ -485,16 +575,26 @@
 		})
 
 
-
 		function showVariation() {
 			var value = $('#product_veriation').val();
-			$('#productVeriation').toggle();
+
+			// $('#productVeriation').toggle();
+
+			// $('#productVeriation').show();
+
 			if (value == 1) {
-				$('#product_veriation').val(0)
+				$('#SimpleProductTitle').show();
+				$('#SimpleProduct').show();
+				$('#productVeriation').hide();
+				$('#product_veriation_title').hide();
 			}else{
-				$('#product_veriation').val(1)
+				$('#productVeriation').show();
+				$('#product_veriation_title').show();
+				$('#SimpleProduct').hide();
+				$('#SimpleProductTitle').hide();
 			}
 		}
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>

@@ -205,6 +205,10 @@ Route::group(['prefix' => 'importer'], function(){
 
 		//Product Controller
 		Route::resource('product', App\Http\Controllers\Importer\ProductController::class);
+		Route::resource('shop', App\Http\Controllers\Importer\ShopController::class);
+		Route::get('remove-from-cart/{rowId}', [App\Http\Controllers\Importer\ShopController::class, 'remove_from_cart'])->name('remove-from-cart');
+		Route::post('add-to-cart',  [App\Http\Controllers\Importer\ShopController::class, 'add_to_cart'])->name('add-to-cart');
+		Route::get('show-cart', [App\Http\Controllers\Importer\ShopController::class, 'show_cart'])->name('show-cart');
 
 		//Ajax Request
 		Route::post('importer/get-attribute-value', [App\Http\Controllers\Vendor\ProductController::class, 'get_attribute_value'])->name('importer/get-attribute-value');

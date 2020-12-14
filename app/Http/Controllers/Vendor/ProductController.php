@@ -19,6 +19,7 @@ use App\Models\Product_attribute;
 use App\Models\Attribute;
 use App\Models\Product_variation;
 use App\Models\Attribute_value;
+use App\Models\Product_attribute_attribute_value;
 use Str;
 use Auth;
 
@@ -71,7 +72,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product = new Product();
-        $product->admin_id = $request->user_id;
+        $product->admin_id = 1;
         $product->vendor_id = $request->user_id;
         $product->merchant_id = Null;
         $product->importer_id = Null;
@@ -124,32 +125,24 @@ class ProductController extends Controller
         $attribute_id= $request->attribute_id;
         if ($attribute_id) {
             foreach ($attribute_id as $key => $value ){
-                $product_size = new Product_attribute();
-                $product_size->product_id =$product->id;
-                $product_size->attribute_id=$value;
-                $product_size->save();
+                $product_attribute = new Product_attribute();
+                $product_attribute->product_id =$product->id;
+                $product_attribute->attribute_id=$value;
+                $product_attribute->save();
+
+
+                $attribute_value_id= $request->attribute_value_id;
+                if ($attribute_value_id) {
+                    $product_attribute_value = new Product_attribute_attribute_value();
+                    $product_attribute_value->product_attribute_id =$product_attribute->id;
+                    $product_attribute_value->attribute_value_id=$attribute_value_id[$key];
+                    $product_attribute_value->save();
+                }
+
+
             }   
         }
 
-        $size_id = $request->size_id;
-        if ($size_id) {
-            foreach ($size_id as $key => $value ){
-                $product_size = new Product_size();
-                $product_size->product_id =$product->id;
-                $product_size->size_id=$value;
-                $product_size->save();
-            }   
-        }
-
-        $color_id = $request->color_id;
-        if ($color_id) {
-            foreach ($color_id as $key => $value ){
-                $product_color = new Product_color();
-                $product_color->product_id =$product->id;
-                $product_color->color_id=$value;
-                $product_color->save();
-            } 
-        }
 
         $image = $request->file('product_image');
         if ($image) {
@@ -258,7 +251,7 @@ class ProductController extends Controller
     {
 
         $product = Product::findorfail($id);
-        $product->admin_id = $request->user_id;
+        $product->admin_id = 1;
         $product->vendor_id = $request->user_id;
         $product->merchant_id = Null;
         $product->importer_id = Null;
@@ -309,39 +302,39 @@ class ProductController extends Controller
             }   
         }
 
-        $ProductAttribute = Product_attribute::where('product_id', $id)->delete();
-        $attribute_id = $request->attribute_id;
+        // old attribute delete
+        $ProductAttributes = Product_attribute::where('product_id', $id)->get();
+
+        if ($ProductAttributes) {
+            foreach ($ProductAttributes as $key => $product_attribute ){
+                if ($product_attribute) {
+                    Product_attribute_attribute_value::where('product_attribute_id', $product_attribute->id)->delete();
+                }
+                $product_attribute->delete();
+            }   
+        }
+
+        $attribute_id= $request->attribute_id;
         if ($attribute_id) {
             foreach ($attribute_id as $key => $value ){
                 $product_attribute = new Product_attribute();
                 $product_attribute->product_id =$product->id;
                 $product_attribute->attribute_id=$value;
                 $product_attribute->save();
+
+
+                $attribute_value_id= $request->attribute_value_id;
+                if ($attribute_value_id) {
+                    $product_attribute_value = new Product_attribute_attribute_value();
+                    $product_attribute_value->product_attribute_id =$product_attribute->id;
+                    $product_attribute_value->attribute_value_id=$attribute_value_id[$key];
+                    $product_attribute_value->save();
+                }
+
+
             }   
         }
 
-
-        $ProductSize = Product_size::where('product_id', $id)->delete();
-        $size_id = $request->size_id;
-        if ($size_id) {
-            foreach ($size_id as $key => $value ){
-                $product_size = new Product_size();
-                $product_size->product_id =$product->id;
-                $product_size->size_id=$value;
-                $product_size->save();
-            }   
-        }
-
-        $ProductColor = Product_color::where('product_id', $id)->delete();
-        $color_id = $request->color_id;
-        if ($color_id) {
-            foreach ($color_id as $key => $value ){
-                $product_color = new Product_color();
-                $product_color->product_id =$product->id;
-                $product_color->color_id=$value;
-                $product_color->save();
-            } 
-        }
 
         if ($request->product_image) {
             $ProductImage = Product_image::where('product_id', $id)->delete();        
