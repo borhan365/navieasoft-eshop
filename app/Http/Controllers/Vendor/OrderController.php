@@ -9,6 +9,7 @@ use App\Models\PaymentMethod;
 use App\Models\Shop;
 use App\Models\OrderDetails;
 use App\Models\Product;
+use App\Models\Vendor;
 use Auth;
 
 class OrderController extends Controller
@@ -27,12 +28,12 @@ class OrderController extends Controller
 
 
         $methods = PaymentMethod::where('status', 1)->get();
+     
+        $OrderDetails = OrderDetails::where('product_owner_id', $user_id)->where('product_owner_type', $user_type)->get(); 
+        $orders = OrderDetails::where('product_owner_id', $user_id)->where('product_owner_type', $user_type)->distinct()->get('order_id');
 
-        $shop = Shop::where('owner_id', $user_id)->where('owner_type', $user_type)->first();
 
-        $orders = Order::where('shop_id', $shop->id)->get();
-
-        return view('backend.vendor.order.index', compact('orders', 'methods'));
+        return view('backend.vendor.order.index', compact('orders', 'methods', 'user_id', 'user_type'));
     }
 
     /**
@@ -62,12 +63,16 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($order_id)
     {
-        $order = Order::findorfail($id);
-        $orderDetails = OrderDetails::where('order_id', $id)->get();
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
 
-        $toal_p_price = OrderDetails::where('order_id', $id)->sum('product_price');
+        $order = Order::findorfail($order_id);
+        $orderDetails = OrderDetails::where('order_id', $order_id)->where('product_owner_id', $user_id)->where('product_owner_type', $user_type)->get();
+
+        $toal_p_price = OrderDetails::where('order_id', $order_id)->where('product_owner_id', $user_id)->where('product_owner_type', $user_type)->sum('product_price');
         $tax = 10;
         $shipping_charge = 100;
 
@@ -114,9 +119,13 @@ class OrderController extends Controller
     }
 
     public function invoice_print($id){
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
+
         $order = Order::findorfail($id);
-        $orderDetails = OrderDetails::where('order_id', $id)->get();
-        $toal_p_price = OrderDetails::where('order_id', $id)->sum('product_price');
+        $orderDetails = OrderDetails::where('order_id', $id)->where('product_owner_id', $user_id)->where('product_owner_type', $user_type)->get();
+        $toal_p_price = OrderDetails::where('order_id', $id)->where('product_owner_id', $user_id)->where('product_owner_type', $user_type)->sum('product_price');
         $tax = 10;
         $shipping_charge = 100;
         $total = $toal_p_price + $tax + $shipping_charge;
@@ -189,7 +198,7 @@ class OrderController extends Controller
         $user_type = Auth::user()->type;
 
         $shop = Shop::where('owner_id', $user_id)->where('owner_type', $user_type)->first();
-        
+
         $orders = Order::where('shop_id', $shop->id)->where(function($filter) use ($from_date, $to_date, $payment_method, $status) {
                        if (!empty($from_date) || $from_date != '') {
                            $filter->where('created_at', '>=' , $from_date);

@@ -8,6 +8,10 @@ use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\PaymentMethod;
 use App\Models\Product;
+use App\Models\Shop;
+use App\Models\Vendor;
+use App\Models\Merchant;
+use App\Models\Importer;
 
 
 class OrderController extends Controller
@@ -21,6 +25,7 @@ class OrderController extends Controller
     {
         $orders = Order::get();
         $methods = PaymentMethod::where('status', 1)->get();
+
         return view('backend.admin.order.index', compact('orders', 'methods'));
     }
 
@@ -56,13 +61,25 @@ class OrderController extends Controller
         $order = Order::findorfail($id);
         $orderDetails = OrderDetails::where('order_id', $id)->get();
 
+        $shop = Shop::where('id', $order->shop_id)->first();
+
+        if($shop->owner_type == 'vendor') {
+            $shop_owner = Vendor::where('id', $shop->owner_id)->first();
+        }
+        if($shop->owner_type == 'merchant') {
+            $shop_owner = Merchant::where('id', $shop->owner_id)->first();
+        }
+        if($shop->owner_type == 'importer') {
+            $shop_owner = Importer::where('id', $shop->owner_id)->first();
+        }
+
         $toal_p_price = OrderDetails::where('order_id', $id)->sum('product_price');
         $tax = 10;
         $shipping_charge = 100;
 
         $total = $toal_p_price + $tax + $shipping_charge;
 
-        return view('backend.admin.order.details', compact('order', 'orderDetails', 'toal_p_price','tax', 'shipping_charge', 'total'));
+        return view('backend.admin.order.details', compact('order', 'orderDetails', 'toal_p_price','tax', 'shipping_charge', 'total', 'shop_owner'));
     }
 
     /**
@@ -76,7 +93,19 @@ class OrderController extends Controller
         $order = Order::findorfail($id);
         $orderDetails = OrderDetails::where('order_id', $id)->get();
 
-        return view('backend.admin.order.edit', compact('order', 'orderDetails'));
+        $shop = Shop::where('id', $order->shop_id)->first();
+
+        if($shop->owner_type == 'vendor') {
+            $shop_owner = Vendor::where('id', $shop->owner_id)->first();
+        }
+        if($shop->owner_type == 'merchant') {
+            $shop_owner = Merchant::where('id', $shop->owner_id)->first();
+        }
+        if($shop->owner_type == 'importer') {
+            $shop_owner = Importer::where('id', $shop->owner_id)->first();
+        }
+
+        return view('backend.admin.order.edit', compact('order', 'orderDetails', 'shop_owner'));
     }
 
     /**
@@ -109,7 +138,21 @@ class OrderController extends Controller
         $tax = 10;
         $shipping_charge = 100;
         $total = $toal_p_price + $tax + $shipping_charge;
-        return view('backend.admin.order.invoice_print', compact('order', 'orderDetails', 'toal_p_price','tax', 'shipping_charge', 'total'));
+
+        $shop = Shop::where('id', $order->shop_id)->first();
+
+        if($shop->owner_type == 'vendor') {
+            $shop_owner = Vendor::where('id', $shop->owner_id)->first();
+        }
+        if($shop->owner_type == 'merchant') {
+            $shop_owner = Merchant::where('id', $shop->owner_id)->first();
+        }
+        if($shop->owner_type == 'importer') {
+            $shop_owner = Importer::where('id', $shop->owner_id)->first();
+        }
+
+
+        return view('backend.admin.order.invoice_print', compact('order', 'orderDetails', 'toal_p_price','tax', 'shipping_charge', 'total', 'shop_owner'));
     }
 
     public function update_shipping_address(Request $request, $id){

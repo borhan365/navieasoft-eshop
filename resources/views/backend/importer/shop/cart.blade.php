@@ -257,11 +257,15 @@ td.checkout {
           	$contents = Cart::content();
           	$sub_total = Cart::total();
           ?>
+
+          <form action="{{URL::to('importer/update-cart')}}">
+            @csrf
           <?php foreach($contents as $content) {?>
+          <input type="hidden" name="rowid[]" value="{{$content->rowId}}">
           <tr class="productitm">
             <!-- http://www.inkydeals.com/deal/ginormous-bundle/ -->
             <td><img src="{{ asset($content->options->image) }}" class="thumb" style="width: 162px;height: 99px;"></td>
-            <td><input type="number" value="{{$content->qty}}" min="0" max="99" class="qtyinput"></td>
+            <td><input type="number" value="{{$content->qty}}" min="0" max="99" class="qtyinput" name="quantity[]"></td>
             <td>{{$content->name}}</td>
             <td>{{$content->options->attribute_value}}</td>
             <td>{{$content->price}} /-</td>
@@ -271,12 +275,12 @@ td.checkout {
 
           
           <!-- tax + subtotal -->
-          <tr class="extracosts">
+<!--           <tr class="extracosts">
             <td class="light">Shipping &amp; Tax</td>
             <td colspan="2" class="light"></td>
             <td>0.00</td>
             <td>&nbsp;</td>
-          </tr>
+          </tr> -->
           <tr class="totalprice">
             <td class="light">Total:</td>
             <td colspan="2">&nbsp;</td>
@@ -285,7 +289,14 @@ td.checkout {
           
           <!-- checkout btn -->
           <tr class="checkoutrow">
-            <td colspan="5" class="checkout"><button id="submitbtn">Checkout Now!</button></td>
+              <td  colspan="3" class="checkout"><button type="submit" class="btn btn-info btn-sm">Update Cart</button></td>
+            </form>
+
+            <form action="{{URL::to('importer/checkout')}}" method="get" class="d-inline-block">
+                @csrf
+                
+              <td colspan="3" class="checkout"><button  class="btn btn-info btn-sm">Checkout Now!</button></td>
+            </form>
           </tr>
         </tbody>
       </table>

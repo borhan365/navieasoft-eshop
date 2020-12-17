@@ -19,8 +19,7 @@ class OrderDetailsSeeder extends Seeder
             'order_id' => 1,
             'product_id' => 1,
             'product_price' => 1500,
-            'color_id' => 1,
-            'size_id' => 1,
+
             'qty' => 1,
         ]);
         DB::table('order_details')->insert([
@@ -28,8 +27,7 @@ class OrderDetailsSeeder extends Seeder
             'order_id' => 1,
             'product_id' => 2,
             'product_price' => 1000,
-            'color_id' => 2,
-            'size_id' => 2,
+
             'qty' => 1,
         ]);
         DB::table('order_details')->insert([
@@ -37,8 +35,7 @@ class OrderDetailsSeeder extends Seeder
             'order_id' => 2,
             'product_id' => 1,
             'product_price' => 1000,
-            'color_id' => 2,
-            'size_id' => 2,
+
             'qty' => 1,
         ]);
         DB::table('order_details')->insert([
@@ -46,8 +43,7 @@ class OrderDetailsSeeder extends Seeder
             'order_id' => 2,
             'product_id' => 2,
             'product_price' => 1000,
-            'color_id' => 2,
-            'size_id' => 2,
+
             'qty' => 1,
         ]);
         DB::table('order_details')->insert([
@@ -55,8 +51,7 @@ class OrderDetailsSeeder extends Seeder
             'order_id' => 2,
             'product_id' => 3,
             'product_price' => 1000,
-            'color_id' => 2,
-            'size_id' => 2,
+
             'qty' => 1,
         ]);
         DB::table('order_details')->insert([
@@ -64,8 +59,7 @@ class OrderDetailsSeeder extends Seeder
             'order_id' => 3,
             'product_id' => 3,
             'product_price' => 1000,
-            'color_id' => 2,
-            'size_id' => 2,
+
             'qty' => 1,
         ]);
         DB::table('order_details')->insert([
@@ -73,8 +67,7 @@ class OrderDetailsSeeder extends Seeder
             'order_id' => 3,
             'product_id' => 1,
             'product_price' => 1000,
-            'color_id' => 2,
-            'size_id' => 2,
+
             'qty' => 1,
         ]);
     }

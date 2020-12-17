@@ -18,6 +18,11 @@ class CreateAdminsTable extends Migration
             $table->string('type')->nullable();;
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('bkash')->nullable();
+            $table->string('nagad')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('bank_branch')->nullable();
+            $table->string('bank_account')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

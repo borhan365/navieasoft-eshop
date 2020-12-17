@@ -17,9 +17,11 @@ class CreateOrderDetailsTable extends Migration
             $table->id();
             $table->integer('order_id');
             $table->integer('product_id');
+            $table->integer('product_owner_id')->nullable();;
+            $table->string('product_owner_type')->nullable();;
             $table->integer('product_price')->nullable();
-            $table->integer('color_id')->nullable();
-            $table->integer('size_id')->nullable();
+            $table->string('qty_total_amount')->nullable();
+            $table->string('attribute_value')->nullable();
             $table->integer('qty');
             $table->timestamps();
         });

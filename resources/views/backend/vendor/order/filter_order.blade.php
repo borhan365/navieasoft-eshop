@@ -72,10 +72,32 @@
                   <?php
                       $total_qty = $total_qty+$order->total_qty;
                       $total_cost = $total_cost+$order->total_cost;
+
+                      $data = App\Models\Order::where('id', $order->order_id)->first();
+
+                      $orderTotal = App\Models\OrderDetails::where('order_id', $order->order_id)->where('product_owner_id', $user_id)->where('product_owner_type', $user_type)->sum('product_price');
+
+
+                      $shop = App\Models\Shop::where('id', $data->shop_id)->first();
+
+                      if ($shop->owner_type == 'vendor') {
+                        $shop_owner = App\Models\Vendor::where('id', $shop->owner_id)->first();
+                      }
+                      if ($shop->owner_type == 'merchant') {
+                        $shop_owner = App\Models\Merchant::where('id', $shop->owner_id)->first();
+                      }
+                      if ($shop->owner_type == 'importer') {
+                        $shop_owner = App\Models\Importer::where('id', $shop->owner_id)->first();
+                      }
+                      
                   ?>
                 <tr>
                   	<td>{{$i++}}</td>
-                    <td>{{$order->customer->first_name." ".$order->customer->last_name }}</td>
+                    @if($data->customer_id)
+                    <td>{{$data->customer->first_name." ".$data->customer->last_name }}</td>
+                    @else
+                    <td>{{$shop_owner->name}}</td>
+                    @endif
                     <td>{{$order->total_qty}}</td>
                     <td>{{$order->total_cost}} BDT</td>
                     <td>{{$order->paymentmethod->name}}</td>

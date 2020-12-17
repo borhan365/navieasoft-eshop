@@ -60,19 +60,31 @@
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                   To
-                  <address>
-                    <strong>{{$order->customer->first_name." ".$order->customer->last_name}}</strong><br>
-                    {{$order->customer->address}} <br>
-                    Phone: {{$order->customer->phone}}<br>
-                    Email: {{$order->customer->email}}
-                  </address>
+                    @if($order->customer_id)
+                      <address>
+                        <strong>{{$order->customer->first_name." ".$order->customer->last_name}}</strong><br>
+
+                        {{$order->customer->address}} <br>
+                        Phone: {{$order->customer->phone}}<br>
+                        Email: {{$order->customer->email}}
+                      </address>                     
+                    @else
+                       <address>
+                        <strong>{{$shop_owner->name}}</strong><br>
+
+                        {{$shop_owner->address}} <br>
+                        Phone: {{$shop_owner->phone}}<br>
+                        Email: {{$shop_owner->email}}
+                      </address>
+
+                    @endif
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                   <b>Invoice #{{$order->invoice_id}}</b><br>
                   <br>
                   <b>Order ID:</b> {{$order->id}}<br>
-                  <b>Account:</b> {{$order->account_no ?? ''}}
+                  <b>transaction Id:</b> {{$order->transaction_id ?? ''}}
                 </div>
                 <!-- /.col -->
               </div>

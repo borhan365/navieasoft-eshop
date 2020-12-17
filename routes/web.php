@@ -209,6 +209,12 @@ Route::group(['prefix' => 'importer'], function(){
 		Route::get('remove-from-cart/{rowId}', [App\Http\Controllers\Importer\ShopController::class, 'remove_from_cart'])->name('remove-from-cart');
 		Route::post('add-to-cart',  [App\Http\Controllers\Importer\ShopController::class, 'add_to_cart'])->name('add-to-cart');
 		Route::get('show-cart', [App\Http\Controllers\Importer\ShopController::class, 'show_cart'])->name('show-cart');
+		Route::get('update-cart', [App\Http\Controllers\Importer\ShopController::class, 'update_cart'])->name('update-cart');
+		Route::get('checkout', [App\Http\Controllers\Importer\ShopController::class, 'checkout'])->name('checkout');
+		Route::post('total-amount', [App\Http\Controllers\Importer\ShopController::class, 'total_amount'])->name('total-amount');
+		Route::post('submit-order', [App\Http\Controllers\Importer\ShopController::class, 'submit_order'])->name('submit-order');
+
+		Route::get('order-history', [App\Http\Controllers\Importer\ShopController::class, 'order_history'])->name('order-history');
 
 		//Ajax Request
 		Route::post('importer/get-attribute-value', [App\Http\Controllers\Vendor\ProductController::class, 'get_attribute_value'])->name('importer/get-attribute-value');

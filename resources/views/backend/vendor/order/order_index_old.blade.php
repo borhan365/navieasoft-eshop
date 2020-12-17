@@ -54,6 +54,7 @@
                 <tr>
                   <th>Sl.</th>
                   <th>Order By</th>
+                  <th>Quantity</th>
                   <th>Total Cost</th>
                   <th>Payment Method</th>
                   <th>Date</th>
@@ -62,77 +63,69 @@
                 </tr>
                 </thead>
                 <tbody>
-            @php 
-              $i=1;
-              $orderTotal = 0;
-            @endphp
+            @php $i=1 @endphp
             @foreach($orders as $order)
-
-                <?php
-                  $data = App\Models\Order::where('id', $order->order_id)->first();
-
-                  $orderTotal = App\Models\OrderDetails::where('order_id', $order->order_id)->where('product_owner_id', $user_id)->where('product_owner_type', $user_type)->sum('product_price');
-
-
-                  $shop = App\Models\Shop::where('id', $data->shop_id)->first();
-
-                  if ($shop->owner_type == 'vendor') {
-                    $shop_owner = App\Models\Vendor::where('id', $shop->owner_id)->first();
-                  }
-                  if ($shop->owner_type == 'merchant') {
-                    $shop_owner = App\Models\Merchant::where('id', $shop->owner_id)->first();
-                  }
-                  if ($shop->owner_type == 'importer') {
-                    $shop_owner = App\Models\Importer::where('id', $shop->owner_id)->first();
-                  }
-                ?>
+                    <?php
+                      $shop = App\Models\Shop::where('id', $order->shop_id)->first();
+                      if ($shop->owner_type == 'vendor') {
+                        $shop_owner = App\Models\Vendor::where('id', $shop->owner_id)->first();
+                      }
+                      if ($shop->owner_type == 'merchant') {
+                        $shop_owner = App\Models\Merchant::where('id', $shop->owner_id)->first();
+                      }
+                      if ($shop->owner_type == 'importer') {
+                        $shop_owner = App\Models\Importer::where('id', $shop->owner_id)->first();
+                      }
+                    ?>
+            
                 <tr>
                   	<td>{{$i++}}</td>
-                      
-                    @if($data->customer_id)
-                    <td>{{$data->customer->first_name." ".$data->customer->last_name }}</td>
+                    @if($order->customer_id)
+                    <td>{{$order->customer->first_name." ".$order->customer->last_name }}</td>
                     @else
                     <td>{{$shop_owner->name}}</td>
                     @endif
+                    <td>{{$order->total_qty}}</td>
+                    <td>{{$order->total_cost}} BDT</td>
+                    <td>{{$order->paymentmethod->name}}</td>
+                    <td>{{$order->created_at}} </td>
 
-                    </td>
-                    <td>{{$orderTotal}}</td>
-                    <td>{{$data->paymentmethod->name}}</td>
-                    <td>{{$data->created_at}}</td>
-                  <td>
-                      @php
-                          if($data->status == 0){
-                             echo  "<div class='badge badge-warning badge-shadow'>Pending</div>";
-                           }
-                           if($data->status == 1){
-                             echo  "<div class='badge badge-info badge-shadow'>Processing</div>";
-                           }
-                           if($data->status == 2){
+	                <td>
+	                    @php
+	                        if($order->status == 0){
+	                           echo  "<div class='badge badge-warning badge-shadow'>Pending</div>";
+	                         }
+                           if($order->status == 1){
+	                           echo  "<div class='badge badge-info badge-shadow'>Processing</div>";
+	                         }
+                           if($order->status == 2){
                              echo  "<div class='badge badge-success badge-shadow'>Approved</div>";
                            }
-                           if($data->status == 3){
+                           if($order->status == 3){
                              echo  "<div class='badge badge-danger badge-shadow'>Canceled</div>";
                            }
-                      @endphp
+	                    @endphp
                       
-                  </td>
-                    <td>
-                      
+	                </td>
+                  	<td>
+
                       <div class="row">
-                        <a href="{{URL::to('vendor/order/'.$order->order_id)}}" title="View" style="float: left;margin-right: 10px;">
+                        <a href="{{URL::to('vendor/order/'.$order->id)}}" title="View" style="float: left;margin-right: 10px;">
                             <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>
                             </button>
                         </a>                        
 
-                        <a href="{{URL::to('vendor/order/'.$order->order_id.'/edit')}}" title="Edit" style="float: left;margin-right: 10px;">
+                        <a href="{{URL::to('vendor/order/'.$order->id.'/edit')}}" title="Edit" style="float: left;margin-right: 10px;">
                             <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>
                             </button>
                         </a>
 
+<!--                         <form action="{{URL::to('admin/order/'.$order->id)}}" method="post">
+                        	@csrf
+                        	@method('DELETE')
+                        	<button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash"></i></button>
+                        </form> -->
                       </div>
-
-
-                    </td>
 
 
                   	</td>

@@ -150,7 +150,7 @@
                                                     </button>
                                                 </span>
 
-                                                <select name="attribute_value" id="attribute_value" class="form-control" onchange="AttributValue()">
+                                                <select name="attribute_value" id="attribute_value" class="form-control" onchange="AttributValue()" required="">
                                                 	<option value="" selected="" disabled="">--Select--</option>
                                                 	@foreach($product_attributes as $product_attribute)
                                                 	<option value="{{ $product_attribute->product_attribute_attribute_value->attribute_value->value ?? ''}}">{{ $product_attribute->product_attribute_attribute_value->attribute_value->value ?? ''}}</option>
@@ -350,44 +350,7 @@
 
                         </div>
                     </div>
-                    <div class="seller-top-products-box bg-white sidebar-box mb-3">
-                        <div class="box-title">
-                            Top Selling Products From This Seller
-                        </div>
-                        <div class="box-content">
-                           
-                            <div class="mb-3 product-box-3">
-                                <div class="clearfix">
-                                    <div class="product-image float-left">
-                                        <a href="#">
-                                            <img class="img-fit lazyload" src="images/placeholder.jpg" data-src="" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="product-details float-left">
-                                        <h4 class="title text-truncate">
-                                            <a href="#" class="d-block">Product Name</a>
-                                        </h4>
-                                        <div class="star-rating star-rating-sm mt-1">
-                                            <div class="rating text-right clearfix d-block">
-                                                <span class="star-rating star-rating-sm float-right">
-                                                   
-                                                        <i class="fa fa-star active"></i>
-                                                        <i class="fa fa-star"></i>  
-                                                        <i class="fa fa-star"></i> 
-                                                         <i class="fa fa-star"></i>
-                                                  
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="product-price strong-600 text-success">&#2547; 1500</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                           
-                        </div>
-                    </div>
+
                 </div>
                 <div class="col-xl-9">
                     <div class="product-desc-tab bg-white">
@@ -517,67 +480,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="my-4 bg-white p-3">
-                        <div class="section-title-1 border-bottom border-success">
-                            <h3 class="heading-5 strong-700 mb-0">
-                                <span class="mr-4">Related products</span>
-                            </h3>
-                        </div>
 
-
-
-
-                        <div class="arrow-round gutters-5">
-                         <div class="row no-gutters product-box-2 align-items-center">
-                             
-                                        <div class="col-5">
-                                            <div class="position-relative overflow-hidden h-100">
-                                                <a href="#" class="d-block product-image h-100 text-center">
-                                                    <img class="img-fit lazyload" src="images/placeholder.jpg" data-src="images/placeholder.jpg" alt="">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-7 border-left">
-                                            <div class="p-3">
-                                                <h2 class="product-title mb-0 p-0 text-truncate">
-                                                    <a href="#">Mobile</a>
-                                                </h2>
-                                                <div class="star-rating star-rating-sm mb-2">
-                                                    <div class="rating text-right clearfix d-block">
-                                                        <span class="star-rating star-rating-sm float-right">
-                                                           
-                                                                <i class="fa fa-star active"></i>
-                                                                <i class="fa fa-star"></i>  
-                                                                <i class="fa fa-star"></i> 
-                                                                 <i class="fa fa-star"></i>
-                                                          
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="clearfix">
-                                                    <div class="price-box float-left">
-                                                      
-                                                            <del class="old-product-price strong-400">&#2547;1500</del>
-                                                       
-                                                        <span class="product-price strong-600 text-success">&#2547;1000</span>
-                                                    </div>
-                                                   
-                                                        
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                              
-
-
-
-                              
-    
-                        </div>
-
-
-                        
-                    </div>
                 </div>
             </div>
         </div>

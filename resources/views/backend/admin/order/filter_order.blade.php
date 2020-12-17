@@ -69,13 +69,30 @@
                       $total_cost=0;
                    @endphp
             @foreach($orders as $order)
-                  <?php
-                      $total_qty = $total_qty+$order->total_qty;
-                      $total_cost = $total_cost+$order->total_cost;
-                  ?>
+                    <?php
+                      $shop = App\Models\Shop::where('id', $order->shop_id)->first();
+                      if ($shop->owner_type == 'vendor') {
+                        $shop_owner = App\Models\Vendor::where('id', $shop->owner_id)->first();
+                      }
+                      if ($shop->owner_type == 'merchant') {
+                        $shop_owner = App\Models\Merchant::where('id', $shop->owner_id)->first();
+                      }
+                      if ($shop->owner_type == 'importer') {
+                        $shop_owner = App\Models\Importer::where('id', $shop->owner_id)->first();
+                      }
+
+                      // $total_qty = $total_qty+$order->total_qty;
+                      // $total_cost = $total_cost+$order->total_cost;
+
+                    ?>
+
                 <tr>
                   	<td>{{$i++}}</td>
+                    @if($order->customer_id)
                     <td>{{$order->customer->first_name." ".$order->customer->last_name }}</td>
+                    @else
+                    <td>{{$shop_owner->name}}</td>
+                    @endif
                     <td>{{$order->total_qty}}</td>
                     <td>{{$order->total_cost}} BDT</td>
                     <td>{{$order->paymentmethod->name}}</td>
@@ -125,9 +142,12 @@
 	               <tfoot>
                   <tr>
                     <th></th>
+                    <th></th>                    
                     <th></th>
-                    <th>Total: <?php  echo $total_qty??'' ?></th>
-                    <th>Total(BDT): <?php  echo $total_cost??''." ৳";?></th>
+                    <th></th>
+                    <th></th>
+<!--                     <th>Total: <?php  echo $total_qty??'' ?></th>
+                    <th>Total(BDT): <?php  echo $total_cost??''." ৳";?></th> -->
                     <th></th>
                     <th></th>
                     <th></th>

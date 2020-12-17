@@ -19,6 +19,7 @@
               <!-- /.card-header -->
               <!-- form start -->
               <form role="form">
+                @if($order->customer_id)
                 <div class="card-body">
                   <div class="form-group">
                     <label >Name</label>
@@ -33,6 +34,22 @@
                     <input type="text" class="form-control" value="{{$order->customer->phone}}" readonly="">
                   </div>
                 </div>
+                @else
+                <div class="card-body">
+                  <div class="form-group">
+                    <label >Name</label>
+                    <input type="text" class="form-control"  value='{{$shop_owner->name}}' readonly="">
+                  </div>
+                  <div class="form-group">
+                    <label >Email</label>
+                    <input type="text" class="form-control" value="{{$shop_owner->email}}" readonly="">
+                  </div>
+                  <div class="form-group">
+                    <label >Phone</label>
+                    <input type="text" class="form-control" value="{{$shop_owner->phone}}" readonly="">
+                  </div>
+                </div>
+                @endif
               </form>
             </div>
             <!-- /.card -->

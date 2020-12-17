@@ -66,8 +66,26 @@
             @php $i=1 @endphp
             @foreach($orders as $order)
                 <tr>
+
+                    <?php
+                      $shop = App\Models\Shop::where('id', $order->shop_id)->first();
+                      if ($shop->owner_type == 'vendor') {
+                        $shop_owner = App\Models\Vendor::where('id', $shop->owner_id)->first();
+                      }
+                      if ($shop->owner_type == 'merchant') {
+                        $shop_owner = App\Models\Merchant::where('id', $shop->owner_id)->first();
+                      }
+                      if ($shop->owner_type == 'importer') {
+                        $shop_owner = App\Models\Importer::where('id', $shop->owner_id)->first();
+                      }
+                    ?>
+
                   	<td>{{$i++}}</td>
+                    @if($order->customer_id)
                     <td>{{$order->customer->first_name." ".$order->customer->last_name }}</td>
+                    @else
+                    <td>{{$shop_owner->name}}</td>
+                    @endif
                     <td>{{$order->total_qty}}</td>
                     <td>{{$order->total_cost}} BDT</td>
                     <td>{{$order->paymentmethod->name}}</td>
