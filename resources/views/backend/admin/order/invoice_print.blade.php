@@ -103,7 +103,7 @@
 	            <td>{{$details->color->name ?? ''}}</td>
 	            <td>{{$details->size->name ?? ''}}</td>
 	            <td>{{$details->product_id}}</td>
-	            <td>${{$details->product_price}}</td>
+	            <td>${{$details->qty_total_amount}}</td>
             </tr>
             @endforeach
           </tbody>

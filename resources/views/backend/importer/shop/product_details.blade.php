@@ -235,7 +235,7 @@
                                             <i class="fas fa-shopping-cart"></i> Buy Now
                                         </button>
                             </form>
-                            			<form action="{{route('add-to-cart')}}" method="post">
+                            			<form action="{{route('importer/add-to-cart')}}" method="post">
                             				@csrf
                             				<input type="hidden" value="" name="attribute_value" id="AttributValue">
                             				<input type="hidden" value="1" name="quantity" id="qty">

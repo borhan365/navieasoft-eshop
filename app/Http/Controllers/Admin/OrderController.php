@@ -73,7 +73,7 @@ class OrderController extends Controller
             $shop_owner = Importer::where('id', $shop->owner_id)->first();
         }
 
-        $toal_p_price = OrderDetails::where('order_id', $id)->sum('product_price');
+        $toal_p_price = OrderDetails::where('order_id', $id)->sum('qty_total_amount');
         $tax = 10;
         $shipping_charge = 100;
 
@@ -92,7 +92,7 @@ class OrderController extends Controller
     {
         $order = Order::findorfail($id);
         $orderDetails = OrderDetails::where('order_id', $id)->get();
-
+        
         $shop = Shop::where('id', $order->shop_id)->first();
 
         if($shop->owner_type == 'vendor') {
@@ -134,7 +134,7 @@ class OrderController extends Controller
     public function invoice_print($id){
         $order = Order::findorfail($id);
         $orderDetails = OrderDetails::where('order_id', $id)->get();
-        $toal_p_price = OrderDetails::where('order_id', $id)->sum('product_price');
+        $toal_p_price = OrderDetails::where('order_id', $id)->sum('qty_total_amount');
         $tax = 10;
         $shipping_charge = 100;
         $total = $toal_p_price + $tax + $shipping_charge;

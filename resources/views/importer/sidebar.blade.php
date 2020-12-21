@@ -36,7 +36,14 @@
             </a>
           </li>
 
-
+          <li class="nav-item has-treeview">
+            <a href="{{URL::to('importer/order')}}" class="nav-link">
+              <i class="nav-icon fas fa-dollar-sign"></i>
+              <p>
+                Order
+              </p>
+            </a>
+          </li>
 
           <li class="nav-item has-treeview  
               {{ request()->is('importer/product/create') ? 'menu-open' : '' }}

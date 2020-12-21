@@ -22,15 +22,27 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label >Name</label>
+                    @if($order->customer_id)
                     <input type="text" class="form-control"  value='{{$order->customer->first_name." ".$order->customer->last_name}}' readonly="">
+                    @else
+                    <input type="text" class="form-control"  value='{{$shop_owner->name}}' readonly="">
+                    @endif
                   </div>
                   <div class="form-group">
                     <label >Email</label>
+                    @if($order->customer_id)
                     <input type="text" class="form-control" value="{{$order->customer->email}}" readonly="">
+                    @else
+                    <input type="text" class="form-control" value="{{$shop_owner->email}}" readonly="">
+                    @endif
                   </div>
                   <div class="form-group">
                     <label >Phone</label>
+                    @if($order->customer_id)
                     <input type="text" class="form-control" value="{{$order->customer->phone}}" readonly="">
+                    @else
+                    <input type="text" class="form-control" value="{{$shop_owner->email}}" readonly="">
+                    @endif
                   </div>
                 </div>
               </form>
@@ -105,7 +117,7 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label >Total QTY</label>
-                    <input name="total_qty" type="text" class="form-control" value="{{$order->total_qty}}" readonly="">
+                    <input name="total_qty" type="text" class="form-control" value="{{$total_qty}}" readonly="">
                   </div>
                   @foreach($orderDetails as $details)
                     <div class="row">
@@ -115,7 +127,7 @@
                   @endforeach
                   <div class="form-group">
                     <label >Total Cost</label>
-                    <input name="total_cost" type="text" class="form-control" value="{{$order->total_cost}}" readonly="">
+                    <input name="total_cost" type="text" class="form-control" value="{{$toal_p_price}}" readonly="">
                   </div>
                   <div class="form-group">
                     <label>Delivery Method</label>
@@ -135,7 +147,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Update</button>
+                  <!-- <button type="submit" class="btn btn-primary">Update</button> -->
                 </div>
               </form>
             </div>
@@ -172,17 +184,24 @@
 
                     <div class="col-md-3">
                         <div class="form-group">
-                          <label for="inputName">Color</label>
-                          <input type="text" id="inputName" class="form-control" name="color[]" placeholder="Product Color" value="{{$details->color->name ?? ''}}">
+                          <label for="inputName">Attribute</label>
+                          <input type="text" id="inputName" class="form-control" name="attribute_value[]"  value="{{$details->attribute_value ?? ''}}">
                         </div>   
                     </div>  
 
-                    <div class="col-md-3">
+<!--                     <div class="col-md-3">
                         <div class="form-group">
-                          <label for="inputName">Size</label>
-                          <input type="text" id="inputName" class="form-control" name="color[]" placeholder="Product Color" value="{{$details->size->name ?? ''}}">
+                          <label for="inputName">Product Owner</label>
+
+                          <?php
+                            $product_owner = App\Models\Vendor::where('id', $details->product_owner_id)->where('type', 'vendor')->first();
+                          ?>
+
+                          <a href=""><p  class="form-control" name="product_owner[]" >{{$product_owner->name ?? ''}}</p></a>
                         </div>   
-                    </div>
+                    </div>   -->
+
+
                     @endforeach  
                   </div>
 

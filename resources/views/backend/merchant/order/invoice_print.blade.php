@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{{$order->customer->first_name." ".$order->customer->last_name}} Invoice</title>
+  <title>Invoice</title>
+
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bootstrap 4 -->
@@ -47,19 +48,40 @@
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
         To
-	    <address>
-	        <strong>{{$order->customer->first_name." ".$order->customer->last_name}}</strong><br>
-	        {{$order->customer->address}} <br>
-	        Phone: {{$order->customer->phone}}<br>
-	        Email: {{$order->customer->email}}
-	    </address>
+        <?php
+          $shop = App\Models\Shop::where('id', $order->shop_id)->first();
+          if ($shop->owner_type == 'vendor') {
+            $shop_owner = App\Models\Vendor::where('id', $shop->owner_id)->first();
+          }
+          if ($shop->owner_type == 'merchant') {
+            $shop_owner = App\Models\Merchant::where('id', $shop->owner_id)->first();
+          }
+          if ($shop->owner_type == 'importer') {
+            $shop_owner = App\Models\Importer::where('id', $shop->owner_id)->first();
+          }
+        ?>
+
+        @if($order->customer_id)
+        <address>
+          <strong>{{$order->customer->first_name." ".$order->customer->last_name}}</strong><br>
+          {{$order->customer->address}} <br>
+          Phone: {{$order->customer->phone}}<br>
+          Email: {{$order->customer->email}}
+        </address>
+        @else
+        <address>
+          <strong>{{$shop_owner->name}}</strong><br>
+           Phone: {{$shop_owner->phone}}<br>
+           Email: {{$shop_owner->email}}
+        </address>
+        @endif
       </div>
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
         <b>Invoice #{{$order->invoice_id}}</b><br>
         <br>
         <b>Order ID:</b> {{$order->id}}<br>
-        <b>Account:</b> {{$order->account_no ?? ''}}
+        <b>Transaction Id:</b> {{$order->transaction_id ?? ''}}
       </div>
       <!-- /.col -->
     </div>
@@ -71,23 +93,21 @@
         <table class="table table-striped">
           <thead>
           <tr>
-	          <th>Qty</th>
-	          <th>Product</th>
-	          <th>Color</th>
-	          <th>Size</th>
-	          <th>Serial #</th>
-	          <th>Subtotal</th>
+            <th>Qty</th>
+            <th>Product</th>
+            <th>Attribute</th>
+            <th>Serial #</th>
+            <th>Subtotal</th>
           </tr>
           </thead>
           <tbody>
             @foreach($orderDetails as $details)
             <tr>
-	            <td>{{$details->qty}}</td>
-	            <td>{{$details->product->name}}</td>
-	            <td>{{$details->color->name ?? ''}}</td>
-	            <td>{{$details->size->name ?? ''}}</td>
-	            <td>{{$details->product_id}}</td>
-	            <td>${{$details->product_price}}</td>
+              <td>{{$details->qty}}</td>
+              <td>{{$details->product->name}}</td>
+              <td>{{$details->attribute_value}}</td>
+              <td>{{$details->product_id}}</td>
+              <td>${{$details->qty_total_amount}}</td>
             </tr>
             @endforeach
           </tbody>
@@ -116,24 +136,24 @@
         <p class="lead"></p>
 
         <div class="table-responsive">
-          	<table class="table">
-              	<tr>
-                	<th style="width:50%">Subtotal:</th>
-                	<td>${{$toal_p_price}}</td>
-              	</tr>
-              	<tr>
-                	<th>Tax (5.0%)</th>
-                	<td>${{$tax}}</td>
-              	</tr>
-              	<tr>
-                	<th>Shipping:</th>
-                	<td>${{$shipping_charge}}</td>
-              	</tr>
-              	<tr>
-                	<th>Total:</th>
-                	<td>${{$total}}</td>
-              	</tr>
-          	</table>
+            <table class="table">
+                <tr>
+                  <th style="width:50%">Subtotal:</th>
+                  <td>${{$toal_p_price}}</td>
+                </tr>
+                <tr>
+                  <th>Tax (5.0%)</th>
+                  <td>${{$tax}}</td>
+                </tr>
+                <tr>
+                  <th>Shipping:</th>
+                  <td>${{$shipping_charge}}</td>
+                </tr>
+                <tr>
+                  <th>Total:</th>
+                  <td>${{$total}}</td>
+                </tr>
+            </table>
         </div>
       </div>
       <!-- /.col -->

@@ -100,6 +100,24 @@
             </a>
           </li>
 
+          <li class="nav-item has-treeview">
+            <a href="{{URL::to('vendor/shop')}}" class="nav-link">
+              <i class="fas fa-shopping-cart"></i> &nbsp;
+              <p>
+                Shop Now
+              </p>
+            </a>
+          </li>
+
+
+          <li class="nav-item has-treeview">
+            <a href="{{URL::to('vendor/order-history')}}" class="nav-link">
+              <i class="fas fa-shopping-cart"></i> &nbsp;
+              <p>
+                Order history
+              </p>
+            </a>
+          </li>
 
 
         </ul>

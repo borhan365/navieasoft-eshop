@@ -175,6 +175,19 @@ Route::group(['prefix' => 'vendor'], function(){
 
 		Route::get('vendor/filter-order', [App\Http\Controllers\Vendor\OrderController::class, 'filter_order'])->name('vendor/filter-order');
 
+		Route::resource('shop', App\Http\Controllers\Vendor\ShopController::class);
+		Route::post('add-to-cart',  [App\Http\Controllers\Vendor\ShopController::class, 'add_to_cart'])->name('vendor/add-to-cart');
+		Route::get('show-cart', [App\Http\Controllers\Vendor\ShopController::class, 'show_cart'])->name('vendor/show-cart');
+		Route::get('update-cart', [App\Http\Controllers\Vendor\ShopController::class, 'update_cart'])->name('vendor/update-cart');
+		Route::get('remove-from-cart/{rowId}', [App\Http\Controllers\Vendor\ShopController::class, 'remove_from_cart'])->name('vendor/remove-from-cart');
+		Route::post('total-amount', [App\Http\Controllers\Vendor\ShopController::class, 'total_amount'])->name('vendor/total-amount');
+		Route::post('submit-order', [App\Http\Controllers\Vendor\ShopController::class, 'submit_order'])->name('vendor/submit-order');
+		Route::get('checkout', [App\Http\Controllers\Vendor\ShopController::class, 'checkout'])->name('vendor/checkout');
+
+		Route::get('checkout', [App\Http\Controllers\Vendor\ShopController::class, 'checkout'])->name('vendor/checkout');
+		Route::get('order-history', [App\Http\Controllers\Vendor\ShopController::class, 'order_history'])->name('/order-history');
+
+
 		Route::get('merchants', [VendorController::class, 'merchants'])->name('vendor/merchants');	
 		Route::get('merchant-profile/{id}', [VendorController::class, 'merchant_profile'])->name('vendor/merchant-profile');		
 		Route::get('send-message/{id}', [VendorController::class, 'send_message'])->name('vendor/send-message');		
@@ -206,15 +219,27 @@ Route::group(['prefix' => 'importer'], function(){
 		//Product Controller
 		Route::resource('product', App\Http\Controllers\Importer\ProductController::class);
 		Route::resource('shop', App\Http\Controllers\Importer\ShopController::class);
-		Route::get('remove-from-cart/{rowId}', [App\Http\Controllers\Importer\ShopController::class, 'remove_from_cart'])->name('remove-from-cart');
-		Route::post('add-to-cart',  [App\Http\Controllers\Importer\ShopController::class, 'add_to_cart'])->name('add-to-cart');
-		Route::get('show-cart', [App\Http\Controllers\Importer\ShopController::class, 'show_cart'])->name('show-cart');
-		Route::get('update-cart', [App\Http\Controllers\Importer\ShopController::class, 'update_cart'])->name('update-cart');
-		Route::get('checkout', [App\Http\Controllers\Importer\ShopController::class, 'checkout'])->name('checkout');
-		Route::post('total-amount', [App\Http\Controllers\Importer\ShopController::class, 'total_amount'])->name('total-amount');
-		Route::post('submit-order', [App\Http\Controllers\Importer\ShopController::class, 'submit_order'])->name('submit-order');
+		Route::get('remove-from-cart/{rowId}', [App\Http\Controllers\Importer\ShopController::class, 'remove_from_cart'])->name('importer/remove-from-cart');
+		Route::post('add-to-cart',  [App\Http\Controllers\Importer\ShopController::class, 'add_to_cart'])->name('importer/add-to-cart');
+		Route::get('show-cart', [App\Http\Controllers\Importer\ShopController::class, 'show_cart'])->name('importer/show-cart');
+		Route::get('update-cart', [App\Http\Controllers\Importer\ShopController::class, 'update_cart'])->name('importer/update-cart');
+		Route::get('checkout', [App\Http\Controllers\Importer\ShopController::class, 'checkout'])->name('importer/checkout');
+		Route::post('total-amount', [App\Http\Controllers\Importer\ShopController::class, 'total_amount'])->name('importer/total-amount');
+		Route::post('submit-order', [App\Http\Controllers\Importer\ShopController::class, 'submit_order'])->name('importer/submit-order');
 
-		Route::get('order-history', [App\Http\Controllers\Importer\ShopController::class, 'order_history'])->name('order-history');
+
+
+
+		Route::resource('order', App\Http\Controllers\Importer\OrderController::class);	
+		Route::get('filter-order', [App\Http\Controllers\Importer\OrderController::class, 'filter_order'])->name('importer/filter-order');
+
+		Route::get('invoice-print/{id}', [App\Http\Controllers\Importer\OrderController::class, 'invoice_print'])->name('importer/invoice-print');
+
+		Route::post('update-shipping-address/{id}', [App\Http\Controllers\Importer\OrderController::class, 'update_shipping_address'])->name('importer/update-shipping-address');
+		Route::post('update-order-summery/{id}', [App\Http\Controllers\Importer\OrderController::class, 'update_order_summery'])->name('importer/update-order-summery');
+
+
+		Route::get('order-history', [App\Http\Controllers\Importer\ShopController::class, 'order_history'])->name('importer/order-history');
 
 		//Ajax Request
 		Route::post('importer/get-attribute-value', [App\Http\Controllers\Vendor\ProductController::class, 'get_attribute_value'])->name('importer/get-attribute-value');
@@ -258,6 +283,22 @@ Route::group(['prefix' => 'merchant'], function(){
 
 		Route::get('show-message/{id}', [MerchantController::class, 'show_message'])->name('merchant/show-message');
 		Route::get('vendor-replay/{id}', [MerchantController::class, 'vendor_replay'])->name('merchant/vendor-replay');	
+
+		Route::resource('shop', App\Http\Controllers\Merchant\ShopController::class);
+
+		Route::post('add-to-cart',  [App\Http\Controllers\Merchant\ShopController::class, 'add_to_cart'])->name('merchant/add-to-cart');
+		Route::get('show-cart', [App\Http\Controllers\Merchant\ShopController::class, 'show_cart'])->name('merchant/show-cart');
+		Route::get('update-cart', [App\Http\Controllers\Merchant\ShopController::class, 'update_cart'])->name('merchant/update-cart');
+		Route::get('remove-from-cart/{rowId}', [App\Http\Controllers\Merchant\ShopController::class, 'remove_from_cart'])->name('merchant/remove-from-cart');
+		Route::get('checkout', [App\Http\Controllers\Merchant\ShopController::class, 'checkout'])->name('merchant/checkout');
+		Route::post('total-amount', [App\Http\Controllers\Merchant\ShopController::class, 'total_amount'])->name('merchant/total-amount');
+		Route::post('submit-order', [App\Http\Controllers\Merchant\ShopController::class, 'submit_order'])->name('merchant/submit-order');
+
+		Route::get('order-history', [App\Http\Controllers\Merchant\ShopController::class, 'order_history'])->name('merchant/order-history');
+
+
+
+
 
 		//Ajax Request
 		Route::post('merchant/get-attribute-value', [App\Http\Controllers\Merchant\ProductController::class, 'get_attribute_value'])->name('merchant/get-attribute-value');

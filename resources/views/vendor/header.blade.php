@@ -54,6 +54,15 @@
             </ul>
         </li>
         <!-- Control Sidebar Toggle Button -->
+
+            <li style="position: relative; left: 900px;">
+              <?php  
+                  $a = Cart::content()->count();
+              ?>
+              
+              <a href="{{route('vendor/show-cart')}}" style="color: white; font-size: 20px;">Cart <span>{{$a}}</span></a>
+            </li>
+        
         <li>
 {{--   <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>--}}
 

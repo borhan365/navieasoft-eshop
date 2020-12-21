@@ -189,17 +189,34 @@
 
                     <div class="col-md-3">
                         <div class="form-group">
-                          <label for="inputName">Color</label>
-                          <input type="text" id="inputName" class="form-control" name="color[]" placeholder="Product Color" value="{{$details->color->name ?? ''}}">
+                          <label for="inputName">Attribute</label>
+                          <input type="text" id="inputName" class="form-control" name="attribute_value[]"  value="{{$details->attribute_value ?? ''}}">
                         </div>   
                     </div>  
 
                     <div class="col-md-3">
                         <div class="form-group">
-                          <label for="inputName">Size</label>
-                          <input type="text" id="inputName" class="form-control" name="color[]" placeholder="Product Color" value="{{$details->size->name ?? ''}}">
+                          <label for="inputName">Product Owner</label>
+
+                          <?php
+                            $product_owner = App\Models\Vendor::where('id', $details->product_owner_id)->where('type', 'vendor')->first();
+                          ?>
+                          <br>
+
+                          @if($details->product_owner_type == 'merchant')
+                            <a href="{{URL::to('admin/merchant/'.$details->product_owner_id)}}">Profile - <i class="fas fa-user-circle"></i> </a>
+                          @endif                          
+
+                          @if($details->product_owner_type == 'vendor')
+                            <a href="{{URL::to('admin/vendor/'.$details->product_owner_id)}}">Profile - <i class="fas fa-user-circle"></i> </a>
+                          @endif
+
+                          @if($details->product_owner_type == 'importer')
+                            <a href="{{URL::to('admin/importer/'.$details->product_owner_id)}}">Profile - <i class="fas fa-user-circle"></i> </a>
+                          @endif
+                          
                         </div>   
-                    </div>
+                    </div> 
                     @endforeach  
                   </div>
 

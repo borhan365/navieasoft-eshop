@@ -34,7 +34,7 @@
                       <div class="col-xl-2 col-md-2">
                           <label class="col-form-label"><b>Status<i class="text-danger">*</i> </b></label>
                           <select class="form-control select2" name="status">
-                              <option value="">----Select----</option>
+                              <option value="" disabled="" selected="">----Select----</option>
                               <option value="0">Pending</option>
                               <option value="1">Processing</option>
                               <option value="2">Approved</option>
@@ -71,7 +71,7 @@
                 <?php
                   $data = App\Models\Order::where('id', $order->order_id)->first();
 
-                  $orderTotal = App\Models\OrderDetails::where('order_id', $order->order_id)->where('product_owner_id', $user_id)->where('product_owner_type', $user_type)->sum('product_price');
+                  $orderTotal = App\Models\OrderDetails::where('order_id', $order->order_id)->where('product_owner_id', $user_id)->where('product_owner_type', $user_type)->sum('qty_total_amount');
 
 
                   $shop = App\Models\Shop::where('id', $data->shop_id)->first();

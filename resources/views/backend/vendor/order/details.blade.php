@@ -119,7 +119,7 @@
                       <td>{{$details->product->name}}</td>
                       <td>{{$details->product_id}}</td>
                       <td>{{$details->attribute_value}}</td>
-                      <td>${{$details->product_price}}</td>
+                      <td>${{$details->qty_total_amount}}</td>
                     </tr>
                     @endforeach
 

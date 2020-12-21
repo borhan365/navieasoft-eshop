@@ -59,7 +59,7 @@
                   $a = Cart::content()->count();
               ?>
               
-              <a href="{{route('show-cart')}}" style="color: white; font-size: 20px;">Cart <span>{{$a}}</span></a>
+              <a href="{{route('importer/show-cart')}}" style="color: white; font-size: 20px;">Cart <span>{{$a}}</span></a>
             </li>
 
         <li>

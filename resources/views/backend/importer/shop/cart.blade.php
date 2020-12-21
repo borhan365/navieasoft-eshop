@@ -269,7 +269,7 @@ td.checkout {
             <td>{{$content->name}}</td>
             <td>{{$content->options->attribute_value}}</td>
             <td>{{$content->price}} /-</td>
-            <td><a href="{{ route('remove-from-cart',[$content->rowId])}}"><span class="remove"><img src="https://i.imgur.com/h1ldGRr.png" alt="X"></span></a></td>
+            <td><a href="{{ route('importer/remove-from-cart',[$content->rowId])}}"><span class="remove"><img src="https://i.imgur.com/h1ldGRr.png" alt="X"></span></a></td>
           </tr>
           <?php }?>
 
