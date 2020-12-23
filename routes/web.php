@@ -6,6 +6,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\ImporterController;
 use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\WelcomeController;
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubcategoryController;
@@ -39,14 +42,52 @@ use App\Http\Controllers\Admin\MailController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
+Route::get('product-details/{slug}', [WelcomeController::class, 'product_details'])->name('product-details');
+
+
+
+
+Route::get('registration', [RegistrationController::class, 'registration'])->name('registration');
+Route::get('vendor-registration', [RegistrationController::class, 'vendor_registration'])->name('vendor-registration');
+Route::get('importer-registration', [RegistrationController::class, 'importer_registration'])->name('importer-registration');
+Route::get('merchant-registration', [RegistrationController::class, 'merchant_registration'])->name('merchant-registration');
+
+Route::post('customer-registration', [RegistrationController::class, 'customerForm'])->name('customer-registration');
+Route::post('vendor-registration', [RegistrationController::class, 'vendorForm'])->name('vendor-registration');
+Route::post('importer-registration', [RegistrationController::class, 'importerForm'])->name('importer-registration');
+Route::post('merchant-registration', [RegistrationController::class, 'merchantForm'])->name('merchant-registration');
+
+Route::get('loginForm', [LoginController::class, 'loginForm'])->name('loginForm');
+Route::post('customer-login', [LoginController::class, 'customer_login'])->name('customer-login');
+Route::get('VendorLoginForm', [LoginController::class, 'VendorLoginForm'])->name('VendorLoginForm');
+Route::post('vendor-login', [LoginController::class, 'vendor_login'])->name('vendor-login');
+Route::get('ImporterLoginForm', [LoginController::class, 'ImporterLoginForm'])->name('ImporterLoginForm');
+Route::post('importer-login', [LoginController::class, 'importer_login'])->name('importer-login');
+Route::get('MerchantLoginForm', [LoginController::class, 'MerchantLoginForm'])->name('MerchantLoginForm');
+Route::post('merchant-login', [LoginController::class, 'merchant_login'])->name('merchant-login');
+Route::get('logout', [RegistrationController::class, 'logout'])->name('logout');
+
+
+Route::post('cart-page', [App\Http\Controllers\ShopController::class, 'show_cart'])->name('cart-page');
+Route::get('cart', [App\Http\Controllers\ShopController::class, 'cart'])->name('cart');
+Route::post('add-to-cart',  [App\Http\Controllers\ShopController::class, 'add_to_cart'])->name('add-to-cart');
+Route::get('update-cart', [App\Http\Controllers\ShopController::class, 'update_cart'])->name('update-cart');
+Route::get('remove-from-cart/{rowId}', [App\Http\Controllers\ShopController::class, 'remove_from_cart'])->name('remove-from-cart');
+Route::get('checkout', [App\Http\Controllers\ShopController::class, 'checkout'])->name('checkout');
+Route::post('total-amount', [App\Http\Controllers\ShopController::class, 'total_amount'])->name('total-amount');
+Route::post('submit-order', [App\Http\Controllers\ShopController::class, 'submit_order'])->name('submit-order');
+
+
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE'; //Return anything
+});
 
 //Admin Route
 Route::group(['prefix' => 'admin'], function(){
@@ -81,6 +122,7 @@ Route::group(['prefix' => 'admin'], function(){
 
 		//Product Controller
 		Route::resource('product', ProductController::class);
+		Route::get('product-variation/{id}', [ProductController::class, 'product_variation'])->name('admin/product-variation');
 
 		//Page Controller
 		Route::resource('page', PageController::class);
@@ -161,6 +203,11 @@ Route::group(['prefix' => 'vendor'], function(){
 		Route::get('dashboard', [VendorController::class, 'dashboard'])->name('vendor.home');		
 		Route::post('logout', [VendorController::class, 'logout'])->name('vendor.logout');
 
+		//Attribute Controller
+		Route::resource('attribute', App\Http\Controllers\Vendor\AttributeController::class);
+
+		//Attribute Controller
+		Route::resource('attribute_value', App\Http\Controllers\Vendor\AttributeValueController::class);
 		//Product Controller
 		Route::resource('product', App\Http\Controllers\Vendor\ProductController::class);
 
@@ -184,7 +231,7 @@ Route::group(['prefix' => 'vendor'], function(){
 		Route::post('submit-order', [App\Http\Controllers\Vendor\ShopController::class, 'submit_order'])->name('vendor/submit-order');
 		Route::get('checkout', [App\Http\Controllers\Vendor\ShopController::class, 'checkout'])->name('vendor/checkout');
 
-		Route::get('checkout', [App\Http\Controllers\Vendor\ShopController::class, 'checkout'])->name('vendor/checkout');
+		// Route::get('checkout', [App\Http\Controllers\Vendor\ShopController::class, 'checkout'])->name('vendor/checkout');
 		Route::get('order-history', [App\Http\Controllers\Vendor\ShopController::class, 'order_history'])->name('/order-history');
 
 
@@ -215,6 +262,12 @@ Route::group(['prefix' => 'importer'], function(){
 	Route::group(['middleware'=>'importer.auth'], function(){
 		Route::get('dashboard', [ImporterController::class, 'dashboard'])->name('importer.home');		
 		Route::post('logout', [ImporterController::class, 'logout'])->name('importer.logout');
+
+		//Attribute Controller
+		Route::resource('attribute', App\Http\Controllers\Importer\AttributeController::class);
+
+		//Attribute Value Controller
+		Route::resource('attribute_value', App\Http\Controllers\Importer\AttributeValueController::class);
 
 		//Product Controller
 		Route::resource('product', App\Http\Controllers\Importer\ProductController::class);
@@ -272,6 +325,13 @@ Route::group(['prefix' => 'merchant'], function(){
 		Route::resource('withdraw', App\Http\Controllers\Merchant\WithdrawController::class);	
 
 		
+
+		//Attribute Controller
+		Route::resource('attribute', App\Http\Controllers\Merchant\AttributeController::class);
+
+		//Attribute Value Controller
+		Route::resource('attribute_value', App\Http\Controllers\Merchant\AttributeValueController::class);
+
 		//Product Controller
 		Route::resource('product', App\Http\Controllers\Merchant\ProductController::class);
 

@@ -48,13 +48,12 @@ class ProductController extends Controller
 
         $brands = Brand::where('status', 1)->get();
         $categories  = Category::where('status', 1)->get();
-        $colors   = Color::where('status', 1)->get();
-        $sizes   = Size::where('status', 1)->get();
+
 
         $attributes = Attribute::where('status', 1)->get();
 
 
-        return view('backend.admin.product.create', compact('brands', 'categories', 'colors', 'sizes', 'attributes', 'user_id', 'user_type'));
+        return view('backend.admin.product.create', compact('brands', 'categories', 'attributes', 'user_id', 'user_type'));
     }
 
     /**
@@ -472,6 +471,25 @@ class ProductController extends Controller
     public function get_prosubcategory(Request $request){
         $prosubcategories = Category::where('parent_id', $request->subcategory_id)->get();
         return view('backend.admin.product.get_prosubcategory',compact('prosubcategories'));
+    }
+
+    public function product_variation(Request $request, $id){
+
+        $product = Product::findorfail($id);
+        $product_categories = Product_category::where('product_id', $product->id)->get();
+
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
+
+        $brands = Brand::where('status', 1)->get();
+        $categories  = Category::where('status', 1)->get();
+
+        $attributes = Attribute::where('status', 1)->get();
+        // $ProductVariations= Product_variation::where('product_id', $id)->get();
+        $ProductAttributes= Product_attribute::where('product_id', $id)->get();
+
+        return view('backend.admin.product.product_variation', compact('brands', 'categories', 'attributes', 'user_id', 'user_type', 'product', 'product_categories', 'ProductAttributes'));
     }
 
 }

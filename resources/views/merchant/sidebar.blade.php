@@ -79,6 +79,45 @@
           </li>    -->       
 
 
+          <li class="nav-item has-treeview  
+              {{ request()->is('merchant/attribute/create') ? 'menu-open' : '' }}
+              {{ request()->is('merchant/attribute') ? 'menu-open' : '' }}
+              {{ request()->is('merchant/attribute_value') ? 'menu-open' : '' }}
+          ">
+            <a href="" class="nav-link has-treeview">
+              <i class="nav-icon fab fa-bimobject"></i>
+              <p class=" has-treeview">
+                Attribute
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ request()->is('merchant/attribute/create') ? 'active' : '' }}">
+                <a href="{{URL::to('merchant/attribute/create')}}" class="nav-link {{ request()->is('merchant/attribute/create') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Attribute</p>
+                </a>
+              </li>              
+
+              <li class="nav-item {{ request()->is('merchant/attribute') ? 'active' : '' }}">
+                <a href="{{URL::to('merchant/attribute')}}" class="nav-link {{ request()->is('merchant/attribute') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Attribute</p>
+                </a>
+              </li>
+
+              <li class="nav-item {{ request()->is('merchant/attribute_value') ? 'active' : '' }}">
+                <a href="{{URL::to('merchant/attribute_value')}}" class="nav-link {{ request()->is('merchant/attribute_value') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Attribute Value</p>
+                </a>
+              </li>  
+
+
+            </ul>
+          </li>
+
+
 
           <li class="nav-item has-treeview  
               {{ request()->is('merchant/product/create') ? 'menu-open' : '' }}

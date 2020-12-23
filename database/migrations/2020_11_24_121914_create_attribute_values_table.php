@@ -16,6 +16,10 @@ class CreateAttributeValuesTable extends Migration
         Schema::create('attribute_values', function (Blueprint $table) {
             $table->id();
             $table->integer('attribute_id');
+            $table->string('admin_id');
+            $table->string('vendor_id')->nullable();
+            $table->string('merchant_id')->nullable();
+            $table->string('importer_id')->nullable();
             $table->string('value');
             $table->string('slug');
             $table->text('description')->nullable();

@@ -56,7 +56,43 @@
           </li>
 
 
+          <li class="nav-item has-treeview  
+              {{ request()->is('vendor/attribute/create') ? 'menu-open' : '' }}
+              {{ request()->is('vendor/attribute') ? 'menu-open' : '' }}
+              {{ request()->is('vendor/attribute_value') ? 'menu-open' : '' }}
+          ">
+            <a href="" class="nav-link has-treeview">
+              <i class="nav-icon fab fa-bimobject"></i>
+              <p class=" has-treeview">
+                Attribute
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ request()->is('vendor/attribute/create') ? 'active' : '' }}">
+                <a href="{{URL::to('vendor/attribute/create')}}" class="nav-link {{ request()->is('vendor/attribute/create') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Attribute</p>
+                </a>
+              </li>              
 
+              <li class="nav-item {{ request()->is('vendor/attribute') ? 'active' : '' }}">
+                <a href="{{URL::to('vendor/attribute')}}" class="nav-link {{ request()->is('vendor/attribute') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Attribute</p>
+                </a>
+              </li>
+
+              <li class="nav-item {{ request()->is('vendor/attribute_value') ? 'active' : '' }}">
+                <a href="{{URL::to('vendor/attribute_value')}}" class="nav-link {{ request()->is('vendor/attribute_value') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Attribute Value</p>
+                </a>
+              </li>  
+
+
+            </ul>
+          </li>
 
 
 

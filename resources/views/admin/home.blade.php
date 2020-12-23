@@ -41,9 +41,9 @@
                       ?>
                   @endforeach
 
-                <h3>{{$sell}}</h3>
+                <h3>{{$sell}} /-</h3>
 
-                <p>Sell</p>
+                <p>Today Sell</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -51,6 +51,107 @@
               <a href="#" class="small-box-footer">Today Sell <i class="fas fa-dollar-sign"></i></a>
             </div>
           </div>
+
+          <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+              <div class="inner">
+                <?php
+                    $date = date('Y-m-d');
+                    $Weekly_sells = App\Models\Order::select('total_cost', 'total_qty')->where('status', 2)->whereBetween('created_at', [Carbon\Carbon::now()->startOfWeek(), Carbon\Carbon::now()->endOfWeek()])->get();
+                    $Weekly = 0;
+                ?>
+                  @foreach($Weekly_sells as $data)
+                    <?php 
+                      $Weekly = $Weekly+($data->total_cost*$data->total_qty);
+                      ?>
+                  @endforeach
+
+                <h3>{{$Weekly}} /-</h3>
+
+                <p>Weekly Sell</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer">Weekly Sell <i class="fas fa-dollar-sign"></i></a>
+            </div>
+          </div>
+
+
+          <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+              <div class="inner">
+                <?php
+                    $date = date('Y-m-d');
+                    $Monthly_sells = App\Models\Order::select('total_cost', 'total_qty')->where('status', 2)->whereMonth('created_at', Carbon\Carbon::now()->month)->get();
+                    $Monthly = 0;
+                ?>
+                  @foreach($Monthly_sells as $data)
+                    <?php 
+                      $Monthly = $Monthly+($data->total_cost*$data->total_qty);
+                      ?>
+                  @endforeach
+
+                <h3>{{$Monthly}} /-</h3>
+
+                <p>Monthly Sell</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer">Monthly Sell <i class="fas fa-dollar-sign"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+              <div class="inner">
+                <?php
+                    $startFrom =  date('Y-m-d', strtotime(Carbon\Carbon::now()->subYear()));
+
+                    $endTo =  date('Y-m-d', strtotime(Carbon\Carbon::now()));
+
+                    // $Yearly_sells = App\Models\Order::select('total_cost', 'total_qty')->where('status', 2)
+                    //                   ->where(function ($query) use ($endTo,$startFrom) {
+                    //                       $query->whereBetween('orders.created_at',[$startFrom, $endTo]);
+                    //                   })
+                    //                   ->get();
+
+
+                    $Yearly_sells = App\Models\Order::where(function($filter) use ($startFrom, $endTo) {
+                       if (!empty($startFrom) || $startFrom != '') {
+                           $filter->where('created_at', '>=' , $startFrom);
+                       }
+                       if (!empty($endTo) || $endTo != '') {
+                           $filter->where('created_at', '<=' , $endTo);
+                       }                       
+                    })
+                    ->select('total_cost', 'total_qty')
+                    ->where('status', 2)
+                    ->get();
+
+
+
+
+                    $Yearly = 0;
+                ?>
+                  @foreach($Yearly_sells as $data)
+                    <?php 
+                      $Yearly = $Yearly+($data->total_cost*$data->total_qty);
+                      ?>
+                  @endforeach
+
+                <h3>{{$Yearly}} /-</h3>
+
+                <p>Yearly Sell</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer">Yearly Sell <i class="fas fa-dollar-sign"></i></a>
+            </div>
+          </div>
+
 
           <div class="col-lg-3 col-6">
             <div class="small-box bg-danger">

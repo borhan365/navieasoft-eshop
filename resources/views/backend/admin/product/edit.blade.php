@@ -53,7 +53,7 @@
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Brand</label>
 		                      	<select name="brand_id" class="form-control">
-		                      		<option value="" selected="" disabled="">----Selected Brand----</option>}
+		                      		<option value="" selected="" disabled="">----Selected Brand----</option>
                                         @foreach($brands as $brand)
 				                            <option value="{{$brand->id}}" @php echo $brand->id==$product->brand_id?"selected":""; @endphp>{{$brand->name}}</option>
                                         @endforeach
@@ -70,19 +70,10 @@
 		                      	</select>
 		                    </div>		                    
 
-		                    <div class="col-sm-6">
-		                    	<label for="inputEmail3" class="col-form-label">Product Style</label>
-		                      	<select name="" id="product_veriation" class="form-control" onchange="showVariation(0)">
-				                    <option value="" selected="" disabled="">---Select---</option>
-				                    <option value="1" @php echo $product->product_veriation==0?"selected":""; @endphp>Simple Product</option>
-				                    <option value="2" @php echo $product->product_veriation==1?"selected":""; @endphp>Variation Product</option>
-		                      	</select>
-		                    </div>	
 
 		                  </div>		                  
 		                  
 
-		                  	@if($product->product_veriation == 0)
 		                  	<div class="form-group row">
 			                    <div class="col-sm-2">
 			                    	<label for="inputEmail3" class="col-form-label" id="SimpleProductTitle" style="display: none">Simple Product</label>
@@ -127,49 +118,7 @@
 
 			                    </div>	
 		                  	</div>
-		                  	@else
-		                  	<div class="form-group row">
-			                    <div class="col-sm-2">
-			                    	<label for="inputEmail3" class="col-form-label" id="SimpleProductTitle" style="display: none">Simple Product</label>
-			                      	<!-- <input type="checkbox" id="product_veriation" name="product_veriation" onchange="showVariation()" value="0"> -->
-			                    </div>
 
-			                    <div class="col-sm-6" id="SimpleProduct" style="display: none">
-                                    <table class="table table-striped" id="SimplePro">
-                                        <thead>
-                                        <tr>
-                                            <th>Attribute</th>
-                                            <th>Value</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-							                      	<select name="attribute_id[]" id="attribute_id1" class="form-control attribute_id">
-							                      		<option value="">---Select Attribute---</option>
-														@foreach($attributes as $attribute)
-															<option value="{{$attribute->id}}">{{$attribute->name}}</option>
-														@endforeach
-							                      	</select>
-                                                </td>
-                                                <td>
-							                      	<select name="attribute_value_id[]" id="attribute_value_id" class="form-control attribute_value_id">
-							                      	</select>
-                                                </td>
-
-                                                <td> 
-                                                	<button id="addSimpleProduct"  type="button" class="btn btn-success btn-sm addSimpleProduct"><i class="fa fa-plus-circle"></i> </button>
-                                                </td>
-                                            </tr>
-                                            <tr></tr>
-
-                                        </tbody>
-                                    </table>  
-
-			                    </div>	
-		                  	</div>
-		                  	@endif
 
 
 

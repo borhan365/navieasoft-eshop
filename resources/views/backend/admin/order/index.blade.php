@@ -69,6 +69,7 @@
 
                     <?php
                       $shop = App\Models\Shop::where('id', $order->shop_id)->first();
+
                       if ($shop->owner_type == 'vendor') {
                         $shop_owner = App\Models\Vendor::where('id', $shop->owner_id)->first();
                       }
@@ -88,7 +89,7 @@
                     @endif
                     <td>{{$order->total_qty}}</td>
                     <td>{{$order->total_cost}} BDT</td>
-                    <td>{{$order->paymentmethod->name}}</td>
+                    <td>{{$order->paymentmethod->name ?? ''}}</td>
                     <td>{{$order->created_at}} </td>
 
 	                <td>

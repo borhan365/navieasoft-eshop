@@ -119,7 +119,7 @@
                     <input type="text" class="form-control" name="bank_branch" value="{{$admin->bank_branch}}" readonly=""><br>
                     <input type="text" class="form-control" name="bank_account" value="{{$admin->bank_account}}" readonly=""><br>
                   </div>                  
-              </div>
+                </div>
               </div>
 
           </div>

@@ -67,6 +67,11 @@
                               </button>
                           </a>
 
+                          <a href="{{URL::to('admin/product-variation', [$product->id])}}" title="Variation" style="float: left; margin-left: 10px; margin-right: 10px">
+                              <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>
+                              </button>
+                          </a>
+
                           <form action="{{URL::to('admin/product/'.$product->id)}}" method="post">
                             @csrf
                             @method('DELETE')

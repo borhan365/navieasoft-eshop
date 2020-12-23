@@ -1,6 +1,25 @@
     <?php
         $categories = App\Models\Category::where('status', 1)->where('parent_id', 0)->get();
+        $user_id = Session::get('user_id');
+        $user_name = Session::get('name');
+
+        $first_name = Session::get('first_name');
+        $Cart = Cart::content()->count();
     ?>
+
+     <style>
+         
+        .cart{
+            position: absolute;
+            top: 0;
+            top: 26px;
+            font-weight: 900;
+            color: #FF6A00;
+            font-size: 18px;
+
+        }
+
+     </style>                
 
     <header>
         <nav>        
@@ -8,7 +27,7 @@
             <div class="navbar-middle">
                 <div class="container-fluid p-0 p-md-4">
                     <div class="d-flex justify-content-between">
-                        <div class="logo-area"><img src="{{asset('public/frontend/img/logo.png')}}" alt="" class="logo"></div> <!-- logo -->
+                        <div class="logo-area"><a href="{{URL::to('/')}}"><img src="{{asset('public/frontend/img/logo.png')}}" alt="" class="logo"></a></div> <!-- logo -->
         
                         <div class="search-area">
                             <div class="search-box">
@@ -28,10 +47,19 @@
                         <!-- end of search area -->
         
                         <div class="card-love d-none d-lg-block">
-                            <a href="#"><i class="icofont-waiter-alt"></i> <br> Name</a>
+                            @if($user_id)
+                                @if($first_name)
+                                    <a href="#"><i class="icofont-waiter-alt"></i> <br> {{$first_name}}</a>
+                                @else
+                                    <a href="#"><i class="icofont-waiter-alt"></i> <br> {{$user_name}}</a>
+                                @endif
+                            <a href="{{route('logout')}}"><i class="icofont-logout"></i><br> Logout</a>
+                            @else
+                            <a href="{{route('registration')}}"><i class="icofont-waiter-alt"></i> <br> Registration</a>
+                            <a href="{{route('loginForm')}}"><i class="icofont-login"></i> <br> Login</a>
+                            @endif
                             <a href="#"><i class="icofont-ui-message"></i> <br> Messages</a>
-                            <a href="#"><i class="icofont-list"></i> <br> Wishlist</a>
-                            <a href="#"><i class="icofont-ui-cart"></i> <br> Card</a>
+                            <a href="{{route('cart')}}"><i class="icofont-ui-cart"></i> <sub>{{$Cart}}</sub><br> Cart </a>
                         </div>
                     </div>
                 </div>
@@ -44,16 +72,34 @@
                     <div class="container-fluid clearfix navigation">
                         <ul>
                             <li><a href="#" class="pl-0">Category <i class="icofont-rounded-down"></i></a>
-                                <ul class="border">
+                                <ul class="border" style="z-index: 999;">
+
                                     @foreach($categories as $category)
                                     <li><a href="#">{{$category->name ?? ''}} <i class="icofont-rounded-right float-right"></i></a>
                                         <?php
                                             $subcategories = App\Models\Category::where('status', 1)->where('parent_id', $category->id)->get();
                                         ?>
                                         <ul class="border">
-                                            @foreach($subcategories as $subcategory)
+                                            <!-- @foreach($subcategories as $subcategory)
                                             <li><a href="#">{{$subcategory->name}}<i class="icofont-rounded-right float-right"></i></a></li>
-                                            @endforeach
+                                            @endforeach -->
+
+                                            <div class="row">
+                                                @foreach($subcategories as $subcategory)
+
+
+                                                <div class="col-6">
+                                                    <li><a href="#" class="font-weight-bold">{{$subcategory->name}}</a></li>
+                                                    <?php
+                                                        $prosubcategories = App\Models\Category::where('status', 1)->where('parent_id', $subcategory->id)->get();
+                                                    ?>
+                                                    @foreach($prosubcategories as $prosubcategory)
+                                                    <li><a href="#" class="font-weight-normal">{{$prosubcategory->name}}</a></li>
+                                                    @endforeach
+                                                </div>
+                                                @endforeach
+
+                                            </div>
                                         </ul>
                                     </li>
                                     @endforeach
@@ -63,7 +109,6 @@
                             <li><a href="#">Ready To Ship</a></li>
                             <li><a href="#">Trade Shop</a></li>
                             <li><a href="#">Services</a></li>
-                            <li><a href="#">Sell On Alibaba</a></li>
                             <li><a href="#">Help</a></li>
                         </ul>
                         <ul class="float-right">
@@ -78,22 +123,9 @@
                     <div class="container-fluid">
                         <ul>
                             <li><a class="d-block" href="#" class="active">Category</a></li>
-                            <li><a class="d-block" href="#">PRODUCTS</a></li>
-                            <li><a class="d-block" href="#">PAGES</a></li>
-                            <li><a class="d-block" href="#">FEATURES</a></li>
-                            <li><a class="d-block" href="#">SPACIAL OFFER</a></li>
-                            <li><a class="d-block" href="#">BUY</a></li>
-                            <li><a class="d-block" href="#">SPACIAL OFFER</a></li>
-                            <li><a class="d-block" href="#">BUY</a></li>
-                            <li><a class="d-block" href="#">READY TO SHIP</a></li>
-                            <li><a class="d-block" href="#">SERVICES</a></li>
-                            <li><a class="d-block" href="#">SPACIAL OFFER</a></li>
-                            <li><a class="d-block" href="#">BUY</a></li>
-                            <li><a class="d-block" href="#">SPACIAL OFFER</a></li>
-                            <li><a class="d-block" href="#">BUY</a></li>
-                            <li><a class="d-block" href="#">READY TO SHIP</a></li>
-                            <li><a class="d-block" href="#">SERVICES</a></li>
-                            <li><a class="d-block" href="#">SELL YOUR PRODUCTS</a></li>
+                            @foreach($categories as $category)
+                            <li><a class="d-block" href="#">{{$category->name ?? ''}}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -113,13 +145,17 @@
                     <i class="icofont-ui-message"></i>
                     <p class="mb-0">Message</p>
                 </a>
-                <a href="#">
-                    <i class="icofont-cart-alt"></i>
-                    <p class="mb-0">Cart</p>
+                <a href="{{route('cart')}}">
+                    <i class="icofont-cart-alt "></i>
+                    <p class="mb-0">Cart <sub>{{$Cart}}</sub></p>
                 </a>
                 <a href="#">
                     <i class="icofont-waiter-alt"></i>
                     <p class="mb-0">My Profile</p>
+                </a>
+                <a href="#">
+                    <i class="icofont-waiter-alt"></i>
+                    <p class="mb-0">Registration</p>
                 </a>
             </div>
             <!-- end of bottom nav bar -->

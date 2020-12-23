@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Attribute;
 use App\Models\Attribute_value;
+use Str;
+use Auth;
 
 class AttributeController extends Controller
 {
@@ -39,12 +41,20 @@ class AttributeController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:attributes',
             'slug' => 'required|unique:attributes',
             'status' => 'required',
         ]);
 
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
+
         $attribute = new Attribute();
+        $attribute->admin_id = $user_id;
+        $attribute->vendor_id = Null;
+        $attribute->merchant_id = Null;
+        $attribute->importer_id = Null;
         $attribute->name = $request->name;
         $attribute->slug = $request->slug;
         $attribute->discription = $request->discription;
@@ -90,8 +100,15 @@ class AttributeController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        $user = Auth::user();
+        $user_id = Auth::user()->id;
+        $user_type = Auth::user()->type;
+        
         $attribute = Attribute::findorfail($id);
+        $attribute->admin_id = $user_id;
+        $attribute->vendor_id = Null;
+        $attribute->merchant_id = Null;
+        $attribute->importer_id = Null;
         $attribute->name = $request->name;
         $attribute->slug = $request->slug;
         $attribute->discription = $request->discription;

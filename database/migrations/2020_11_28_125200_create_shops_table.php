@@ -37,6 +37,7 @@ class CreateShopsTable extends Migration
             $table->boolean('id_verified')->nullable()->default(Null);
             $table->boolean('phone_verified')->nullable()->default(Null);
             $table->boolean('address_verified')->nullable()->default(Null);
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

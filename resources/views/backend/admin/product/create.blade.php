@@ -70,26 +70,26 @@
 		                    </div>			
 
                     
-
+<!-- 
 		                    <div class="col-sm-6">
 		                    	<label for="inputEmail3" class="col-form-label">Product Style</label>
-		                      	<select name="" id="product_veriation" class="form-control" onchange="showVariation(0)">
+		                      	<select name="" id="product_veriation" class="form-control">
 				                    <option value="" selected="" disabled="">---Select---</option>
 				                    <option value="1">Simple Product</option>
 				                    <option value="2">Variation Product</option>
 		                      	</select>
-		                    </div>	
+		                    </div>	 -->
 
 
 		                  </div>		                  
 		  
 		                  	<div class="form-group row">
 			                    <div class="col-sm-2">
-			                    	<label for="inputEmail3" class="col-form-label" id="SimpleProductTitle" style="display: none">Simple Product</label>
+			                    	<label for="inputEmail3" class="col-form-label" id="SimpleProductTitle" style="display: block"> Product Attribute</label>
 			                      	<!-- <input type="checkbox" id="product_veriation" name="product_veriation" onchange="showVariation()" value="0"> -->
 			                    </div>
 
-			                    <div class="col-sm-6" id="SimpleProduct" style="display: none">
+			                    <div class="col-sm-6" id="SimpleProduct" style="display: block">
                                     <table class="table table-striped" id="SimplePro">
                                         <thead>
                                         <tr>
@@ -101,7 +101,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-							                      	<select name="attribute_id[]" id="attribute_id1" class="form-control attribute_id">
+							                      	<select name="attribute_id[]" id="attribute_id1" class="form-control attribute_id" required="">
 							                      		<option value="">---Select Attribute---</option>
 														@foreach($attributes as $attribute)
 															<option value="{{$attribute->id}}">{{$attribute->name}}</option>
@@ -223,14 +223,7 @@
 		                  	</div>
 
 		                  	<div class="form-group row">
-<!-- 			                    <div class="col-sm-4">
-			                    <label for="inputEmail3" class="col-form-label">Product Color</label>
-									<select class="form-control" id="color" name="color_id[]" multiple="multiple">
-										@foreach($colors as $color)
-									  		<option value="{{$color->id}}">{{$color->name}}</option>
-									  	@endforeach
-									</select>
-			                    </div> --> 
+
 			                    <div class="col-sm-4">
 			                    <label for="inputEmail3" class="col-form-label">Fetaure Image</label>
 			                      <input type="file" class="form-control" name="image" placeholder="Fetaure Image" required="">

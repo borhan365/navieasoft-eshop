@@ -46,6 +46,44 @@
           </li>
 
           <li class="nav-item has-treeview  
+              {{ request()->is('importer/attribute/create') ? 'menu-open' : '' }}
+              {{ request()->is('importer/attribute') ? 'menu-open' : '' }}
+              {{ request()->is('importer/attribute_value') ? 'menu-open' : '' }}
+          ">
+            <a href="" class="nav-link has-treeview">
+              <i class="nav-icon fab fa-bimobject"></i>
+              <p class=" has-treeview">
+                Attribute
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item {{ request()->is('importer/attribute/create') ? 'active' : '' }}">
+                <a href="{{URL::to('importer/attribute/create')}}" class="nav-link {{ request()->is('importer/attribute/create') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Attribute</p>
+                </a>
+              </li>              
+
+              <li class="nav-item {{ request()->is('importer/attribute') ? 'active' : '' }}">
+                <a href="{{URL::to('importer/attribute')}}" class="nav-link {{ request()->is('importer/attribute') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Attribute</p>
+                </a>
+              </li>
+
+              <li class="nav-item {{ request()->is('importer/attribute_value') ? 'active' : '' }}">
+                <a href="{{URL::to('importer/attribute_value')}}" class="nav-link {{ request()->is('importer/attribute_value') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Attribute Value</p>
+                </a>
+              </li>  
+
+            </ul>
+          </li>
+
+
+          <li class="nav-item has-treeview  
               {{ request()->is('importer/product/create') ? 'menu-open' : '' }}
               {{ request()->is('importer/product') ? 'menu-open' : '' }}
           ">
